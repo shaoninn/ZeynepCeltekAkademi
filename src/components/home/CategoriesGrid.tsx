@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { SiteLink } from "@/components/ui/SiteLink";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { EditableText } from "@/components/editor/EditableText";
+import { toWebpSrc, toWebpSrcMobile } from "@/lib/image-optimize";
 import type { CategoryListItem } from "@/lib/catalog";
 
 interface CategoriesGridProps {
@@ -44,12 +44,12 @@ export function CategoriesGrid({
               value={title || "Kariyerinizi güzelleştiren eğitimler"}
               as="h2"
               block
-              className="font-display text-2xl sm:text-3xl lg:text-[2.35rem] font-semibold text-ink tracking-tight leading-tight"
+              className="font-display text-2xl sm:text-3xl lg:text-[2.35rem] font-semibold text-ink tracking-tight leading-tight break-anywhere"
               help="Eğitimler bölüm başlığı"
               textStyle={titleStyle}
             />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <div className="flex gap-2">
               <button
                 type="button"
@@ -70,7 +70,7 @@ export function CategoriesGrid({
             </div>
             <SiteLink
               href="/hizmetler"
-              className="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-ink/20 text-ink text-[11px] font-semibold tracking-[0.14em] uppercase hover:border-orange hover:text-orange transition-colors"
+              className="inline-flex items-center gap-2 min-h-11 px-5 py-2.5 rounded-full border border-ink/20 text-ink text-[11px] font-semibold tracking-[0.14em] uppercase hover:border-orange hover:text-orange transition-colors"
             >
               Tüm Eğitimleri Gör
               <ArrowRight size={14} />
@@ -85,22 +85,26 @@ export function CategoriesGrid({
         >
           {items.map((cat, index) => {
             const num = String(index + 1).padStart(2, "0");
+            const imgSrc = cat.image
+              ? toWebpSrcMobile(cat.image) || toWebpSrc(cat.image)
+              : null;
             return (
               <SiteLink
                 key={cat.id}
                 href={`/hizmetler/${cat.slug}`}
                 data-cat-card
-                className="group snap-start shrink-0 w-[70vw] max-w-[260px] sm:w-56"
+                className="group snap-start shrink-0 w-[min(70vw,16.25rem)] sm:w-56"
               >
                 <div className="arch-frame relative aspect-[3/4.2] bg-[#2a2420] mb-5 shadow-[0_16px_40px_rgba(26,22,18,0.12)]">
-                  {cat.image ? (
-                    <Image
-                      src={cat.image}
+                  {imgSrc ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={imgSrc}
                       alt={cat.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="240px"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
+                      decoding="async"
+                      sizes="(max-width: 640px) 70vw, 224px"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center p-4">

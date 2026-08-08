@@ -46,7 +46,7 @@ export function HeaderClient({
 
         <SiteLink
           href="/sepet"
-          className="relative inline-flex items-center justify-center w-10 h-10 text-white/70 hover:text-orange transition-colors"
+          className="relative inline-flex items-center justify-center w-11 h-11 text-white/70 hover:text-orange transition-colors"
           aria-label={`Kayıt Sepeti${cartCount > 0 ? ` (${cartCount})` : ""}`}
         >
           <ShoppingCart size={18} />

@@ -30,11 +30,11 @@ export function HeroMedia({
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={webpSm}
-        srcSet={`${webpSm} 960w, ${webp} 1600w`}
+        srcSet={`${webpSm} 640w, ${webp} 1100w`}
         sizes={sizes}
         alt={alt}
-        width={1600}
-        height={1600}
+        width={1100}
+        height={1500}
         className={`absolute inset-0 h-full w-full ${className}`}
         loading="eager"
         decoding="async"
@@ -48,8 +48,8 @@ export function HeroMedia({
     <img
       src={webp}
       alt={alt}
-      width={1600}
-      height={1600}
+      width={1100}
+      height={1500}
       className={`absolute inset-0 h-full w-full ${className}`}
       loading="eager"
       decoding="async"

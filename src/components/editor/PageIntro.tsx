@@ -33,7 +33,7 @@ export function PageIntro({
         value={title}
         as="h1"
         block
-        className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white tracking-tight max-w-3xl leading-tight"
+        className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white tracking-tight max-w-3xl leading-tight break-anywhere"
         help="Sayfa ana başlığı"
       />
       <EditableText

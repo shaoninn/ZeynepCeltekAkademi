@@ -41,7 +41,7 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
                   href={acc.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-orange hover:border-orange transition-colors"
+                  className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-orange hover:border-orange transition-colors"
                   aria-label={acc.handle}
                   title={acc.handle}
                 >
@@ -52,7 +52,7 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
                 href={settings.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-[#25D366] hover:border-[#25D366] transition-colors"
+                className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-[#25D366] hover:border-[#25D366] transition-colors"
                 aria-label="WhatsApp"
               >
                 <WhatsAppIcon size={15} />

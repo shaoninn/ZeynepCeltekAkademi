@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShoppingCart, Minus, Plus, Check } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cartSlice";
@@ -18,6 +18,13 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
   const [heightCm, setHeightCm] = useState("");
   const [color, setColor] = useState("");
   const [added, setAdded] = useState(false);
+  const addedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (addedTimer.current) clearTimeout(addedTimer.current);
+    };
+  }, []);
 
   const handleAdd = () => {
     dispatch(
@@ -35,7 +42,8 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
       })
     );
     setAdded(true);
-    setTimeout(() => setAdded(false), 4000);
+    if (addedTimer.current) clearTimeout(addedTimer.current);
+    addedTimer.current = setTimeout(() => setAdded(false), 4000);
   };
 
   return (

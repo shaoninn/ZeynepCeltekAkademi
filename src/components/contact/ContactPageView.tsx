@@ -38,7 +38,7 @@ export function ContactPageView({
             value={data.title}
             as="h1"
             block
-            className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white tracking-tight max-w-3xl leading-tight"
+            className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white tracking-tight max-w-3xl leading-tight break-anywhere"
             help="İletişim sayfası başlığı"
           />
           <EditableText

@@ -48,8 +48,8 @@ export function FeatureBar({
       value={sectionOffset}
       label="Özellik çubuğu"
     >
-      <section className="relative z-30 -mt-16 sm:-mt-20 lg:-mt-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto rounded-2xl sm:rounded-[1.75rem] border border-white/10 bg-[#141210]/95 backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.5)] px-5 sm:px-8 py-8 lg:py-9">
+      <section className="relative z-30 -mt-8 sm:-mt-16 lg:-mt-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto rounded-2xl sm:rounded-[1.75rem] border border-white/10 bg-[#141210]/95 backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.5)] px-5 sm:px-8 py-7 sm:py-8 lg:py-9">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
             {list.map((item, index) => {
               const n = index + 1;
@@ -75,7 +75,7 @@ export function FeatureBar({
                     contentKey={`feature_bar_${n}_title`}
                     value={item.title}
                     as="h3"
-                    className="font-display text-[13px] font-semibold text-white tracking-wide uppercase"
+                    className="font-display text-[13px] font-semibold text-white tracking-wide uppercase break-anywhere leading-snug"
                     help={`Özellik ${n} başlık`}
                     textStyle={styles?.[`feature_bar_${n}_title`]}
                   />

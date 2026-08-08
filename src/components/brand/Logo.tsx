@@ -5,13 +5,14 @@ interface LogoProps {
   href?: string | null;
   className?: string;
   size?: "sm" | "md" | "lg";
+  /** Avoid on marketing LCP pages — hero should win fetch priority. */
   priority?: boolean;
 }
 
 const heights = { sm: 40, md: 52, lg: 64 } as const;
 const widths = { sm: 120, md: 160, lg: 200 } as const;
 
-/** Transparent PNG + screen blend so any residual black never shows as a box. */
+/** Compact WebP header mark (~9KB) — do not use the full ~190KB PNG here. */
 export function Logo({
   href = "/",
   className = "",
@@ -25,14 +26,16 @@ export function Logo({
     <span className={`inline-flex items-center ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/logo/logo-nobg.png"
+        src="/images/logo/logo-header.webp"
         alt={SITE_NAME}
         width={w}
         height={h}
         className="h-auto w-auto object-contain mix-blend-screen"
         style={{ maxHeight: h, width: "auto" }}
         decoding="async"
-        {...(priority ? { fetchPriority: "high" as const } : { loading: "lazy" as const })}
+        {...(priority
+          ? { fetchPriority: "high" as const }
+          : { loading: "lazy" as const, fetchPriority: "low" as const })}
       />
     </span>
   );

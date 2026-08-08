@@ -21,13 +21,14 @@ const montserrat = Montserrat({
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
   variable: "--font-display",
   display: "swap",
   adjustFontFallback: true,
   preload: false,
 });
 
+/** Script font — used on home hero/stats; keep light (no preload). */
 const greatVibes = Great_Vibes({
   subsets: ["latin", "latin-ext"],
   weight: "400",
@@ -56,15 +57,13 @@ export const metadata: Metadata = {
     "cilt bakımı eğitimi",
     "güzellik uzmanlığı",
   ],
-  // Per-page canonical only — never set "/" here (inherits to all routes).
   icons: {
     icon: [
-      { url: "/favicon.ico?v=3", sizes: "any" },
-      { url: "/icon.png?v=3", type: "image/png", sizes: "192x192" },
-      { url: "/favicon-32.png?v=3", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico?v=5", sizes: "any" },
+      { url: "/favicon.png?v=5", type: "image/png", sizes: "192x192" },
     ],
-    apple: [{ url: "/apple-icon.png?v=3", sizes: "180x180" }],
-    shortcut: "/favicon.ico?v=3",
+    apple: [{ url: "/apple-icon.png?v=5", sizes: "180x180" }],
+    shortcut: "/favicon.ico?v=5",
   },
   openGraph: {
     title: "Zeynep Çeltek Güzellik Akademi | Adana Güzellik Eğitimi",

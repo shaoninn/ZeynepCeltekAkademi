@@ -40,7 +40,7 @@ export function StatsBar({
                     contentKey={`stat_${n}_label`}
                     value={stat.label}
                     as="p"
-                    className="text-[11px] sm:text-xs text-white/55 tracking-[0.14em] uppercase"
+                    className="text-[11px] sm:text-xs text-white/55 tracking-[0.14em] uppercase break-anywhere"
                     help={`İstatistik ${n} etiket`}
                   />
                 </div>
@@ -51,7 +51,7 @@ export function StatsBar({
             contentKey="stats_script"
             value={scriptText}
             as="p"
-            className="font-script text-orange text-2xl sm:text-3xl lg:text-[2.1rem] leading-snug text-left lg:text-right"
+            className="font-script text-orange text-2xl sm:text-3xl lg:text-[2.1rem] leading-snug text-left lg:text-right break-anywhere"
             help="İstatistik dekoratif yazı"
           />
         </div>

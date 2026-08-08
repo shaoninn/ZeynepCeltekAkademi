@@ -186,7 +186,7 @@ export function SiteMenu({
                   </p>
                   <button
                     type="button"
-                    className="w-9 h-9 inline-flex items-center justify-center text-muted hover:text-orange"
+                    className="w-11 h-11 inline-flex items-center justify-center text-muted hover:text-orange"
                     onClick={close}
                     aria-label="Menüyü kapat"
                   >
@@ -259,7 +259,7 @@ export function SiteMenu({
                     </p>
                     <button
                       type="button"
-                      className="text-muted hover:text-orange text-xs uppercase tracking-wider"
+                      className="min-h-11 px-3 inline-flex items-center text-muted hover:text-orange text-xs uppercase tracking-wider"
                       onClick={() => setSub(null)}
                     >
                       Geri
@@ -294,7 +294,7 @@ export function SiteMenu({
     <>
       <button
         type="button"
-        className="inline-flex w-10 h-10 items-center justify-center text-muted hover:text-orange transition-colors border border-transparent hover:border-border rounded-md"
+        className="inline-flex w-11 h-11 items-center justify-center text-muted hover:text-orange transition-colors border border-transparent hover:border-border rounded-md"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
         aria-expanded={open}

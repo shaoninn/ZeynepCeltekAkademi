@@ -58,6 +58,7 @@ export function ContactForm({
     "idle"
   );
   const [error, setError] = useState("");
+  const [showMap, setShowMap] = useState(false);
 
   const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
     GOOGLE_MAPS_EMBED_QUERY
@@ -359,14 +360,26 @@ export function ContactForm({
             <ExternalLink size={12} />
           </a>
         </div>
-        <iframe
-          title="Zeynep Çeltek Güzellik Akademi konumu — Adana"
-          src={mapsEmbed}
-          className="w-full h-[240px] sm:h-[320px] md:h-[400px] grayscale-[20%] contrast-110"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
+        {showMap ? (
+          <iframe
+            title="Zeynep Çeltek Güzellik Akademi konumu — Adana"
+            src={mapsEmbed}
+            className="w-full h-[240px] sm:h-[320px] md:h-[400px] grayscale-[20%] contrast-110"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setShowMap(true)}
+            className="w-full h-[240px] sm:h-[320px] md:h-[400px] flex flex-col items-center justify-center gap-2 bg-black/40 text-white/70 hover:text-orange hover:bg-black/50 transition-colors"
+          >
+            <MapPin size={22} className="text-orange" />
+            <span className="text-sm font-medium">Haritayı yükle</span>
+            <span className="text-xs text-muted">Google Maps yalnızca tıklanınca açılır</span>
+          </button>
+        )}
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ export function CTASection({
                 value={title || "Kariyerinize bir adım önde başlayın"}
                 as="h2"
                 block
-                className="font-display text-2xl sm:text-3xl font-semibold text-white mb-4 tracking-tight uppercase leading-tight"
+                className="font-display text-2xl sm:text-3xl font-semibold text-white mb-4 tracking-tight uppercase leading-tight break-anywhere"
                 help="CTA başlık"
                 textStyle={styles?.cta_title}
               />
@@ -50,7 +50,7 @@ export function CTASection({
               </p>
               <SiteLink
                 href="/iletisim"
-                className="inline-flex items-center justify-center gap-2 self-start rounded-full bg-orange text-black px-6 py-3.5 text-[11px] font-bold tracking-[0.14em] uppercase hover:bg-orange-dark transition-colors"
+                className="inline-flex items-center justify-center gap-2 self-start min-h-11 rounded-full bg-orange text-black px-6 py-3.5 text-[11px] font-bold tracking-[0.14em] uppercase hover:bg-orange-dark transition-colors"
               >
                 <EditableText
                   contentKey="cta_button_label"
@@ -63,12 +63,12 @@ export function CTASection({
               </SiteLink>
             </div>
 
-            <div className="relative min-h-[220px] lg:min-h-0 border-y lg:border-y-0 lg:border-x border-white/10">
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:min-h-0 border-y lg:border-y-0 lg:border-x border-white/10">
               <Image
                 src={consultImg}
                 alt="Danışmanlık"
                 fill
-                className="object-cover"
+                className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 28vw"
                 loading="lazy"
               />

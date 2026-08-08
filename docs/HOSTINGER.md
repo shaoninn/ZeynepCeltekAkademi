@@ -86,6 +86,8 @@ ALLOW_PROD_SEED=true ADMIN_PASSWORD='GucluSifre123!' npm run db:seed
 
 **Not:** Aynı Hostinger hesabında birden fazla Node sitesi 120 EP kotasını paylaşır. Limit doluyorsa diğer siteleri ayırın veya VPS’e geçin.
 
+**503 / uptime probe:** hPanel’de `/?nocache=…` (Guzzle) ve harici monitoring sık istek atıyorsa Entry Process kotası dolup 503 üretir. Uptime aralığını gevşetin; mümkünse hafif bir health path kullanın (kök sayfa yerine). Cache-bust parametreli sürekli probe’lardan kaçının.
+
 ### Hostinger destek checklist (hPanel)
 
 1. Bu site: Deployments → Settings → **Max Processes = 1** → redeploy  

@@ -38,6 +38,9 @@ const staticAssetCache = [
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
   // Hostinger: runtime /_next/image sharp often 404s / spikes CPU.
   // Serve originals + pre-baked WebP from scripts/optimize-images.mjs.
   images: {
@@ -61,6 +64,10 @@ const nextConfig = {
         headers: staticAssetCache,
       },
       {
+        source: "/uploads/:path*",
+        headers: staticAssetCache,
+      },
+      {
         source: "/_next/static/:path*",
         headers: staticAssetCache,
       },
@@ -69,7 +76,7 @@ const nextConfig = {
         headers: staticAssetCache,
       },
       {
-        source: "/icon.png",
+        source: "/favicon.png",
         headers: staticAssetCache,
       },
       {

@@ -1,16 +1,20 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { SiteLink } from "@/components/ui/SiteLink";
 import { EditableText } from "@/components/editor/EditableText";
 import { EditableImage } from "@/components/editor/EditableImage";
+import { toWebpSrc, toWebpSrcMobile } from "@/lib/image-optimize";
 import type { ProjectListItem } from "@/lib/catalog";
 
 interface FacilitySectionProps {
   projects: ProjectListItem[];
   title?: string;
   body?: string;
+}
+
+function localThumb(src: string): string {
+  return toWebpSrcMobile(src) || toWebpSrc(src);
 }
 
 export function FacilitySection({
@@ -35,7 +39,7 @@ export function FacilitySection({
               value={title}
               as="h2"
               block
-              className="font-display text-2xl sm:text-3xl lg:text-[2.2rem] font-semibold text-ink mb-4 tracking-tight leading-tight uppercase"
+              className="font-display text-2xl sm:text-3xl lg:text-[2.2rem] font-semibold text-ink mb-4 tracking-tight leading-tight uppercase break-anywhere"
               help="Akademi ortamı başlığı"
             />
             <EditableText
@@ -49,7 +53,7 @@ export function FacilitySection({
             />
             <SiteLink
               href="/hakkimizda"
-              className="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-ink/20 text-ink text-[11px] font-semibold tracking-[0.14em] uppercase hover:border-orange hover:text-orange transition-colors"
+              className="inline-flex items-center gap-2 min-h-11 px-5 py-2.5 rounded-full border border-ink/20 text-ink text-[11px] font-semibold tracking-[0.14em] uppercase hover:border-orange hover:text-orange transition-colors"
             >
               Akademiyi İncele
               <ArrowRight size={14} />
@@ -64,11 +68,11 @@ export function FacilitySection({
                 fallback="/images/facility/facility-1.webp"
                 alt="Akademi ortamı"
                 fill
-                sizes="(max-width: 1024px) 60vw, 30vw"
+                sizes="(max-width: 640px) 55vw, (max-width: 1024px) 45vw, 30vw"
                 imgClassName="object-cover"
                 help="Akademi ana görsel"
               />
-              <div className="absolute bottom-4 right-4 w-[4.5rem] h-[4.5rem] sm:w-20 sm:h-20 rounded-full border-2 border-orange bg-ink text-orange flex items-center justify-center text-center px-2 shadow-xl">
+              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-[4.25rem] h-[4.25rem] sm:w-20 sm:h-20 rounded-full border-2 border-orange bg-ink text-orange flex items-center justify-center text-center px-2 shadow-xl">
                 <span className="font-display text-[9px] sm:text-[10px] font-semibold uppercase leading-tight tracking-wider">
                   Uluslararası
                   <br />
@@ -78,23 +82,25 @@ export function FacilitySection({
             </div>
             <div className="grid grid-rows-2 gap-3 sm:gap-4">
               <div className="relative rounded-2xl overflow-hidden border border-ink/10 min-h-0">
-                <Image
-                  src={sideA}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={localThumb(sideA)}
                   alt="Eğitim"
-                  fill
-                  className="object-cover"
-                  sizes="25vw"
+                  className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 640px) 40vw, (max-width: 1024px) 25vw, 20vw"
                 />
               </div>
               <div className="relative rounded-2xl overflow-hidden border border-ink/10 min-h-0">
-                <Image
-                  src={sideB}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={localThumb(sideB)}
                   alt="Akademi detay"
-                  fill
-                  className="object-cover"
-                  sizes="25vw"
+                  className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 640px) 40vw, (max-width: 1024px) 25vw, 20vw"
                 />
               </div>
             </div>

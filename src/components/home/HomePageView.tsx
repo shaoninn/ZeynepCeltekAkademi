@@ -2,10 +2,16 @@ import dynamic from "next/dynamic";
 import { preload } from "react-dom";
 import { Hero, DEFAULT_HERO_IMAGE } from "@/components/home/Hero";
 import { heroPreloadHrefs } from "@/components/home/HeroMedia";
-import { HomeCategoriesSection } from "@/components/home/HomeCategoriesSection";
-import { FeatureBar } from "@/components/home/FeatureBar";
 import { loadHomePageData } from "@/lib/home-content";
 
+const FeatureBar = dynamic(() =>
+  import("@/components/home/FeatureBar").then((m) => m.FeatureBar)
+);
+const HomeCategoriesSection = dynamic(() =>
+  import("@/components/home/HomeCategoriesSection").then(
+    (m) => m.HomeCategoriesSection
+  )
+);
 const StatsBar = dynamic(() =>
   import("@/components/home/StatsBar").then((m) => m.StatsBar)
 );
@@ -25,8 +31,8 @@ export async function HomePageView() {
     as: "image",
     fetchPriority: "high",
     imageSrcSet:
-      mobile === desktop ? desktop : `${mobile} 960w, ${desktop} 1600w`,
-    imageSizes: "(max-width: 1024px) 100vw, 50vw",
+      mobile === desktop ? desktop : `${mobile} 640w, ${desktop} 1100w`,
+    imageSizes: "(max-width: 1024px) 92vw, 50vw",
   });
 
   return (

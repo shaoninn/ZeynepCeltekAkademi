@@ -40,7 +40,7 @@ export function AboutPageView({ data }: { data: AboutPageData }) {
               as="h1"
               block
               multiline
-              className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white mb-5 whitespace-pre-line tracking-tight leading-tight"
+              className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white mb-5 whitespace-pre-line tracking-tight leading-tight break-anywhere"
               help="Hakkımızda ana başlık. Satır kırmak için Enter kullanın."
             />
             <EditableText

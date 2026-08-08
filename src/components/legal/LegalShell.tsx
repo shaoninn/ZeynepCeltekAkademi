@@ -15,7 +15,7 @@ export function LegalShell({
           <p className="text-[11px] tracking-[0.28em] uppercase text-orange font-semibold mb-3">
             Kurumsal
           </p>
-          <h1 className="font-display text-3xl sm:text-4xl font-semibold text-white tracking-tight">
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold text-white tracking-tight break-anywhere">
             {title}
           </h1>
           <p className="text-xs text-white/45 mt-3">

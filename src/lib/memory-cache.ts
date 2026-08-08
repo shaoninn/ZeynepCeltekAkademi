@@ -1,11 +1,13 @@
 /**
  * Process-memory TTL cache for Hostinger.
  * Avoids Next.js Data Cache "sticky empty" bugs while cutting remote MySQL RTTs.
+ * Bounded size + opportunistic expiry sweep to avoid unbounded Map growth.
  */
 
 type Entry<T> = { value: T; expiresAt: number };
 
 const store = new Map<string, Entry<unknown>>();
+const MAX_ENTRIES = 400;
 
 export type MemoryCacheOptions = {
   /** TTL in ms */
@@ -20,6 +22,17 @@ function isEmptyResult(value: unknown): boolean {
   return false;
 }
 
+function purgeExpired(now: number): void {
+  for (const [key, entry] of store) {
+    if (entry.expiresAt <= now) store.delete(key);
+  }
+}
+
+function evictOldest(): void {
+  const first = store.keys().next().value;
+  if (first != null) store.delete(first);
+}
+
 export async function memoryCache<T>(
   key: string,
   loader: () => Promise<T>,
@@ -30,6 +43,10 @@ export async function memoryCache<T>(
   if (hit && hit.expiresAt > now) {
     return hit.value;
   }
+  if (hit) store.delete(key);
+
+  if (store.size > MAX_ENTRIES) purgeExpired(now);
+  while (store.size >= MAX_ENTRIES) evictOldest();
 
   const value = await loader();
   const empty = options.skipEmpty !== false && isEmptyResult(value);

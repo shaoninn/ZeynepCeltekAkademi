@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShoppingCart, Check, Minus, Plus } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cartSlice";
@@ -25,6 +25,13 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const addedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (addedTimer.current) clearTimeout(addedTimer.current);
+    };
+  }, []);
 
   const unitPrice =
     product.badgeSale && product.salePrice != null
@@ -45,7 +52,8 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
       })
     );
     setAdded(true);
-    window.setTimeout(() => setAdded(false), 1800);
+    if (addedTimer.current) clearTimeout(addedTimer.current);
+    addedTimer.current = setTimeout(() => setAdded(false), 1800);
   };
 
   return (
