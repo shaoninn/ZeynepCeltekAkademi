@@ -2,7 +2,7 @@ import { getSiteSettings } from "@/lib/site";
 import { ContactPageView } from "@/components/contact/ContactPageView";
 import { loadContactPageData } from "@/lib/page-content";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 
 export const metadata = {

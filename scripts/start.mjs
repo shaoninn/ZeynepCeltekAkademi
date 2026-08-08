@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 /**
- * Hostinger start — do NOT run prisma db push on every boot
- * (it opens connections and can starve the app pool).
- * Schema sync once: RUN_DB_PUSH=1 node scripts/start.mjs
- * or: npx prisma db push
+ * Hostinger start — single OS process (no npx wrapper).
+ * Do NOT run prisma db push on every boot.
+ * Schema sync once: RUN_DB_PUSH=1 npm run start
+ *
+ * DB warm happens in src/instrumentation.ts (same process).
  */
-import { spawnSync, spawn } from "node:child_process";
+import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 function run(cmd, args) {
   const result = spawnSync(cmd, args, {
@@ -18,7 +22,16 @@ function run(cmd, args) {
 
 if (process.env.RUN_DB_PUSH === "1") {
   console.log("[start] RUN_DB_PUSH=1 → prisma db push…");
-  const code = run("npx", ["prisma", "db", "push"]);
+  const prismaCli = path.join(
+    process.cwd(),
+    "node_modules",
+    "prisma",
+    "build",
+    "index.js"
+  );
+  const code = existsSync(prismaCli)
+    ? run(process.execPath, [prismaCli, "db", "push"])
+    : run("npx", ["prisma", "db", "push"]);
   if (code !== 0) {
     console.error("[start] prisma db push failed — continuing to boot Next");
   }
@@ -27,33 +40,32 @@ if (process.env.RUN_DB_PUSH === "1") {
 }
 
 const port = process.env.PORT || "3000";
-console.log(`[start] next start on 0.0.0.0:${port}`);
-const child = spawn(
-  "npx",
-  ["next", "start", "--hostname", "0.0.0.0", "--port", String(port)],
-  {
-    stdio: "inherit",
-    env: {
-      ...process.env,
-      NODE_ENV: "production",
-    },
-    shell: process.platform === "win32",
-  }
+const nextBin = path.join(
+  process.cwd(),
+  "node_modules",
+  "next",
+  "dist",
+  "bin",
+  "next"
 );
 
-// After listen, hit health so the worker opens MySQL before the first visitor.
-const warmDelayMs = Number(process.env.DB_WARM_DELAY_MS || 4_000) || 4_000;
-setTimeout(() => {
-  const url = `http://127.0.0.1:${port}/api/health`;
-  console.log(`[start] warming ${url}`);
-  fetch(url)
-    .then(async (res) => {
-      const body = await res.text();
-      console.log(`[start] warm ${res.status}: ${body.slice(0, 160)}`);
-    })
-    .catch((err) => {
-      console.warn("[start] warm failed:", err instanceof Error ? err.message : err);
-    });
-}, warmDelayMs);
+if (!existsSync(nextBin)) {
+  console.error("[start] next binary missing — run npm install / build");
+  process.exit(1);
+}
 
-child.on("exit", (code) => process.exit(code ?? 1));
+process.env.NODE_ENV = "production";
+console.log(`[start] next start (in-process) 0.0.0.0:${port}`);
+
+// Run Next in this process — no parent+npx+child tree (Hostinger EP friendly).
+process.argv = [
+  process.execPath,
+  nextBin,
+  "start",
+  "--hostname",
+  "0.0.0.0",
+  "--port",
+  String(port),
+];
+
+await import(pathToFileURL(nextBin).href);

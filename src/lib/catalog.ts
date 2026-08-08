@@ -6,7 +6,8 @@ import {
   getFallbackCategoryBySlug,
 } from "@/lib/catalog-fallback";
 
-const CATALOG_TTL_MS = 60_000;
+const CATALOG_TTL_MS = 120_000;
+const MENU_TTL_MS = 120_000;
 
 export type ProjectListItem = Awaited<
   ReturnType<typeof loadActiveProjects>
@@ -147,6 +148,49 @@ export const getPublishedPosts = cache(async () => {
     });
   } catch (error) {
     console.error("[catalog] getPublishedPosts failed:", error);
+    return [];
+  }
+});
+
+/** Header/menu only — light rows, capped. */
+async function loadMenuNavProjects() {
+  return prisma.project.findMany({
+    where: { isActive: true },
+    select: { slug: true, title: true },
+    orderBy: [{ isFeatured: "desc" }, { sortOrder: "asc" }],
+    take: 12,
+  });
+}
+
+async function loadMenuNavPosts() {
+  return prisma.blogPost.findMany({
+    where: { isPublished: true },
+    select: { slug: true, title: true },
+    orderBy: { publishedAt: "desc" },
+    take: 8,
+  });
+}
+
+export const getMenuNavProjects = cache(async () => {
+  try {
+    return await memoryCache("catalog:menu:projects", loadMenuNavProjects, {
+      ttlMs: MENU_TTL_MS,
+      skipEmpty: true,
+    });
+  } catch (error) {
+    console.error("[catalog] getMenuNavProjects failed:", error);
+    return [];
+  }
+});
+
+export const getMenuNavPosts = cache(async () => {
+  try {
+    return await memoryCache("catalog:menu:posts", loadMenuNavPosts, {
+      ttlMs: MENU_TTL_MS,
+      skipEmpty: true,
+    });
+  } catch (error) {
+    console.error("[catalog] getMenuNavPosts failed:", error);
     return [];
   }
 });

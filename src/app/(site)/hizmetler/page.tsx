@@ -6,7 +6,7 @@ import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 import Image from "next/image";
 import { ArrowRight, GraduationCap } from "lucide-react";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export const metadata = {
   alternates: { canonical: "/hizmetler" },

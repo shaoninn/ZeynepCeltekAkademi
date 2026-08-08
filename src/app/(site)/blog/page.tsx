@@ -6,7 +6,7 @@ import { PageIntro } from "@/components/editor/PageIntro";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 import { EditableText } from "@/components/editor/EditableText";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 
 export const metadata = {

@@ -29,18 +29,21 @@ export function revalidateNav() {
 
 export function revalidateProjects() {
   invalidateCatalogMemoryCache();
+  memoryCacheInvalidate("sitemap:");
   revalidateTag(CACHE_TAGS.projects, IMMEDIATE);
   bustPublicPages();
 }
 
 export function revalidateCategories() {
   invalidateCatalogMemoryCache();
+  memoryCacheInvalidate("sitemap:");
   revalidateTag(CACHE_TAGS.categories, IMMEDIATE);
   bustPublicPages();
 }
 
 export function revalidateBlog() {
   invalidateCatalogMemoryCache();
+  memoryCacheInvalidate("sitemap:");
   revalidateTag(CACHE_TAGS.blog, IMMEDIATE);
   bustPublicPages();
 }

@@ -7,7 +7,7 @@ import { CatalogProductGrid } from "@/components/shop/CatalogProductGrid";
 import { EditableCategoryField } from "@/components/editor/EditableCategoryField";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 
 interface Props {

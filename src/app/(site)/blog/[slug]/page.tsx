@@ -3,7 +3,7 @@ import Image from "next/image";
 import { SiteLink } from "@/components/ui/SiteLink";
 import { getPostBySlug } from "@/lib/catalog";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 
 interface Props {

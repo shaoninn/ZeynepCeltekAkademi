@@ -14,7 +14,7 @@ import { MapPin, Check, Truck } from "lucide-react";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 import { ProductBadges } from "@/components/shop/ProductBadges";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 
 interface Props {
@@ -74,22 +74,26 @@ export default async function ProductPage({ params }: Props) {
       ? product.salePrice
       : product.price;
 
-  const similar = await (async () => {
-    try {
-      return await prisma.product.findMany({
-        where: {
-          categoryId: product.categoryId,
-          isActive: true,
-          id: { not: product.id },
-        },
-        include: { category: true },
-        orderBy: { sortOrder: "asc" },
-        take: 4,
-      });
-    } catch {
-      return [];
-    }
-  })();
+  const similar = await memoryCache(
+    `catalog:similar:${product.categoryId}:${product.id}`,
+    async () => {
+      try {
+        return await prisma.product.findMany({
+          where: {
+            categoryId: product.categoryId,
+            isActive: true,
+            id: { not: product.id },
+          },
+          include: { category: true },
+          orderBy: { sortOrder: "asc" },
+          take: 4,
+        });
+      } catch {
+        return [];
+      }
+    },
+    { ttlMs: 120_000, skipEmpty: true }
+  );
 
   return (
     <section className="py-16 lg:py-24">

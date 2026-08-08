@@ -66,14 +66,21 @@ npx prisma db push
 ALLOW_PROD_SEED=true ADMIN_PASSWORD='GucluSifre123!' npm run db:seed
 ```
 
-## Performans
+## Performans (Entry Process / Maksimum İşlem)
 
 | Önlem | Ne yapar |
 |-------|----------|
-| `MYSQL_POOL_SIZE=3` | Layout + sayfa sorguları paralel |
-| Process memory cache (60s) | Tekrar DB’ye gitmez |
+| `MYSQL_POOL_SIZE=2` (gerekirse `1`) | Paralel MySQL bekleme ↓ |
+| `scripts/start.mjs` in-process Next | `npx` çocuğu yok — site başına 1 Node |
+| ISR `revalidate=300` | Pazarlama sayfalarında regenerasyon seyrek |
+| Sitemap bellek 30 dk | Bot her hit’te 4 DB sorgusu atmaz |
+| Home ölü fetch yok | Instagram / ürün havuzu home’da yok |
+| Menü hafif sorgular | Blog/galeri menü `take` + `select` |
+| Process memory cache | Tekrar DB’ye gitmez |
 | `SiteLink` `prefetch={false}` | Hover’da MySQL fırtınası olmasın |
-| Boot warm (`/api/health`) | Soğuk ilk ziyaret yumuşar |
+| Boot warm (`instrumentation`) | Soğuk ilk ziyaret yumuşar |
+
+**Not:** Aynı Hostinger hesabında birden fazla Node sitesi 120 EP kotasını paylaşır. Limit doluyorsa diğer siteleri ayırın veya VPS’e geçin.
 
 ## Kontrol listesi
 

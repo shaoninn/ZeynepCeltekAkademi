@@ -24,8 +24,8 @@ export function resolveMysqlPoolConfig(): MysqlPoolConfig {
   const password = process.env.MYSQL_PASSWORD;
   const hasMysqlParts = Boolean(user && database && password !== undefined);
 
-  // Remote Hostinger MySQL: 3–5 connections allow parallel layout+page queries.
-  const poolSize = Math.max(1, Number(process.env.MYSQL_POOL_SIZE || 3) || 3);
+  // Remote Hostinger MySQL: keep pool small — EP/process limit friendly.
+  const poolSize = Math.max(1, Number(process.env.MYSQL_POOL_SIZE || 2) || 2);
   const serializeQueries =
     process.env.MYSQL_SERIALIZE === "1" || poolSize <= 1;
 
@@ -36,7 +36,7 @@ export function resolveMysqlPoolConfig(): MysqlPoolConfig {
     connectTimeout: Number(process.env.MYSQL_CONNECT_TIMEOUT_MS || 20_000) || 20_000,
     acquireTimeout: Number(process.env.MYSQL_ACQUIRE_TIMEOUT_MS || 25_000) || 25_000,
     idleTimeout: Number(process.env.MYSQL_IDLE_TIMEOUT_MS || 120_000) || 120_000,
-    minimumIdle: Math.min(2, poolSize),
+    minimumIdle: Math.min(1, poolSize),
     allowPublicKeyRetrieval: true,
     serializeQueries,
   };

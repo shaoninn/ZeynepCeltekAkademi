@@ -6,12 +6,12 @@ import { getNavLinks, getSiteSettings } from "@/lib/site";
 import { getContentMap } from "@/lib/site-content";
 import {
   getActiveCategories,
-  getFeaturedProjects,
-  getPublishedPosts,
+  getMenuNavPosts,
+  getMenuNavProjects,
 } from "@/lib/catalog";
 
-/** ISR: HTML + data cache ~60s; editor/admin saves call revalidatePath. */
-export const revalidate = 60;
+/** ISR: 5 dk — admin kaydı revalidatePath ile anında yeniler. */
+export const revalidate = 300;
 
 export default async function SiteLayout({
   children,
@@ -24,19 +24,19 @@ export default async function SiteLayout({
       getNavLinks(),
       getContentMap(["footer_blurb"]),
       getActiveCategories(),
-      getFeaturedProjects(),
-      getPublishedPosts(),
+      getMenuNavProjects(),
+      getMenuNavPosts(),
     ]);
 
   const menuCategories = categories.map((c) => ({
     href: `/hizmetler/${c.slug}`,
     label: c.name,
   }));
-  const menuProjects = projects.slice(0, 12).map((p) => ({
+  const menuProjects = projects.map((p) => ({
     href: `/projeler/${p.slug}`,
     label: p.title,
   }));
-  const menuPosts = posts.slice(0, 8).map((p) => ({
+  const menuPosts = posts.map((p) => ({
     href: `/blog/${p.slug}`,
     label: p.title,
   }));
