@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 import { ArrowRight, Mail, MapPin, Phone, Clock } from "lucide-react";
 import { EditableText } from "@/components/editor/EditableText";
 import { EditableSectionShift } from "@/components/editor/EditableSectionShift";
-import { PHONE, EMAIL, ADDRESS, WORK_HOURS } from "@/lib/constants";
+import { SiteLink } from "@/components/ui/SiteLink";
+import { PHONE, PHONE_RAW, EMAIL, ADDRESS, WORK_HOURS } from "@/lib/constants";
 
 interface CTASectionProps {
   title?: string;
@@ -17,50 +18,68 @@ interface CTASectionProps {
 export function CTASection({
   title,
   buttonLabel,
+  bannerImages,
   sectionOffset = "0",
   styles,
 }: CTASectionProps) {
+  const consultImg =
+    bannerImages?.[0] || "/images/gallery/gallery-2.webp";
+
   return (
     <EditableSectionShift
       settingKey="section_cta_offset"
       value={sectionOffset}
       label="CTA kaydır"
     >
-      <section className="py-14 lg:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto rounded-3xl border border-border bg-card overflow-hidden bg-marble">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-0">
-            <div className="p-8 sm:p-10 lg:p-14 flex flex-col justify-center">
+      <section className="py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="max-w-7xl mx-auto rounded-[1.75rem] border border-white/10 overflow-hidden bg-[#12100e]">
+          <div className="grid lg:grid-cols-[1fr_0.85fr_1fr]">
+            <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
               <EditableText
                 contentKey="cta_title"
                 value={title || "Kariyerinize bir adım önde başlayın"}
                 as="h2"
                 block
-                className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4 tracking-tight"
-                help="Alt CTA başlığı"
+                className="font-display text-2xl sm:text-3xl font-semibold text-white mb-4 tracking-tight uppercase leading-tight"
+                help="CTA başlık"
                 textStyle={styles?.cta_title}
               />
-              <p className="text-muted text-sm sm:text-base mb-8 max-w-md leading-relaxed">
+              <p className="text-white/55 text-sm mb-8 max-w-sm leading-relaxed">
                 Ücretsiz danışmanlık için bize ulaşın; size uygun eğitim
                 programını birlikte planlayalım.
               </p>
-              <Button href="/iletisim" size="lg" className="w-full sm:w-auto justify-center">
+              <SiteLink
+                href="/iletisim"
+                className="inline-flex items-center justify-center gap-2 self-start rounded-full bg-orange text-black px-6 py-3.5 text-[11px] font-bold tracking-[0.14em] uppercase hover:bg-orange-dark transition-colors"
+              >
                 <EditableText
                   contentKey="cta_button_label"
                   value={buttonLabel || "Ücretsiz Danışmanlık Al"}
                   as="span"
-                  help="CTA buton yazısı"
+                  help="CTA buton"
                   textStyle={styles?.cta_button_label}
                 />
-                <ArrowRight size={18} />
-              </Button>
+                <ArrowRight size={16} />
+              </SiteLink>
             </div>
 
-            <div className="border-t lg:border-t-0 lg:border-l border-border p-8 sm:p-10 lg:p-14 bg-black/30 space-y-5">
-              <h3 className="font-display text-sm font-semibold tracking-[0.18em] uppercase text-orange mb-2">
+            <div className="relative min-h-[220px] lg:min-h-0 border-y lg:border-y-0 lg:border-x border-white/10">
+              <Image
+                src={consultImg}
+                alt="Danışmanlık"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 28vw"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="p-8 sm:p-10 lg:p-12 space-y-5 bg-black/25">
+              <h3 className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-orange mb-1">
                 İletişim
               </h3>
               <a
-                href={`tel:${PHONE.replace(/\D/g, "")}`}
+                href={`tel:+${PHONE_RAW}`}
                 className="flex items-start gap-3 text-sm text-white/85 hover:text-orange transition-colors"
               >
                 <Phone size={16} className="mt-0.5 text-orange shrink-0" />
@@ -75,7 +94,7 @@ export function CTASection({
               </a>
               <p className="flex items-start gap-3 text-sm text-white/85">
                 <MapPin size={16} className="mt-0.5 text-orange shrink-0" />
-                {ADDRESS}
+                <span>{ADDRESS}</span>
               </p>
               <p className="flex items-start gap-3 text-sm text-white/85">
                 <Clock size={16} className="mt-0.5 text-orange shrink-0" />

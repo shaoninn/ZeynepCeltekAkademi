@@ -27,7 +27,7 @@ export default async function BlogPage() {
   ]);
 
   return (
-    <section className="py-16 lg:py-24">
+    <section className="pb-16 lg:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageIntro
           eyebrowKey="blog_eyebrow"
@@ -62,7 +62,7 @@ export default async function BlogPage() {
               <SiteLink
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                className="group block bg-card border border-border hover:border-orange/50 transition-all"
+                className="group block bg-[#141210] border border-white/10 rounded-2xl overflow-hidden hover:border-orange/40 transition-all"
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   {post.image ? (

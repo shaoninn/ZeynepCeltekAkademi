@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
   ]);
 
   return (
-    <section className="py-16 lg:py-24">
+    <section className="pb-16 lg:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageIntro
           eyebrowKey="projects_eyebrow"
@@ -74,7 +74,7 @@ export default async function ProjectsPage() {
                   href={`/projeler/${project.slug}`}
                   className="group"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-card border border-border group-hover:border-orange/50 transition-colors">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-card border border-white/10 rounded-2xl group-hover:border-orange/40 transition-colors">
                     {project.image ? (
                       <Image
                         src={project.image}

@@ -21,7 +21,7 @@ export function FloatingContact({ phone, whatsappUrl }: FloatingContactProps) {
   );
 
   return (
-    <div className="fixed z-40 flex flex-col gap-2 bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))]">
+    <div className="fixed z-40 flex flex-col gap-2 bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] xl:hidden">
       <a
         href={telHref(phone)}
         className="w-12 h-12 flex items-center justify-center rounded-full bg-card border border-border text-orange hover:border-orange transition-colors md:hidden"

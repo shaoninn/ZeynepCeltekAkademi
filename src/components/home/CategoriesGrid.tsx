@@ -25,55 +25,62 @@ export function CategoriesGrid({
     const el = trackRef.current;
     if (!el) return;
     const card = el.querySelector<HTMLElement>("[data-cat-card]");
-    const step = (card?.offsetWidth ?? 220) + 20;
-    el.scrollBy({ left: dir * step * 2, behavior: "smooth" });
+    const step = (card?.offsetWidth ?? 240) + 24;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
   }
 
   return (
-    <section className="bg-cream-section py-16 lg:py-22">
+    <section id="egitimler" className="relative bg-cream-section pt-20 sm:pt-24 lg:pt-28 pb-16 lg:pb-20">
+      <div className="cream-wave absolute -top-10 left-0 right-0 h-12 pointer-events-none" aria-hidden />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-          <EditableText
-            contentKey="services_section_title"
-            value={title || "Kariyerinizi güzelleştiren eğitimler"}
-            as="h2"
-            block
-            className="font-display text-2xl sm:text-3xl lg:text-[2.15rem] font-semibold text-ink max-w-xl tracking-tight"
-            help="Eğitimler bölüm başlığı"
-            textStyle={titleStyle}
-          />
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10 lg:mb-12">
+          <div className="max-w-2xl">
+            <p className="text-[11px] tracking-[0.28em] uppercase text-[#a67c52] font-semibold mb-3">
+              Eğitim programlarımız
+            </p>
+            <EditableText
+              contentKey="services_section_title"
+              value={title || "Kariyerinizi güzelleştiren eğitimler"}
+              as="h2"
+              block
+              className="font-display text-2xl sm:text-3xl lg:text-[2.35rem] font-semibold text-ink tracking-tight leading-tight"
+              help="Eğitimler bölüm başlığı"
+              textStyle={titleStyle}
+            />
+          </div>
           <div className="flex items-center gap-3">
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => scrollByCard(-1)}
-                className="w-10 h-10 rounded-full flex items-center justify-center border border-ink/15 text-ink hover:border-orange hover:text-orange transition-colors"
-                aria-label="Önceki eğitimler"
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-ink/15 text-ink hover:border-orange hover:text-orange transition-colors"
+                aria-label="Önceki"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 type="button"
                 onClick={() => scrollByCard(1)}
-                className="w-10 h-10 rounded-full flex items-center justify-center border border-ink/15 text-ink hover:border-orange hover:text-orange transition-colors"
-                aria-label="Sonraki eğitimler"
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-ink/15 text-ink hover:border-orange hover:text-orange transition-colors"
+                aria-label="Sonraki"
               >
                 <ChevronRight size={18} />
               </button>
             </div>
             <SiteLink
               href="/hizmetler"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink hover:text-orange transition-colors uppercase tracking-wider"
+              className="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-ink/20 text-ink text-[11px] font-semibold tracking-[0.14em] uppercase hover:border-orange hover:text-orange transition-colors"
             >
               Tüm Eğitimleri Gör
-              <ArrowRight size={16} />
+              <ArrowRight size={14} />
             </SiteLink>
           </div>
         </div>
 
         <div
           ref={trackRef}
-          className="flex gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide"
+          className="flex gap-5 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
         >
           {items.map((cat, index) => {
@@ -83,37 +90,34 @@ export function CategoriesGrid({
                 key={cat.id}
                 href={`/hizmetler/${cat.slug}`}
                 data-cat-card
-                className="group snap-start shrink-0 w-[58vw] max-w-[240px] sm:w-52"
+                className="group snap-start shrink-0 w-[70vw] max-w-[260px] sm:w-56"
               >
-                <div className="relative mb-4">
-                  <span className="absolute -top-1 left-3 z-10 font-display text-4xl sm:text-5xl font-semibold text-ink/10 select-none">
-                    {num}
-                  </span>
-                  <div className="arch-frame relative aspect-[3/4] bg-cream-dark border border-ink/8 shadow-[0_12px_40px_rgba(26,22,18,0.08)]">
-                    {cat.image ? (
-                      <Image
-                        src={cat.image}
-                        alt={cat.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="220px"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center p-4 bg-gradient-to-b from-[#2a2420] to-[#1a1612]">
-                        <span className="font-display text-sm font-semibold text-orange/40 uppercase text-center tracking-wide">
-                          {cat.name}
-                        </span>
-                      </div>
-                    )}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-orange text-black flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <span className="font-display text-xs font-bold">
-                        {num}
+                <div className="arch-frame relative aspect-[3/4.2] bg-[#2a2420] mb-5 shadow-[0_16px_40px_rgba(26,22,18,0.12)]">
+                  {cat.image ? (
+                    <Image
+                      src={cat.image}
+                      alt={cat.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="240px"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center p-4">
+                      <span className="font-display text-sm text-orange/40 uppercase text-center">
+                        {cat.name}
                       </span>
                     </div>
-                  </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                  <span className="absolute top-4 left-4 font-display text-3xl text-white/25 font-semibold">
+                    {num}
+                  </span>
+                  <span className="absolute bottom-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-orange text-black flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                    <ArrowRight size={16} />
+                  </span>
                 </div>
-                <h3 className="font-display text-xs sm:text-sm font-semibold text-ink uppercase tracking-[0.12em] text-center group-hover:text-orange transition-colors line-clamp-2 px-1">
+                <h3 className="font-display text-sm font-semibold text-ink uppercase tracking-[0.12em] text-center group-hover:text-orange transition-colors line-clamp-2 px-1">
                   {cat.name}
                 </h3>
               </SiteLink>

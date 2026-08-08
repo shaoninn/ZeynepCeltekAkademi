@@ -127,6 +127,19 @@ main {
   overflow: hidden;
 }
 
+.cream-wave {
+  background: linear-gradient(to bottom, transparent, var(--cream));
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 40%, transparent 70%);
+}
+
+.page-hero {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(201, 169, 98, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 85% 10%, rgba(255, 255, 255, 0.03), transparent 50%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

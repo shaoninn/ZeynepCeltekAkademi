@@ -5,3 +5,5 @@ Aşağıdaki stok fotoğraflar [Unsplash License](https://unsplash.com/license) 
 Klasörler: `public/images/{hero,courses,about,facility,gallery,blog}`
 
 Kurumsal logo (`public/images/logo`) markaya aittir; Unsplash değildir.
+
+Hero görseli: Unsplash (salon / eğitmen portre stok).

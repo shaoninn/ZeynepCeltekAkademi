@@ -22,23 +22,23 @@ export function ContactPageView({
   settings: SiteSettingsMap;
 }) {
   return (
-    <section className="py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
+    <>
+      <section className="page-hero pt-10 sm:pt-14 pb-10 sm:pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <EditableText
             contentKey="contact_eyebrow"
             value={data.eyebrow}
             as="p"
             block
-            className="text-orange text-xs font-semibold tracking-[0.3em] uppercase mb-2"
-            help="İletişim sayfası üst etiket (küçük turuncu metin)"
+            className="text-[11px] tracking-[0.28em] uppercase text-orange font-semibold mb-3"
+            help="İletişim sayfası üst etiket (küçük altın metin)"
           />
           <EditableText
             contentKey="contact_title"
             value={data.title}
             as="h1"
             block
-            className="font-display text-3xl sm:text-4xl font-bold text-white mb-4"
+            className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-white tracking-tight max-w-3xl leading-tight"
             help="İletişim sayfası başlığı"
           />
           <EditableText
@@ -47,13 +47,17 @@ export function ContactPageView({
             as="p"
             block
             multiline
-            className="text-muted max-w-2xl"
+            className="mt-4 text-white/60 text-sm sm:text-base max-w-2xl leading-relaxed"
             help="İletişim sayfası kısa açıklama"
           />
         </div>
+      </section>
 
-        <ContactForm settings={settings} copy={data.formCopy} />
-      </div>
-    </section>
+      <section className="py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ContactForm settings={settings} copy={data.formCopy} />
+        </div>
+      </section>
+    </>
   );
 }

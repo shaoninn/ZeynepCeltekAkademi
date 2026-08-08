@@ -40,7 +40,7 @@ const DRAWER_LINKS: { href: string; label: string; sub?: SubPanel }[] = [
   { href: "/tekliflerim", label: "Kayıtlarım" },
   { href: "/sepet", label: "Kayıt Sepeti" },
   { href: "/odeme", label: "Ödeme" },
-  { href: "/hizmet-bolgeleri", label: "Hizmet Bölgeleri" },
+  { href: "/hizmet-bolgeleri", label: "Eğitim Bölgeleri" },
   { href: "/hakkimizda", label: "Akademi" },
   { href: "/iletisim", label: "İletişim" },
   { href: "#legal", label: "Kurumsal / Yasal", sub: "legal" },
