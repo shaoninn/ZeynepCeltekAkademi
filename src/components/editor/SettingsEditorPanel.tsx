@@ -25,12 +25,21 @@ const FIELDS = [
     label: "Konum yazısı",
     help: "Üst sol: Adana vb.",
   },
-  { key: "email", label: "E-posta", help: "İletişim formu ve footer." },
   { key: "address", label: "Adres", help: "İletişim sayfası ve harita sorgusu." },
   {
     key: "instagram",
-    label: "Instagram URL",
-    help: "Footer sosyal linki.",
+    label: "Instagram (Adana)",
+    help: "https://www.instagram.com/zeynepceltek_adana/",
+  },
+  {
+    key: "instagram_2",
+    label: "Instagram (T. Özal)",
+    help: "https://www.instagram.com/zeynepceltek_t.ozal/",
+  },
+  {
+    key: "instagram_3",
+    label: "Instagram (Güzellik Kursu)",
+    help: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
   },
   {
     key: "google_reviews_url",

@@ -59,13 +59,13 @@ const siteContent = [
     key: "mission",
     title: "Misyon",
     content:
-      "Güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmek.",
+      "Güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmek; canlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak.",
   },
   {
     key: "vision",
     title: "Vizyon",
     content:
-      "Adana ve çevresinde güzellik eğitiminde referans akademi olmak; bilimi sanatla buluşturan standartlar koymak.",
+      "Adana ve çevresinde güzellik eğitiminde referans akademi olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamak.",
   },
   {
     key: "values_hygiene",
@@ -556,7 +556,7 @@ async function main() {
   await prisma.siteSetting.createMany({
     data: [
       { key: "phone", value: "0 (850) 550 35 40" },
-      { key: "email", value: "info@zeynepceltekakademi.local" },
+      { key: "email", value: "" },
       {
         key: "address",
         value:
@@ -565,7 +565,15 @@ async function main() {
       { key: "location_label", value: "Seyhan / Adana" },
       {
         key: "instagram",
-        value: "https://www.instagram.com/zeynepceltekakademi/",
+        value: "https://www.instagram.com/zeynepceltek_adana/",
+      },
+      {
+        key: "instagram_2",
+        value: "https://www.instagram.com/zeynepceltek_t.ozal/",
+      },
+      {
+        key: "instagram_3",
+        value: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
       },
       { key: "whatsapp", value: "908505503540" },
       {
@@ -588,7 +596,7 @@ async function main() {
         excerpt:
           "Uygulamalı eğitim ve belgelendirme ile sektöre nasıl hazırlanırsınız?",
         content:
-          "Güzellik sektöründe kalıcı bir kariyer için doğru eğitim modeli kritiktir. Canlı manken üzerinde birebir uygulama, teoriyi sahaya taşır. Zeynep Çeltek Güzellik Akademi'de programlar MEB onaylı belge süreçleriyle desteklenir.",
+          "<p>Güzellik sektöründe kalıcı bir kariyer için doğru eğitim modeli kritiktir. Canlı manken üzerinde birebir uygulama, teoriyi sahaya taşır.</p><p>Zeynep Çeltek Güzellik Akademi'de programlar MEB onaylı belge süreçleriyle desteklenir. Ücretsiz danışmanlık için iletişime geçin.</p>",
         image: "/images/blog/blog-1.webp",
         isPublished: true,
         publishedAt: new Date(),
@@ -598,8 +606,19 @@ async function main() {
         slug: "protez-tirnak-egitiminde-neler-ogrenilir",
         excerpt: "3 haftalık müfredat: teori, manikür, nail art ve şablon tırnak.",
         content:
-          "Protez tırnak eğitiminde kuru manikür, kalıcı oje, nail art, tips ve şablon tırnak teknikleri canlı manken üzerinde işlenir. Eğitim sonunda MEB onaylı belge için sınav yapılır.",
+          "<p>Protez tırnak eğitiminde kuru manikür, kalıcı oje, nail art, tips ve şablon tırnak teknikleri canlı manken üzerinde işlenir.</p><p>Eğitim sonunda MEB onaylı belge için sınav yapılır.</p>",
         image: "/images/blog/blog-2.webp",
+        isPublished: true,
+        publishedAt: new Date(),
+      },
+      {
+        title: "Kirpik Lifting ve Kaş Laminasyon: Bir Günde Uzmanlaşın",
+        slug: "kirpik-lifting-kas-laminasyon-bir-gunde",
+        excerpt:
+          "Blok ders modeliyle aynı gün canlı manken uygulaması ve sertifika.",
+        content:
+          "<p>Kirpik lifting ve kaş laminasyon eğitimi bir günde 10:00–17:00 arasında tamamlanır. Canlı manken üzerinde ilk işleminizi uygulayıp sertifikanızı alırsınız.</p>",
+        image: "/images/courses/kirpik-lifting-kas-laminasyon.webp",
         isPublished: true,
         publishedAt: new Date(),
       },
@@ -609,7 +628,7 @@ async function main() {
         excerpt:
           "2,5–3 aylık programda microblading'den dudak tekniklerine uzanan yolculuk.",
         content:
-          "Kalıcı makyaj eğitiminde teori, microblading, altın oran, shading, eyeliner ve dudak renklendirme uygulamaları birebir yapılır. MEB onaylı belge için sınav süreci vardır.",
+          "<p>Kalıcı makyaj eğitiminde teori, microblading, altın oran, shading, eyeliner ve dudak renklendirme uygulamaları birebir yapılır. MEB onaylı belge için sınav süreci vardır.</p>",
         image: "/images/blog/blog-3.webp",
         isPublished: true,
         publishedAt: new Date(),

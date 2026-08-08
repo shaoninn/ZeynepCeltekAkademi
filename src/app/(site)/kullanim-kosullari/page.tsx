@@ -47,7 +47,7 @@ export default function TermsPage() {
       </p>
       <h2>İletişim</h2>
       <p>
-        {COMPANY.email} · {COMPANY.phone}
+        {COMPANY.phone}
         <br />
         {COMPANY.address}
       </p>

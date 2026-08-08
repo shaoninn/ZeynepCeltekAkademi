@@ -4,7 +4,6 @@
  */
 import {
   ADDRESS,
-  EMAIL,
   LEGAL_ENTITY_NAME,
   PHONE,
   SITE_NAME,
@@ -18,7 +17,7 @@ export const COMPANY = {
   /** Ticaret unvanı — yalnızca yasal metinlerde (mesafeli satış vb.) */
   name: LEGAL_ENTITY_NAME,
   address: ADDRESS,
-  email: EMAIL,
+  email: "",
   phone: PHONE,
   site: "https://zeynepceltekakademi.local",
 };

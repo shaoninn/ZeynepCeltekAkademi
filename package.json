@@ -18,6 +18,7 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
     "db:seed:editor": "tsx prisma/upsert-editor-content.ts",
+    "db:sync:public": "tsx prisma/sync-public-content.ts",
     "db:setup": "prisma generate && prisma db push && tsx prisma/seed.ts",
     "postinstall": "prisma generate"
   },

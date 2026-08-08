@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SiteLink } from "@/components/ui/SiteLink";
-import { MapPin, Phone, Mail, Clock, ExternalLink } from "lucide-react";
+import { MapPin, Phone, Clock, ExternalLink } from "lucide-react";
 import type { SiteSettingsMap } from "@/lib/site";
 import {
   GOOGLE_MAPS_EMBED_QUERY,
@@ -173,16 +173,6 @@ export function ContactForm({
               </div>
             </li>
             <li className="flex gap-3">
-              <Mail size={18} className="text-orange flex-shrink-0" />
-              <EditableSetting
-                settingKey="email"
-                value={settings.email}
-                as="span"
-                className="text-sm text-muted hover:text-orange"
-                help="E-posta adresi"
-              />
-            </li>
-            <li className="flex gap-3">
               <Clock size={18} className="text-orange flex-shrink-0" />
               <div className="text-sm text-muted space-y-1">
                 <EditableSetting
@@ -260,18 +250,6 @@ export function ContactForm({
             />
           </div>
           <div>
-            <label className="block text-sm text-muted mb-1" htmlFor="c-email">
-              E-posta
-            </label>
-            <input
-              id="c-email"
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className={fieldClass}
-            />
-          </div>
-          <div>
             <label className="block text-sm text-muted mb-1" htmlFor="c-subject">
               Konu
             </label>
@@ -281,9 +259,9 @@ export function ContactForm({
               onChange={(e) => setForm({ ...form, subject: e.target.value })}
               className={fieldClass}
             >
-              <option value="Teklif">Teklif Talebi</option>
-              <option value="Keşif">Ücretsiz Keşif</option>
-              <option value="Bilgi">Bilgi Alma</option>
+              <option value="Eğitim Bilgisi">Eğitim Bilgisi</option>
+              <option value="Kayıt">Kayıt Danışmanlığı</option>
+              <option value="Ücretsiz Danışmanlık">Ücretsiz Danışmanlık</option>
               <option value="Diğer">Diğer</option>
             </select>
           </div>

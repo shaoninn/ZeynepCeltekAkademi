@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { SiteLink } from "@/components/ui/SiteLink";
 import { SITE_NAME } from "@/lib/constants";
 
@@ -12,6 +11,7 @@ interface LogoProps {
 const heights = { sm: 40, md: 52, lg: 64 } as const;
 const widths = { sm: 120, md: 160, lg: 200 } as const;
 
+/** Transparent PNG + screen blend so any residual black never shows as a box. */
 export function Logo({
   href = "/",
   className = "",
@@ -23,14 +23,16 @@ export function Logo({
 
   const content = (
     <span className={`inline-flex items-center ${className}`}>
-      <Image
-        src="/images/logo/logo.png"
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/logo/logo-nobg.png"
         alt={SITE_NAME}
         width={w}
         height={h}
-        priority={priority}
-        className="h-auto w-auto max-h-[inherit] object-contain"
+        className="h-auto w-auto object-contain mix-blend-screen"
         style={{ maxHeight: h, width: "auto" }}
+        decoding="async"
+        {...(priority ? { fetchPriority: "high" as const } : { loading: "lazy" as const })}
       />
     </span>
   );

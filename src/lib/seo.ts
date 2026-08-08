@@ -1,8 +1,7 @@
 import {
   ADDRESS,
-  EMAIL,
   GOOGLE_BUSINESS_URL,
-  INSTAGRAM,
+  INSTAGRAM_ACCOUNTS,
   PHONE_RAW,
   SITE_NAME,
   SITE_TAGLINE,
@@ -21,15 +20,14 @@ export function localBusinessJsonLd() {
   const url = getSiteUrl();
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "BeautySalon",
     "@id": `${url}/#business`,
     name: SITE_NAME,
     description: SITE_TAGLINE,
     url,
     telephone: `+${PHONE_RAW}`,
-    email: EMAIL,
-    image: `${url}/images/logo/logo.png`,
-    logo: `${url}/images/logo/logo.png`,
+    image: `${url}/images/logo/logo-nobg.png`,
+    logo: `${url}/images/logo/logo-nobg.png`,
     address: {
       "@type": "PostalAddress",
       streetAddress: ADDRESS,
@@ -56,7 +54,10 @@ export function localBusinessJsonLd() {
       "@type": "AdministrativeArea",
       name: "Seyhan / Adana",
     },
-    sameAs: [INSTAGRAM, GOOGLE_BUSINESS_URL].filter(Boolean),
+    sameAs: [
+      ...INSTAGRAM_ACCOUNTS.map((a) => a.href),
+      GOOGLE_BUSINESS_URL,
+    ].filter(Boolean),
     priceRange: "$$",
   };
 }

@@ -43,7 +43,7 @@ export default function DeliveryPage() {
       </p>
       <h2>İletişim</h2>
       <p>
-        {COMPANY.phone} · {COMPANY.email}
+        {COMPANY.phone}
       </p>
     </LegalShell>
   );

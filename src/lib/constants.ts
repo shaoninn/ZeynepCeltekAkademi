@@ -8,11 +8,26 @@ export const PHONE = "0 (850) 550 35 40";
 export const PHONE_RAW = "908505503540";
 export const PHONE_ALT = "";
 export const WHATSAPP_URL = `https://wa.me/${PHONE_RAW}`;
-export const EMAIL = "info@zeynepceltekakademi.local";
+export const EMAIL = "";
 export const ADDRESS =
   "Cemalpaşa Mah. Gazipaşa Bulvarı Çelik Apartmanı Kat 4 No 7, Seyhan / Adana";
 export const LOCATION_LABEL = "Seyhan / Adana";
-export const INSTAGRAM = "https://www.instagram.com/zeynepceltekakademi/";
+/** Ana Instagram */
+export const INSTAGRAM = "https://www.instagram.com/zeynepceltek_adana/";
+export const INSTAGRAM_ACCOUNTS = [
+  {
+    handle: "@zeynepceltek_adana",
+    href: "https://www.instagram.com/zeynepceltek_adana/",
+  },
+  {
+    handle: "@zeynepceltek_t.ozal",
+    href: "https://www.instagram.com/zeynepceltek_t.ozal/",
+  },
+  {
+    handle: "@zeynepceltek_guzellik.kursu",
+    href: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
+  },
+] as const;
 /** Google İşletme Profili */
 export const GOOGLE_BUSINESS_URL = "https://share.google/URWo0MWX0f2nTAswo";
 /** Harita gömme — işletme adı + adres araması */

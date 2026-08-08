@@ -60,6 +60,31 @@ export const projectData: Array<{
     categorySlug: "cilt-bakimi",
   },
   {
+    title: "Kirpik Lifting Atölyesi",
+    slug: "kirpik-lifting-atolye",
+    location: "Seyhan / Adana",
+    description:
+      "Kirpik lifting ve kaş laminasyon uygulamalarından eğitim kareleri.",
+    image: "/images/courses/kirpik-lifting-kas-laminasyon.webp",
+    images: [
+      "/images/courses/kirpik-lifting-kas-laminasyon.webp",
+      "/images/gallery/gallery-5.webp",
+    ],
+    categorySlug: "kirpik-lifting-kas-laminasyon",
+  },
+  {
+    title: "İpek Kirpik Uygulamaları",
+    slug: "ipek-kirpik-uygulama",
+    location: "Seyhan / Adana",
+    description: "İpek kirpik eğitiminden canlı manken uygulamaları.",
+    image: "/images/courses/ipek-kirpik.webp",
+    images: [
+      "/images/courses/ipek-kirpik.webp",
+      "/images/gallery/gallery-6.webp",
+    ],
+    categorySlug: "ipek-kirpik",
+  },
+  {
     title: "Makyaj & Güzellik Çalışmaları",
     slug: "makyaj-guzellik",
     location: "Seyhan / Adana",

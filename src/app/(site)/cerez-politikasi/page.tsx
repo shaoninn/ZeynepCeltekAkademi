@@ -41,7 +41,7 @@ export default function CookiePolicyPage() {
         etkileyebilir.
       </p>
       <h2>İletişim</h2>
-      <p>Sorularınız için {COMPANY.email}</p>
+      <p>Sorularınız için {COMPANY.phone}</p>
     </LegalShell>
   );
 }

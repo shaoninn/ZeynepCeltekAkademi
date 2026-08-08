@@ -30,13 +30,13 @@ export default function ReturnPolicyPage() {
       <h2>Standart ürün / paketler</h2>
       <p>
         Stoktan verilen (varsa) standart ürün veya eğitim paketlerinde,
-        kullanılmamış hallerde iade talepleri yazılı olarak {COMPANY.email}{" "}
-        adresine iletilmelidir. İnceleme sonrası süreç netleştirilir.
+        kullanılmamış hallerde iade talepleri {COMPANY.phone} üzerinden
+        iletilmelidir. İnceleme sonrası süreç netleştirilir.
       </p>
       <h2>Başvuru</h2>
       <p>
         İade / iptal taleplerinizi kayıt veya teklif referansınızla birlikte{" "}
-        {COMPANY.email} veya {COMPANY.phone} üzerinden iletin.
+        {COMPANY.phone} üzerinden iletin.
       </p>
     </LegalShell>
   );

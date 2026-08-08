@@ -11,9 +11,14 @@ import {
 const FIELDS = [
   { key: "phone", label: "Telefon", help: "Sitede ve WhatsApp butonunda görünür." },
   { key: "whatsapp", label: "WhatsApp (ülke kodlu)", help: "Örn: 908505503540 — sadece rakam." },
-  { key: "email", label: "E-posta" },
   { key: "address", label: "Adres" },
-  { key: "instagram", label: "Instagram URL" },
+  { key: "instagram", label: "Instagram (Adana)", help: "zeynepceltek_adana" },
+  { key: "instagram_2", label: "Instagram (T. Özal)", help: "zeynepceltek_t.ozal" },
+  {
+    key: "instagram_3",
+    label: "Instagram (Güzellik Kursu)",
+    help: "zeynepceltek_guzellik.kursu",
+  },
   {
     key: "instagram_access_token",
     label: "Instagram Access Token",
@@ -27,7 +32,6 @@ const FIELDS = [
   { key: "google_reviews_url", label: "Google işletme / yorum linki", help: "Örn: share.google/... veya maps profil linki." },
   { key: "work_hours_weekdays", label: "Hafta içi çalışma saati" },
   { key: "work_hours_sunday", label: "Pazar" },
-  { key: "manufacturer_email", label: "Operasyon e-posta", help: "Yeni kayıt/teklifte özet buraya gider (opsiyonel)." },
   { key: "payment_enabled", label: "Ödeme paneli (1=açık)", help: "1 veya true yazınca /odeme banka bilgilerini vurgular." },
   { key: "bank_name", label: "Banka adı" },
   { key: "bank_iban", label: "IBAN" },

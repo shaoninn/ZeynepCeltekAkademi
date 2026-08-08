@@ -1,26 +1,29 @@
 "use client";
 
 import { Camera, MessageCircle } from "lucide-react";
-import { WHATSAPP_URL, INSTAGRAM } from "@/lib/constants";
+import { WHATSAPP_URL, INSTAGRAM_ACCOUNTS } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/brand/WhatsAppIcon";
 
-/** Vertical social rail — matches design right edge */
+/** Vertical social rail — Instagram hesapları + WhatsApp + iletişim */
 export function SocialRail() {
   const items = [
-    {
-      href: INSTAGRAM,
-      label: "Instagram",
+    ...INSTAGRAM_ACCOUNTS.map((acc) => ({
+      href: acc.href,
+      label: acc.handle,
       icon: <Camera size={16} />,
-    },
+      external: true,
+    })),
     {
       href: WHATSAPP_URL,
       label: "WhatsApp",
       icon: <WhatsAppIcon size={16} />,
+      external: true,
     },
     {
       href: "/iletisim",
       label: "İletişim",
       icon: <MessageCircle size={16} />,
+      external: false,
     },
   ];
 
@@ -33,10 +36,11 @@ export function SocialRail() {
         <a
           key={item.label}
           href={item.href}
-          target={item.href.startsWith("http") ? "_blank" : undefined}
-          rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noopener noreferrer" : undefined}
           className="w-11 h-11 rounded-full border border-orange/40 bg-black/60 backdrop-blur-sm text-orange flex items-center justify-center hover:bg-orange hover:text-black transition-colors"
           aria-label={item.label}
+          title={item.label}
         >
           {item.icon}
         </a>

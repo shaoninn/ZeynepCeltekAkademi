@@ -1,10 +1,11 @@
 import { SiteLink } from "@/components/ui/SiteLink";
-import { Camera, MapPin, Mail, Phone } from "lucide-react";
+import { Camera, MapPin, Phone } from "lucide-react";
 import {
   SITE_NAME,
   CATEGORIES,
   LEGAL_LINKS,
   PRIMARY_NAV_LINKS,
+  INSTAGRAM_ACCOUNTS,
 } from "@/lib/constants";
 import { Logo } from "@/components/brand/Logo";
 import { FooterBlurb } from "@/components/layout/FooterBlurb";
@@ -33,16 +34,20 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
               <Logo size="lg" />
             </div>
             <FooterBlurb value={footerBlurb} />
-            <div className="flex items-center gap-2.5 mt-5">
-              <a
-                href={settings.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-orange hover:border-orange transition-colors"
-                aria-label="Instagram"
-              >
-                <Camera size={15} />
-              </a>
+            <div className="flex flex-wrap items-center gap-2.5 mt-5">
+              {INSTAGRAM_ACCOUNTS.map((acc) => (
+                <a
+                  key={acc.href}
+                  href={acc.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-orange hover:border-orange transition-colors"
+                  aria-label={acc.handle}
+                  title={acc.handle}
+                >
+                  <Camera size={15} />
+                </a>
+              ))}
               <a
                 href={settings.whatsappUrl}
                 target="_blank"
@@ -53,6 +58,20 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
                 <WhatsAppIcon size={15} />
               </a>
             </div>
+            <ul className="mt-4 space-y-1.5">
+              {INSTAGRAM_ACCOUNTS.map((acc) => (
+                <li key={`ig-label-${acc.href}`}>
+                  <a
+                    href={acc.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-muted hover:text-orange transition-colors"
+                  >
+                    {acc.handle}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="lg:col-span-2">
@@ -111,15 +130,6 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
                   className="text-orange text-sm font-semibold hover:underline"
                 >
                   {settings.phone}
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Mail size={15} className="text-orange shrink-0 mt-0.5" />
-                <a
-                  href={`mailto:${settings.email}`}
-                  className="text-muted text-sm hover:text-orange transition-colors break-all"
-                >
-                  {settings.email}
                 </a>
               </li>
               <li className="flex items-start gap-2.5">

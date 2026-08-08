@@ -62,8 +62,12 @@ export async function loadAboutPageData(): Promise<AboutPageData> {
       "GÜZELLİĞİ BİLİMLE,\nSANATA DÖNÜŞTÜRÜYORUZ",
     intro: map.about_intro || "",
     philosophy: map.about_philosophy || "",
-    mission: map.mission || "",
-    vision: map.vision || "",
+    mission:
+      map.mission ||
+      "Güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmek; canlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak.",
+    vision:
+      map.vision ||
+      "Adana ve çevresinde güzellik eğitiminde referans akademi olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamak.",
     values: VALUE_DEFS.map((v) => ({
       key: v.key,
       title: titles[v.key] || v.fallbackTitle,

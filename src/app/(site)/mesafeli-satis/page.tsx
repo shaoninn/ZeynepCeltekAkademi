@@ -23,7 +23,7 @@ export default function DistanceSalesPage() {
         <br />
         {COMPANY.address}
         <br />
-        {COMPANY.email} · {COMPANY.phone}
+        {COMPANY.phone}
       </p>
       <h2>Sözleşmenin konusu</h2>
       <p>
