@@ -19,6 +19,10 @@ hPanel → **Websites → Add website → Node.js Web App**
 | Build | `npm run build` |
 | Start | `npm run start` |
 | Output | `.next` |
+| **Max Processes** | **`1`** (Deployments → Settings — zorunlu) |
+
+**Kritik:** `npm run dev` asla canlıda çalıştırmayın. Sadece `build` + `start`.  
+Hostinger Business’ta **Maksimum işlem (120)** ve **Giriş işlemi / Entry (60)** hesap genelinde 3 site ile ortaktır; hPanel site bazında ayırmaz.
 
 ## Ortam değişkenleri (Hostinger paneli)
 
@@ -81,6 +85,17 @@ ALLOW_PROD_SEED=true ADMIN_PASSWORD='GucluSifre123!' npm run db:seed
 | Boot warm (`instrumentation`) | Soğuk ilk ziyaret yumuşar |
 
 **Not:** Aynı Hostinger hesabında birden fazla Node sitesi 120 EP kotasını paylaşır. Limit doluyorsa diğer siteleri ayırın veya VPS’e geçin.
+
+### Hostinger destek checklist (hPanel)
+
+1. Bu site: Deployments → Settings → **Max Processes = 1** → redeploy  
+2. Env: `NODE_ENV=production`, `MYSQL_POOL_SIZE=1` veya `2`  
+3. Start komutu: `npm run start` (dev değil)  
+4. Kullanılmayan Node deployment / eski preview / cron’ları durdur  
+5. Hangi site şişiriyor: diğer 2 siteyi geçici kapatıp Resources grafiğine bak  
+6. PHP sitelerde cache açık tut; gereksiz eklenti/cron azalt  
+
+Kod tarafında (bu repo): in-process `start`, prefetch kapalı, ISR 300s, sitemap cache, ölü home DB yok — sonsuz polling / cluster yok.
 
 ## Kontrol listesi
 
