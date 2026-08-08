@@ -34,7 +34,7 @@ hPanel → **Websites → Add website → Node.js Web App**
 | `MYSQL_HOST` | Remote MySQL hostname (`srv….hstgr.io`, `localhost` değil) |
 | `MYSQL_PORT` | `3306` |
 | `MYSQL_DATABASE` | hPanel veritabanı adı |
-| `MYSQL_POOL_SIZE` | `3` |
+| `MYSQL_POOL_SIZE` | `2` (process limiti yüksekse `1`) |
 
 Remote MySQL’de kullanıcı için `%` (Any Host) izni açık olmalı.
 
