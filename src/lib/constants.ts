@@ -1,6 +1,6 @@
 export const SITE_NAME = "Zeynep Çeltek Güzellik Akademi";
 export const SITE_OWNER = "Zeynep Çeltek";
-/** Vergi levhasındaki ticaret unvanı */
+/** Ticaret unvanı — vitrinde gösterilmez; yasal sayfalarda satıcı kimliği için */
 export const LEGAL_ENTITY_NAME =
   "ASDEKRA Eğitim Kurumu Güzellik Salonu Otomotiv İnşaat Sanayi Ticaret Limited Şirketi";
 export const SITE_TAGLINE = "Güzelliği bilimle, sanata dönüştürüyoruz.";
