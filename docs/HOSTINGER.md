@@ -88,6 +88,7 @@ Grafikte **~106/120** çoğu zaman **3 Node sitesinin ortak kotası** + Hostinge
 |-------|----------|
 | `MYSQL_POOL_SIZE=1` (varsayılan) | Paralel MySQL bekleme ↓ |
 | `scripts/start.mjs` in-process Next | `npx` çocuğu yok — site başına 1 Node |
+| `scripts/build.mjs` heap ≥2048 | Panel’deki düşük `NODE_OPTIONS` build’i öldürmesin |
 | ISR `revalidate=600` | Pazarlama regenerasyonu seyrek (admin revalidatePath anında) |
 | Sitemap bellek 30 dk | Bot her hit’te 4 DB sorgusu atmaz |
 | Home ölü fetch yok | Instagram / ürün havuzu home’da yok |

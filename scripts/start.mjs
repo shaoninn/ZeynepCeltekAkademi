@@ -2,9 +2,11 @@
 /**
  * Hostinger start — single OS process (no npx / no PM2 / no cluster).
  * Prefers Next.js standalone server when built; falls back to `next start`.
- * Schema sync once: RUN_DB_PUSH=1 npm run start
  *
- * Hostinger: `npm run start -- -p $PORT` — we honor -p/--port and PORT.
+ * Do NOT set NODE_OPTIONS=--max-old-space-size=460 in Hostinger panel —
+ * that value also applies to `npm run build` and OOMs TypeScript.
+ * Runtime heap is inherited from the process Hostinger starts; keep panel
+ * NODE_OPTIONS empty or >= 1024 if you must set it.
  */
 import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync } from "node:fs";
@@ -55,15 +57,6 @@ process.env.NODE_ENV = "production";
 const port = resolvePort();
 process.env.PORT = String(port);
 process.env.HOSTNAME = process.env.HOSTNAME || "0.0.0.0";
-
-// Soft heap cap — reduces OOM kill → restart loops on shared Hostinger plans.
-if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
-  const heap = process.env.NODE_MAX_OLD_SPACE_SIZE || "460";
-  process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, `--max-old-space-size=${heap}`]
-    .filter(Boolean)
-    .join(" ")
-    .trim();
-}
 
 const cwd = process.cwd();
 const standaloneServer = path.join(cwd, ".next", "standalone", "server.js");
