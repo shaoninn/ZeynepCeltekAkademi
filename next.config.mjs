@@ -38,6 +38,9 @@ const staticAssetCache = [
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  // Hostinger docs: standalone = smaller runtime footprint for SSR.
+  // start.mjs prefers .next/standalone/server.js when present.
+  output: "standalone",
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

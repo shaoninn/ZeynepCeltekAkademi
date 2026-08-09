@@ -10,8 +10,8 @@ import {
   getMenuNavProjects,
 } from "@/lib/catalog";
 
-/** ISR: 5 dk — admin kaydı revalidatePath ile anında yeniler. */
-export const revalidate = 300;
+/** ISR: 10 dk — admin kaydı revalidatePath ile anında yeniler. Hostinger EP dostu. */
+export const revalidate = 600;
 
 export default async function SiteLayout({
   children,

@@ -6,8 +6,8 @@ import {
   getFallbackCategoryBySlug,
 } from "@/lib/catalog-fallback";
 
-const CATALOG_TTL_MS = 120_000;
-const MENU_TTL_MS = 120_000;
+const CATALOG_TTL_MS = 300_000;
+const MENU_TTL_MS = 300_000;
 
 export type ProjectListItem = Awaited<
   ReturnType<typeof loadActiveProjects>

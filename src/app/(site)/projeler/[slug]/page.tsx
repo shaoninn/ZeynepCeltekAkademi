@@ -10,7 +10,7 @@ import { getContentMap } from "@/lib/site-content";
 import { EditableText } from "@/components/editor/EditableText";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 
-export const revalidate = 300;
+export const revalidate = 600;
 
 
 interface PageProps {

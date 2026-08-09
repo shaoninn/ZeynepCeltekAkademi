@@ -17,8 +17,8 @@ hPanel → **Websites → Add website → Node.js Web App**
 | Root | `./` |
 | Node | 20 veya 22 |
 | Build | `npm run build` |
-| Start | `npm run start` |
-| Output | `.next` |
+| Start | `npm run start` (Hostinger PORT için: `npm run start -- -p $PORT`) |
+| Output | `.next` (standalone `server.js` start.mjs ile) |
 | **Max Processes** | **`1`** (Deployments → Settings — zorunlu) |
 
 **Kritik:** `npm run dev` asla canlıda çalıştırmayın. Sadece `build` + `start`.  
@@ -38,7 +38,7 @@ Hostinger Business’ta **Maksimum işlem (120)** ve **Giriş işlemi / Entry (6
 | `MYSQL_HOST` | Remote MySQL hostname (`srv….hstgr.io`, `localhost` değil) |
 | `MYSQL_PORT` | `3306` |
 | `MYSQL_DATABASE` | hPanel veritabanı adı |
-| `MYSQL_POOL_SIZE` | `2` (process limiti yüksekse `1`) |
+| `MYSQL_POOL_SIZE` | `1` (zorunlu öneri; max `2`) |
 
 Remote MySQL’de kullanıcı için `%` (Any Host) izni açık olmalı.
 
@@ -72,32 +72,46 @@ ALLOW_PROD_SEED=true ADMIN_PASSWORD='GucluSifre123!' npm run db:seed
 
 ## Performans (Entry Process / Maksimum İşlem)
 
+### P0 — Hostinger platform (koddan önce)
+
+Grafikte **~106/120** çoğu zaman **3 Node sitesinin ortak kotası** + Hostinger’ın eski Next.js process spawn davranışıdır; “106 HTTP bağlantısı” değildir.
+
+1. **Her Node sitesi** (`zeynepceltekakademi`, `zeynepceltek`, `minnaguzelliksalonu`):  
+   hPanel → Website → **Deployments → Settings → Save and Redeploy**  
+   Hostinger’ın Next.js process optimizasyonu mevcut app’lere böyle uygulanır ([resmi rehber](https://www.hostinger.com/support/1583532-what-to-do-if-your-hosting-plan-limits-are-reached-in-hostinger/)).
+2. Aynı Settings’te **Max Processes = 1**
+3. Uptime/monitoring: kök `/?nocache=` yerine **`/api/health`**, aralık ≥ 5 dk
+4. Hangi site şişiriyor: diğer Node app’leri geçici kapatıp Resources grafiğine bak  
+   Ayrıntılı audit: [`HOSTINGER-PROCESS-AUDIT.md`](./HOSTINGER-PROCESS-AUDIT.md)
+
 | Önlem | Ne yapar |
 |-------|----------|
-| `MYSQL_POOL_SIZE=2` (gerekirse `1`) | Paralel MySQL bekleme ↓ |
+| `MYSQL_POOL_SIZE=1` (varsayılan) | Paralel MySQL bekleme ↓ |
 | `scripts/start.mjs` in-process Next | `npx` çocuğu yok — site başına 1 Node |
-| ISR `revalidate=300` | Pazarlama sayfalarında regenerasyon seyrek |
+| ISR `revalidate=600` | Pazarlama regenerasyonu seyrek (admin revalidatePath anında) |
 | Sitemap bellek 30 dk | Bot her hit’te 4 DB sorgusu atmaz |
 | Home ölü fetch yok | Instagram / ürün havuzu home’da yok |
 | Menü hafif sorgular | Blog/galeri menü `take` + `select` |
 | Process memory cache | Tekrar DB’ye gitmez |
 | `SiteLink` `prefetch={false}` | Hover’da MySQL fırtınası olmasın |
+| Middleware probe/scanner short-circuit | `/?nocache` + wp-scanner Node+DB’ye düşmez |
 | Boot warm (`instrumentation`) | Soğuk ilk ziyaret yumuşar |
 
 **Not:** Aynı Hostinger hesabında birden fazla Node sitesi 120 EP kotasını paylaşır. Limit doluyorsa diğer siteleri ayırın veya VPS’e geçin.
 
-**503 / uptime probe:** hPanel’de `/?nocache=…` (Guzzle) ve harici monitoring sık istek atıyorsa Entry Process kotası dolup 503 üretir. Uptime aralığını gevşetin; mümkünse hafif bir health path kullanın (kök sayfa yerine). Cache-bust parametreli sürekli probe’lardan kaçının.
+**503 / uptime probe:** hPanel’de `/?nocache=…` (Guzzle) ve harici monitoring sık istek atıyorsa Entry Process kotası dolup 503 üretir. Uptime aralığını gevşetin; mümkünse `/api/health` kullanın.
 
 ### Hostinger destek checklist (hPanel)
 
-1. Bu site: Deployments → Settings → **Max Processes = 1** → redeploy  
-2. Env: `NODE_ENV=production`, `MYSQL_POOL_SIZE=1` veya `2`  
-3. Start komutu: `npm run start` (dev değil)  
-4. Kullanılmayan Node deployment / eski preview / cron’ları durdur  
-5. Hangi site şişiriyor: diğer 2 siteyi geçici kapatıp Resources grafiğine bak  
-6. PHP sitelerde cache açık tut; gereksiz eklenti/cron azalt  
+1. **Üç site:** Deployments → Settings → **Save and Redeploy** (Next.js process optimization)  
+2. Bu site: **Max Processes = 1** → redeploy  
+3. Env: `NODE_ENV=production`, `MYSQL_POOL_SIZE=1`  
+4. Start komutu: `npm run start` (dev değil)  
+5. Kullanılmayan Node deployment / eski preview / cron’ları durdur  
+6. Hangi site şişiriyor: diğer 2 siteyi geçici kapatıp Resources grafiğine bak  
+7. PHP sitelerde cache açık tut; gereksiz eklenti/cron azalt  
 
-Kod tarafında (bu repo): in-process `start`, prefetch kapalı, ISR 300s, sitemap cache, ölü home DB yok — sonsuz polling / cluster yok.
+Kod tarafında (bu repo): in-process `start`, prefetch kapalı, ISR 300s, sitemap cache, ölü home DB yok, probe short-circuit — sonsuz polling / cluster / PM2 yok.
 
 ## Kontrol listesi
 

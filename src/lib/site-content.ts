@@ -11,7 +11,7 @@ export async function getContentMap(keys: string[]): Promise<Record<string, stri
         });
         return Object.fromEntries(rows.map((r) => [r.key, r.content]));
       },
-      { ttlMs: 60_000, skipEmpty: false }
+      { ttlMs: 180_000, skipEmpty: false }
     );
   } catch (error) {
     console.error("[content-map]", error);

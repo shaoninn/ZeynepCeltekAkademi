@@ -14,7 +14,7 @@ import { MapPin, Check, Truck } from "lucide-react";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 import { ProductBadges } from "@/components/shop/ProductBadges";
 
-export const revalidate = 300;
+export const revalidate = 600;
 
 
 interface Props {

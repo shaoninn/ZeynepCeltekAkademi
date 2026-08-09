@@ -24,8 +24,8 @@ export function resolveMysqlPoolConfig(): MysqlPoolConfig {
   const password = process.env.MYSQL_PASSWORD;
   const hasMysqlParts = Boolean(user && database && password !== undefined);
 
-  // Remote Hostinger MySQL: keep pool small — EP/process limit friendly.
-  const poolSize = Math.max(1, Number(process.env.MYSQL_POOL_SIZE || 2) || 2);
+  // Remote Hostinger MySQL: keep pool tiny — shared Max Processes / EP friendly.
+  const poolSize = Math.max(1, Number(process.env.MYSQL_POOL_SIZE || 1) || 1);
   const serializeQueries =
     process.env.MYSQL_SERIALIZE === "1" || poolSize <= 1;
 
