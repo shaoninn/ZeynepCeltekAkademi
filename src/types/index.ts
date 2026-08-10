@@ -1,5 +1,5 @@
 export interface CartItem {
-  /** Unique line key: product + ölçü/renk */
+  /** Unique line key: product + options */
   lineId: string;
   productId: string;
   slug: string;

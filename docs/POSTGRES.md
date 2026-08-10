@@ -1,6 +1,6 @@
-# PostgreSQL geçişi
+# PostgreSQL geçişi (opsiyonel)
 
-Yerel geliştirme varsayılanı SQLite’tır. Canlı / serverless için Postgres önerilir.
+Bu proje canlıda **MySQL (Hostinger)** kullanır. Aşağıdaki notlar yalnızca Postgres’e geçiş düşünülürse içindir.
 
 ## 1. Veritabanı
 
@@ -13,7 +13,7 @@ veya yönetilen Postgres (Neon, Prisma Postgres, RDS…) bağlantı dizesi alın
 `.env`:
 
 ```env
-DATABASE_URL="postgresql://dmd:dmd@localhost:5432/dmdreklam?schema=public"
+DATABASE_URL="postgresql://zca:zca@localhost:5432/zeynepceltekakademi?schema=public"
 ```
 
 ## 2. Şema
@@ -28,7 +28,7 @@ datasource db {
 
 ## 3. Client
 
-`src/lib/db.ts` içinde SQLite adapter yerine:
+`src/lib/db.ts` içinde MySQL adapter yerine:
 
 ```ts
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -55,7 +55,7 @@ npx prisma generate
 Upload’lar için `.env`:
 
 ```env
-S3_BUCKET="dmd-uploads"
+S3_BUCKET="zca-uploads"
 S3_ACCESS_KEY_ID="..."
 S3_SECRET_ACCESS_KEY="..."
 S3_ENDPOINT="https://xxxx.r2.cloudflarestorage.com"

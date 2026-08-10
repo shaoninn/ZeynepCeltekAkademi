@@ -61,7 +61,7 @@ export function OrderProductionPanel({
 
   return (
     <div className="admin-card p-5 space-y-4">
-      <h2 className="font-semibold">Üretim kartı & ödeme</h2>
+      <h2 className="font-semibold">Kayıt kartı & ödeme</h2>
       <AdminField label="İş akışı aşaması">
         <select
           className="admin-input"

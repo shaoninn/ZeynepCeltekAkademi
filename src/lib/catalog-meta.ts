@@ -3,8 +3,6 @@ import type { ProductSpecs } from "@/types";
 
 export type SpecFlags = {
   malzeme: string;
-  isikli: boolean | null;
-  mekan: "ic" | "dis" | null;
   garanti: string;
 };
 
@@ -12,18 +10,7 @@ export function parseProductSpecs(specsJson: string | null | undefined): SpecFla
   const specs = parseJsonObject<ProductSpecs>(specsJson || "{}", {});
   const malzeme = (specs.malzeme || "").trim();
   const garanti = (specs.garanti || "").trim();
-  const raw = `${specs.montaj || ""} ${specs.teslimat || ""} ${malzeme} ${specs.aciklama || ""}`.toLowerCase();
-
-  let isikli: boolean | null = null;
-  if (/ışıksız|isiksiz|ışıksız|unlit/.test(raw)) isikli = false;
-  else if (/ışıklı|isikli|led|neon|ışıklı/.test(raw) || /neon|led/.test(malzeme.toLowerCase()))
-    isikli = true;
-
-  let mekan: "ic" | "dis" | null = null;
-  if (/dış|dis mekan|outdoor|cephe/.test(raw)) mekan = "dis";
-  else if (/iç|ic mekan|indoor|ofis/.test(raw)) mekan = "ic";
-
-  return { malzeme, isikli, mekan, garanti };
+  return { malzeme, garanti };
 }
 
 export function productSeoScore(input: {
@@ -55,7 +42,7 @@ export function productSeoScore(input: {
   const specs = parseJsonObject<Record<string, string>>(input.specs || "{}", {});
   const filled = Object.values(specs).filter((v) => (v || "").trim().length > 0).length;
   if (filled >= 2) score += 20;
-  else tips.push("En az 2 özellik (malzeme, garanti…) doldurun");
+  else tips.push("En az 2 özellik (eğitim içeriği, garanti…) doldurun");
 
   return { score: Math.min(100, score), tips };
 }

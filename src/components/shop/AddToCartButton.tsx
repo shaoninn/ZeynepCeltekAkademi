@@ -11,12 +11,10 @@ interface AddToCartButtonProps {
   product: Product & { category?: { name: string } };
 }
 
+/** Akademi: ölçü/RAL yok — ProductConfigurator ile aynı mantık. */
 export function AddToCartButton({ product }: AddToCartButtonProps) {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(1);
-  const [widthCm, setWidthCm] = useState("");
-  const [heightCm, setHeightCm] = useState("");
-  const [color, setColor] = useState("");
   const [added, setAdded] = useState(false);
   const addedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -35,10 +33,8 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
         price: product.price,
         image: product.image,
         quantity,
-        categoryName: product.category?.name || "",
-        widthCm: widthCm ? Number(widthCm) : null,
-        heightCm: heightCm ? Number(heightCm) : null,
-        color: color.trim() || null,
+        categoryName: product.category?.name || "Eğitimler",
+        optionsNote: JSON.stringify({ type: "egitim-kaydi" }),
       })
     );
     setAdded(true);
@@ -48,53 +44,8 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs text-muted mb-1" htmlFor="w-cm">
-            En (cm)
-          </label>
-          <input
-            id="w-cm"
-            type="number"
-            min={1}
-            step="0.1"
-            className="admin-input"
-            placeholder="örn. 120"
-            value={widthCm}
-            onChange={(e) => setWidthCm(e.target.value)}
-          />
-        </div>
-        <div>
-          <label className="block text-xs text-muted mb-1" htmlFor="h-cm">
-            Boy (cm)
-          </label>
-          <input
-            id="h-cm"
-            type="number"
-            min={1}
-            step="0.1"
-            className="admin-input"
-            placeholder="örn. 40"
-            value={heightCm}
-            onChange={(e) => setHeightCm(e.target.value)}
-          />
-        </div>
-      </div>
-      <div>
-        <label className="block text-xs text-muted mb-1" htmlFor="color">
-          Renk / RAL
-        </label>
-        <input
-          id="color"
-          className="admin-input"
-          placeholder="örn. Siyah mat, RAL 9005"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-        />
-      </div>
-
       <div className="flex items-center gap-4">
-        <span className="text-sm text-muted">Adet:</span>
+        <span className="text-sm text-muted">Kişi:</span>
         <div className="flex items-center border border-border">
           <button
             type="button"
@@ -107,7 +58,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
           <span className="w-12 text-center font-semibold">{quantity}</span>
           <button
             type="button"
-            onClick={() => setQuantity(quantity + 1)}
+            onClick={() => setQuantity(Math.min(20, quantity + 1))}
             className="w-10 h-10 flex items-center justify-center text-muted hover:text-orange transition-colors"
             aria-label="Artır"
           >
@@ -125,12 +76,12 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
         {added ? (
           <>
             <Check size={20} />
-            Teklif Listesine Eklendi
+            Kayıt sepetine eklendi
           </>
         ) : (
           <>
             <ShoppingCart size={20} />
-            Teklif Listesine Ekle — {formatPrice(product.price * quantity)}
+            Kayıt sepetine ekle — {formatPrice(product.price * quantity)}
           </>
         )}
       </button>
@@ -143,7 +94,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
 
       {!product.inStock && (
         <p className="text-sm text-red-400 text-center">
-          Şu an teklife kapalı — iletişime geçin
+          Şu an kayda kapalı — iletişime geçin
         </p>
       )}
     </div>

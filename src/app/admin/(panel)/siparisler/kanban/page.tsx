@@ -37,8 +37,8 @@ export default async function AdminOrdersKanbanPage() {
         Sipariş Panosu (Kanban)
       </h1>
       <p className="text-sm text-[#888] mb-6">
-        Teklif / siparişleri üretim aşamalarına göre sütunlarda yönetin. İleri
-        / geri ile aşama değiştirin.
+        Kayıt / teklifleri aşamalara göre sütunlarda yönetin. İleri / geri ile
+        aşama değiştirin.
       </p>
       <OrderKanban initialOrders={initial} />
     </div>

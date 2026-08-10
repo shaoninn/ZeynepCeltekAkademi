@@ -219,8 +219,8 @@ export async function sendManufacturerBrief(order: {
     })
     .join("\n");
 
-  const subject = `[Üretim] ${order.orderNo} — ${order.name}`;
-  const text = `Yeni teklif/üretim kartı\n\n${order.orderNo}\nMüşteri: ${order.name} / ${order.phone}\nToplam: ${formatPrice(order.total)}\nNot: ${order.note || "-"}\n\nKalemler:\n${lines}`;
+  const subject = `[Kayıt] ${order.orderNo} — ${order.name}`;
+  const text = `Yeni eğitim kayıt talebi\n\n${order.orderNo}\nÖğrenci: ${order.name} / ${order.phone}\nToplam: ${formatPrice(order.total)}\nNot: ${order.note || "-"}\n\nKalemler:\n${lines}`;
   const html = `<pre style="font-family:sans-serif;white-space:pre-wrap">${text}</pre>`;
 
   return deliverMail({ to, subject, html, text });
@@ -234,8 +234,8 @@ export async function sendCrmReminder(order: {
   total: number;
 }): Promise<{ sent: boolean; reason?: string }> {
   if (!order.email) return { sent: false, reason: "no-email" };
-  const subject = `Teklifiniz bekliyor — ${order.orderNo}`;
-  const text = `Merhaba ${order.name}, ${order.orderNo} numaralı teklif talebiniz için ölçü/onay görüşmesi yapmak isteriz. Tahmini toplam: ${formatPrice(order.total)}. Telefon: ${order.phone}`;
+  const subject = `Kayıt talebiniz bekliyor — ${order.orderNo}`;
+  const text = `Merhaba ${order.name}, ${order.orderNo} numaralı eğitim kayıt talebiniz için program/onay görüşmesi yapmak isteriz. Tahmini toplam: ${formatPrice(order.total)}. Telefon: ${order.phone}`;
   const html = `<p>${text}</p><p>Zeynep Çeltek Güzellik Akademi</p>`;
   return deliverMail({ to: order.email, subject, html, text });
 }

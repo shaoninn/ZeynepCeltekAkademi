@@ -91,7 +91,7 @@ export default async function AdminOrderDetailPage({
 
       <div className="admin-card p-5 mb-6">
         <h2 className="font-semibold mb-3 text-sm uppercase tracking-wider text-[#888]">
-          Üretim süreci
+          Kayıt süreci
         </h2>
         <OrderTimeline current={order.workflow} />
       </div>

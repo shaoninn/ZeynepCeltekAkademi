@@ -64,7 +64,7 @@ export function buildAdminWhatsAppMessage(order: {
     ``,
     `Tahmini toplam: ${formatPrice(order.total)}`,
     ``,
-    `Detay ve ölçü teyidi için dönüş yapabilir misiniz?`,
+    `Detay ve program teyidi için dönüş yapabilir misiniz?`,
     `Tel: ${order.phone}`,
   ];
   return lines.join("\n");

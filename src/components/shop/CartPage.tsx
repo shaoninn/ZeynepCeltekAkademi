@@ -10,7 +10,6 @@ import {
   selectCartTotal,
   removeFromCart,
   updateQuantity,
-  updateLineOptions,
   clearCart,
 } from "@/store/cartSlice";
 import { formatPrice } from "@/lib/utils";
@@ -221,7 +220,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-xs text-orange/30 font-bold">GR</span>
+                        <span className="text-xs text-orange/30 font-bold">ZCA</span>
                       </div>
                     )}
                   </div>
@@ -238,70 +237,12 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                     <p className="text-orange font-semibold">
                       {formatPrice(item.price)}
                     </p>
-                    {item.optionsNote && (
+                    {item.optionsNote &&
+                    !item.optionsNote.includes("egitim-kaydi") ? (
                       <p className="text-[11px] text-muted break-anywhere line-clamp-3">
                         {item.optionsNote}
                       </p>
-                    )}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      <input
-                        type="number"
-                        min={1}
-                        step="0.1"
-                        inputMode="decimal"
-                        placeholder="En (cm)"
-                        className="admin-input text-sm"
-                        value={item.widthCm ?? ""}
-                        onChange={(e) =>
-                          dispatch(
-                            updateLineOptions({
-                              lineId: item.lineId,
-                              widthCm: e.target.value
-                                ? Number(e.target.value)
-                                : null,
-                              heightCm: item.heightCm,
-                              color: item.color,
-                            })
-                          )
-                        }
-                      />
-                      <input
-                        type="number"
-                        min={1}
-                        step="0.1"
-                        inputMode="decimal"
-                        placeholder="Boy (cm)"
-                        className="admin-input text-sm"
-                        value={item.heightCm ?? ""}
-                        onChange={(e) =>
-                          dispatch(
-                            updateLineOptions({
-                              lineId: item.lineId,
-                              widthCm: item.widthCm,
-                              heightCm: e.target.value
-                                ? Number(e.target.value)
-                                : null,
-                              color: item.color,
-                            })
-                          )
-                        }
-                      />
-                      <input
-                        placeholder="Renk / RAL"
-                        className="admin-input text-sm"
-                        value={item.color ?? ""}
-                        onChange={(e) =>
-                          dispatch(
-                            updateLineOptions({
-                              lineId: item.lineId,
-                              widthCm: item.widthCm,
-                              heightCm: item.heightCm,
-                              color: e.target.value || null,
-                            })
-                          )
-                        }
-                      />
-                    </div>
+                    ) : null}
                   </div>
                   <div className="flex sm:flex-col items-center sm:items-end justify-between gap-3">
                     <button

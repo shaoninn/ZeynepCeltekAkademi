@@ -187,7 +187,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
 
       <AdminField
         label="Slug (adres eki) *"
-        help="Ürünün web adresi. Örn: isikli-totem-cift-yuzlu → /urun/…. Benzersiz olmalı. Küçük harf, tire; boşluk/Türkçe karakter yok. İsim yazınca otomatik dolar."
+        help="Eğitimin web adresi. Örn: protez-tirnak-baslangic → /urun/…. Benzersiz olmalı. Küçük harf, tire; boşluk/Türkçe karakter yok. İsim yazınca otomatik dolar."
       >
         <input
           className="admin-input"
@@ -289,10 +289,10 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
       />
 
       <ImageUploadField
-        label="Gece görünümü görseli"
+        label="Alternatif görsel (opsiyonel)"
         value={nightImage}
         onChange={setNightImage}
-        help="Karttaki ay ikonu ile gece simülasyonu. Boşsa gündüz görseli karartılır."
+        help="Kartta ay ikonu ile alternatif görünüm. Boş bırakılabilir."
       />
 
       <ImageGalleryField

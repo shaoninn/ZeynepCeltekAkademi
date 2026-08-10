@@ -115,7 +115,7 @@ export default async function PublicQuotePrintPage({ params, searchParams }: Pro
         </div>
 
         <p className="text-xs text-gray-500 mt-8 print:mt-12">
-          Bu belge tahmini tekliftir. Kesin fiyat ölçü teyidi sonrası belirlenir.
+          Bu belge tahmini kayıttır. Kesin ücret program teyidi sonrası belirlenir.
         </p>
       </div>
     </div>
