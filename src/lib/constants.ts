@@ -4,25 +4,18 @@ export const SITE_OWNER = "Zeynep Çeltek";
 export const LEGAL_ENTITY_NAME =
   "ASDEKRA Eğitim Kurumu Güzellik Salonu Otomotiv İnşaat Sanayi Ticaret Limited Şirketi";
 export const SITE_TAGLINE = "Güzelliği bilimle, sanata dönüştürüyoruz.";
-export const PHONE = "0 (850) 550 35 40";
-export const PHONE_RAW = "908505503540";
+export const PHONE = "0 (534) 080 98 73";
+export const PHONE_RAW = "905340809873";
 export const PHONE_ALT = "";
 export const WHATSAPP_URL = `https://wa.me/${PHONE_RAW}`;
 export const EMAIL = "";
 export const ADDRESS =
-  "Cemalpaşa Mah. Gazipaşa Bulvarı Çelik Apartmanı Kat 4 No 7, Seyhan / Adana";
-export const LOCATION_LABEL = "Seyhan / Adana";
+  "Cemalpaşa Mahallesi, Gazipaşa Bulvarı, Adana 01120";
+export const LOCATION_LABEL = "Adana";
 /** Ana Instagram */
-export const INSTAGRAM = "https://www.instagram.com/zeynepceltek_adana/";
+export const INSTAGRAM =
+  "https://www.instagram.com/zeynepceltek_guzellik.kursu/";
 export const INSTAGRAM_ACCOUNTS = [
-  {
-    handle: "@zeynepceltek_adana",
-    href: "https://www.instagram.com/zeynepceltek_adana/",
-  },
-  {
-    handle: "@zeynepceltek_t.ozal",
-    href: "https://www.instagram.com/zeynepceltek_t.ozal/",
-  },
   {
     handle: "@zeynepceltek_guzellik.kursu",
     href: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
@@ -32,7 +25,7 @@ export const INSTAGRAM_ACCOUNTS = [
 export const GOOGLE_BUSINESS_URL = "https://share.google/URWo0MWX0f2nTAswo";
 /** Harita gömme — işletme adı + adres araması */
 export const GOOGLE_MAPS_EMBED_QUERY =
-  "Cemalpaşa Mah. Gazipaşa Bulvarı Çelik Apartmanı, Seyhan Adana";
+  "Cemalpaşa Mahallesi Gazipaşa Bulvarı, Adana 01120";
 /** Eski vitrin — yok */
 export const LEGACY_SITE_URL = "";
 export const WORK_HOURS = {

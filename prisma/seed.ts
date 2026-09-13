@@ -555,27 +555,18 @@ async function main() {
 
   await prisma.siteSetting.createMany({
     data: [
-      { key: "phone", value: "0 (850) 550 35 40" },
+      { key: "phone", value: "0 (534) 080 98 73" },
       { key: "email", value: "" },
       {
         key: "address",
-        value:
-          "Cemalpaşa Mah. Gazipaşa Bulvarı Çelik Apartmanı Kat 4 No 7, Seyhan / Adana",
+        value: "Cemalpaşa Mahallesi, Gazipaşa Bulvarı, Adana 01120",
       },
-      { key: "location_label", value: "Seyhan / Adana" },
+      { key: "location_label", value: "Adana" },
       {
         key: "instagram",
-        value: "https://www.instagram.com/zeynepceltek_adana/",
-      },
-      {
-        key: "instagram_2",
-        value: "https://www.instagram.com/zeynepceltek_t.ozal/",
-      },
-      {
-        key: "instagram_3",
         value: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
       },
-      { key: "whatsapp", value: "908505503540" },
+      { key: "whatsapp", value: "905340809873" },
       {
         key: "google_reviews_url",
         value: "https://share.google/URWo0MWX0f2nTAswo",

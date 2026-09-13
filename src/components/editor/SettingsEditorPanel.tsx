@@ -29,7 +29,7 @@ const FIELDS = [
   {
     key: "instagram",
     label: "Instagram (Adana)",
-    help: "https://www.instagram.com/zeynepceltek_adana/",
+    help: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
   },
   {
     key: "instagram_2",

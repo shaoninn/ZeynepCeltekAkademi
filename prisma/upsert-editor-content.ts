@@ -159,7 +159,7 @@ const keys: { key: string; title: string; content: string }[] = [
     key: "contact_intro",
     title: "İletişim Açıklama",
     content:
-      "Eğitim danışmanlığı, kayıt veya program seçimi hakkında sorularınız için yazın. En hızlı yanıt WhatsApp üzerinden gelir. Adres: Cemalpaşa Mah. Gazipaşa Bulvarı Çelik Apartmanı Kat 4 No 7, Seyhan / Adana · Tel: 0 (850) 550 35 40 · Google: https://share.google/URWo0MWX0f2nTAswo",
+      "Eğitim danışmanlığı, kayıt veya program seçimi hakkında sorularınız için yazın. En hızlı yanıt WhatsApp üzerinden gelir. Adres: Cemalpaşa Mahallesi, Gazipaşa Bulvarı, Adana 01120 · Tel: 0 (534) 080 98 73",
   },
   {
     key: "process_section_title",

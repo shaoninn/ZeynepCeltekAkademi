@@ -107,14 +107,14 @@ export function Hero({ title, subtitle, body, image, styles }: HeroProps) {
                   fill
                   priority
                   sizes="(max-width: 1024px) 92vw, 50vw"
-                  imgClassName="object-cover object-[center_28%] sm:object-[center_30%] lg:object-center"
+                  imgClassName="object-cover object-[center_22%] sm:object-[center_24%] lg:object-center"
                   help="Hero sağ panel — kurucu / akademi görseli"
                 />
               ) : (
                 <HeroMedia
                   src={bg}
                   alt="Zeynep Çeltek Güzellik Akademi"
-                  className="object-cover object-[center_28%] sm:object-[center_30%] lg:object-center"
+                  className="object-cover object-[center_22%] sm:object-[center_24%] lg:object-center"
                   sizes="(max-width: 1024px) 92vw, 50vw"
                 />
               )}

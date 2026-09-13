@@ -101,7 +101,7 @@ export function CategoriesGrid({
                     <img
                       src={imgSrc}
                       alt={cat.name}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="absolute inset-0 h-full w-full object-cover object-[center_32%] transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                       decoding="async"
                       sizes="(max-width: 640px) 70vw, 224px"

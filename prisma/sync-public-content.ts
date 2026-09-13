@@ -169,16 +169,10 @@ async function main() {
   console.log("[sync] Instagram…");
   await upsertSetting(
     "instagram",
-    "https://www.instagram.com/zeynepceltek_adana/"
-  );
-  await upsertSetting(
-    "instagram_2",
-    "https://www.instagram.com/zeynepceltek_t.ozal/"
-  );
-  await upsertSetting(
-    "instagram_3",
     "https://www.instagram.com/zeynepceltek_guzellik.kursu/"
   );
+  await upsertSetting("instagram_2", "");
+  await upsertSetting("instagram_3", "");
   await upsertSetting("email", "");
 
   console.log("[sync] gallery projects…");

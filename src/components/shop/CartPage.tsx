@@ -24,7 +24,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
   const [step, setStep] = useState<1 | 2>(1);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const email = "";
   const [address, setAddress] = useState("");
   const [note, setNote] = useState("");
   const [kvkkAccepted, setKvkkAccepted] = useState(false);
@@ -407,21 +407,6 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
-                  />
-                </div>
-                <div>
-                  <label
-                    className="block text-xs text-muted mb-1"
-                    htmlFor="o-email"
-                  >
-                    E-posta (özet için önerilir)
-                  </label>
-                  <input
-                    id="o-email"
-                    className="admin-input"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>

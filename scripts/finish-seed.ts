@@ -6,7 +6,7 @@ async function main() {
   // Finish incomplete seed pieces safely (upsert)
   const settings = [
     { key: "phone", value: "0 (532) 224 07 85" },
-    { key: "email", value: "info@zeynepceltekakademi.local" },
+    { key: "email", value: "" },
     { key: "address", value: "Çakırlar, Antalya" },
     { key: "instagram", value: "https://www.instagram.com/zeynepceltekakademi/" },
     { key: "whatsapp", value: "905322240785" },

@@ -35,8 +35,8 @@ async function bakeDir(relDir, fullW, smW) {
     const input = path.join(dir, f);
     const webpRel = path.join(relDir, `${base}.webp`).replace(/\\/g, "/");
     const smRel = path.join(relDir, `${base}-sm.webp`).replace(/\\/g, "/");
-    await writeWebp(input, webpRel, fullW, 75);
-    await writeWebp(input, smRel, smW, 68);
+    await writeWebp(input, webpRel, fullW, 80);
+    await writeWebp(input, smRel, smW, 72);
   }
 }
 
