@@ -31,7 +31,6 @@ interface ProductFormProps {
     price: number;
     salePrice?: number | null;
     image: string | null;
-    nightImage?: string | null;
     images: string;
     specs: string;
     sortOrder: number;
@@ -73,7 +72,6 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
   const [shortDesc, setShortDesc] = useState(initial?.shortDesc || "");
   const [description, setDescription] = useState(initial?.description || "");
   const [image, setImage] = useState(initial?.image || "");
-  const [nightImage, setNightImage] = useState(initial?.nightImage || "");
   const [gallery, setGallery] = useState(() => parseImagesJson(initial?.images));
   const [campaignEndsAt, setCampaignEndsAt] = useState(() => {
     if (!initial?.campaignEndsAt) return "";
@@ -134,7 +132,6 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
         shortDesc,
         description,
         image: trimmedImage.length > 0 ? trimmedImage : null,
-        nightImage: nightImage.trim() || null,
         images: JSON.stringify(gallery.filter(Boolean)),
         specs: JSON.stringify(specs),
         shippingLabel: shippingLabel.trim() || null,
@@ -154,7 +151,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
           method: "PUT",
           body: JSON.stringify(payload),
         });
-        setSuccess("Ürün güncellendi.");
+        setSuccess("Eğitim güncellendi.");
         router.refresh();
       } else {
         await apiJson("/api/products", {
@@ -176,7 +173,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
       {error && <AdminAlert type="error">{error}</AdminAlert>}
       {success && <AdminAlert type="success">{success}</AdminAlert>}
 
-      <AdminField label="Ürün Adı *" help="Müşterinin göreceği ürün adı.">
+      <AdminField label="Eğitim adı *" help="Öğrencinin göreceği program adı.">
         <input
           className="admin-input"
           value={name}
@@ -187,7 +184,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
 
       <AdminField
         label="Slug (adres eki) *"
-        help="Eğitimin web adresi. Örn: protez-tirnak-baslangic → /urun/…. Benzersiz olmalı. Küçük harf, tire; boşluk/Türkçe karakter yok. İsim yazınca otomatik dolar."
+        help="Eğitimin web adresi. Örn: protez-tirnak-baslangic → /egitim/…. Benzersiz olmalı. Küçük harf, tire; boşluk/Türkçe karakter yok. İsim yazınca otomatik dolar."
       >
         <input
           className="admin-input"
@@ -245,7 +242,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
       <div className="grid sm:grid-cols-2 gap-4">
         <AdminField
           label="Sıra numarası"
-          help="Listede sıralama. Küçük sayı önce gelir (0, 1, 2…). Aynı kategoride ürünleri bu sayıya göre dizer."
+          help="Listede sıralama. Küçük sayı önce gelir (0, 1, 2…). Aynı kategoride eğitimleri bu sayıya göre dizer."
         >
           <input
             className="admin-input"
@@ -255,12 +252,15 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
             onChange={(e) => setSortOrder(e.target.value)}
           />
         </AdminField>
-        <AdminField label="Kargo / teslimat etiketi" help="Kartlarda küçük satır.">
+        <AdminField
+          label="Kısa etiket (süre / kontenjan)"
+          help="Yalnız admin notu. Kartlarda gösterilmez."
+        >
           <input
             className="admin-input"
             value={shippingLabel}
             onChange={(e) => setShippingLabel(e.target.value)}
-            placeholder="örn. 3-5 iş günü"
+            placeholder="örn. Kontenjan sınırlı"
           />
         </AdminField>
       </div>
@@ -285,14 +285,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
         label="Ana görsel"
         value={image}
         onChange={setImage}
-        help="Liste ve ürün sayfasında görünen kapak fotoğrafı. Mümkünse WebP kullanın (daha hızlı)."
-      />
-
-      <ImageUploadField
-        label="Alternatif görsel (opsiyonel)"
-        value={nightImage}
-        onChange={setNightImage}
-        help="Kartta ay ikonu ile alternatif görünüm. Boş bırakılabilir."
+        help="Liste ve eğitim sayfasında görünen kapak fotoğrafı. Mümkünse WebP kullanın (daha hızlı)."
       />
 
       <ImageGalleryField
@@ -364,7 +357,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
             checked={inStock}
             onChange={(e) => setInStock(e.target.checked)}
           />
-          Stokta var
+          Kayıda açık
         </label>
         <label className="flex items-center gap-2 text-sm text-[#ccc]">
           <input
@@ -388,7 +381,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
             checked={badgeBestseller}
             onChange={(e) => setBadgeBestseller(e.target.checked)}
           />
-          Çok satan
+          Öne çıkan program
         </label>
         <label className="flex items-center gap-2 text-sm text-[#ccc]">
           <input
@@ -402,7 +395,7 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
 
       <div className="flex gap-3">
         <AdminButton type="submit" loading={loading}>
-          {isEdit ? "Güncelle" : "Ürün Ekle"}
+          {isEdit ? "Güncelle" : "Eğitimi Kaydet"}
         </AdminButton>
         <AdminButton
           variant="ghost"

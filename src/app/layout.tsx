@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Montserrat, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import { getSiteUrl, localBusinessJsonLd, siteNavigationJsonLd, webSiteJsonLd } from "@/lib/seo";
 import { Analytics } from "@/components/Analytics";
+import { CookieBanner } from "@/components/ads/CookieBanner";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -74,9 +75,9 @@ export const metadata: Metadata = {
     siteName: "Zeynep Çeltek Güzellik Akademi",
     images: [
       {
-        url: "/images/logo/logo.png",
-        width: 763,
-        height: 117,
+        url: "/images/og.jpg",
+        width: 1200,
+        height: 630,
         alt: "Zeynep Çeltek Güzellik Akademi",
       },
     ],
@@ -85,7 +86,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Zeynep Çeltek Güzellik Akademi | Adana",
     description: "Güzelliği bilimle, sanata dönüştürüyoruz.",
-    images: ["/images/logo/logo.png"],
+    images: ["/images/og.jpg"],
   },
   robots: {
     index: true,
@@ -114,6 +115,7 @@ export default function RootLayout({
           />
         ))}
         {children}
+        <CookieBanner />
         <Analytics />
       </body>
     </html>

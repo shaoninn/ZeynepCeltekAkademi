@@ -45,7 +45,7 @@ export default async function CrmPage() {
       </Link>
       <h1 className="font-display text-3xl font-bold mb-2">CRM hatırlatma</h1>
       <p className="text-sm text-[#888] mb-6">
-        72 saatten eski bekleyen teklifler. WhatsApp şablonu veya e-posta
+        72 saatten eski bekleyen kayıtlar. WhatsApp şablonu veya e-posta
         hatırlatması gönderin.
       </p>
       <CrmRemindersClient initial={initial} />

@@ -65,7 +65,7 @@ export function AboutPageView({ data }: { data: AboutPageData }) {
                   fallback={fallback}
                   alt={`Zeynep Çeltek Güzellik Akademi ${n}`}
                   aspectClass="aspect-[4/5]"
-                  imgClassName="object-cover object-center"
+                  imgClassName="object-cover object-[center_28%]"
                   className="border border-white/10 overflow-hidden bg-card rounded-2xl"
                   help={`Hakkımızda galeri görseli ${n}`}
                 />

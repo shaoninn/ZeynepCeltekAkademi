@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
-  WORKFLOW_STEPS,
+  OWNER_WORKFLOW_STEPS,
+  ownerColumnId,
   nextWorkflowId,
   prevWorkflowId,
   type WorkflowId,
@@ -30,9 +31,11 @@ export function OrderKanban({ initialOrders }: OrderKanbanProps) {
   const [orders, setOrders] = useState(initialOrders);
   const [busy, setBusy] = useState<string | null>(null);
 
-  const byWorkflow = WORKFLOW_STEPS.map((col) => ({
+  const byWorkflow = OWNER_WORKFLOW_STEPS.map((col) => ({
     ...col,
-    items: orders.filter((o) => o.workflow === col.id || (!o.workflow && col.id === "INTAKE")),
+    items: orders.filter(
+      (o) => ownerColumnId(o.workflow || "INTAKE") === col.id
+    ),
   }));
 
   async function moveOrder(id: string, workflow: WorkflowId) {
@@ -58,7 +61,7 @@ export function OrderKanban({ initialOrders }: OrderKanbanProps) {
   }
 
   return (
-    <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory md:grid md:grid-cols-3 xl:grid-cols-5 md:overflow-visible md:snap-none">
+    <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible md:snap-none">
       {byWorkflow.map((col) => (
         <div
           key={col.id}

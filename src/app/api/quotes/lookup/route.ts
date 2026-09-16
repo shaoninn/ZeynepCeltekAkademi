@@ -5,7 +5,7 @@ import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 const lookupSchema = z.object({
   phone: z.string().min(10, "Geçerli bir telefon numarası girin"),
-  orderNo: z.string().min(4, "Sipariş numarası gerekli"),
+  orderNo: z.string().min(4, "Kayıt numarası gerekli"),
 });
 
 function normalizePhone(phone: string): string {
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     if (!order || !phoneOk) {
       return NextResponse.json(
-        { error: "Bu bilgilerle eşleşen teklif bulunamadı." },
+        { error: "Bu bilgilerle eşleşen kayıt bulunamadı." },
         { status: 404 }
       );
     }

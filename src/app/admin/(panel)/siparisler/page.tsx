@@ -15,6 +15,7 @@ export default async function AdminOrdersPage() {
     name: o.name,
     phone: o.phone,
     status: o.status,
+    workflow: o.workflow,
     total: o.total,
     createdAt: o.createdAt.toISOString(),
     itemCount: o.items.length,
@@ -22,18 +23,16 @@ export default async function AdminOrdersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl font-bold mb-2">Siparişler</h1>
+      <h1 className="font-display text-3xl font-bold mb-2">Kayıtlar</h1>
       <p className="text-sm text-[#888] mb-2">
-        Ödeme henüz aktif değil. Bu kayıtlar teklif / sipariş talepleridir.
-        Tarih ve durum ile filtreleyin; eski kayıtları silerek karışıklığı
-        azaltın.
+        Ön kayıt talepleri. Tarih ve durum ile filtreleyin.
       </p>
       <p className="mb-6">
         <a
           href="/admin/siparisler/kanban"
           className="text-sm text-orange hover:underline"
         >
-          Sipariş Panosu →
+          Kayıt panosu →
         </a>
       </p>
       <OrdersClient initial={initial} />

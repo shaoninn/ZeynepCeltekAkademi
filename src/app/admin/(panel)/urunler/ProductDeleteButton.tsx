@@ -15,7 +15,7 @@ export function ProductDeleteButton({
   async function onDelete() {
     if (
       !confirm(
-        `"${name}" ürününü silmek istediğinize emin misiniz?\n\nBu işlem geri alınamaz.`
+        `"${name}" eğitimini silmek istediğinize emin misiniz?\n\nBu işlem geri alınamaz.`
       )
     ) {
       return;

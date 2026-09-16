@@ -15,6 +15,9 @@ import {
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { CartStepper } from "@/components/shop/CartStepper";
+import { trackLead } from "@/lib/ads";
+import { TrackedContactLink } from "@/components/ads/TrackedContactLink";
+import { toWebpSrc } from "@/lib/image-optimize";
 
 export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
   const dispatch = useAppDispatch();
@@ -24,8 +27,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
   const [step, setStep] = useState<1 | 2>(1);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const email = "";
-  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [kvkkAccepted, setKvkkAccepted] = useState(false);
   const [wantPayment, setWantPayment] = useState(false);
@@ -53,7 +55,6 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
         name,
         phone,
         email,
-        address,
         note,
         kvkkAccepted,
         wantPayment,
@@ -62,7 +63,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
       }),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Sipariş oluşturulamadı");
+    if (!res.ok) throw new Error(data.error || "Kayıt oluşturulamadı");
     return data as {
       order: { orderNo: string };
       emailSent?: boolean;
@@ -71,7 +72,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
 
   if (orderNo) {
     const waText = encodeURIComponent(
-      `Merhaba, ${orderNo} numaralı teklif talebimi teyit etmek istiyorum.\nAd: ${name}\nTelefon: ${phone}`
+      `Merhaba, ${orderNo} numaralı ön kayıt talebimi teyit etmek istiyorum.\nAd: ${name}\nTelefon: ${phone}`
     );
     const printUrl = `/teklif/${encodeURIComponent(orderNo)}/yazdir?phone=${encodeURIComponent(phone)}`;
     return (
@@ -79,15 +80,19 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
         <CartStepper current={3} />
         <CheckCircle size={64} className="mx-auto text-orange mb-4 mt-8" />
         <h2 className="font-display text-2xl font-bold text-white mb-2">
-          Teklif Talebiniz Alındı
+          Ön Kayıt Talebiniz Alındı
         </h2>
         <p className="text-muted mb-2">
-          Talep numaranız:{" "}
+          Kayıt numaranız:{" "}
           <span className="text-orange font-semibold">{orderNo}</span>
         </p>
         <p className="text-sm text-muted mb-2">
-          Online ödeme henüz aktif değil; kaydınız teklif talebi olarak alındı.
-          İleride havale / sanal POS buradan bağlanacak.
+          Online ödeme yoktur; kaydınız ön kayıt talebi olarak alındı.
+          Kontenjan ve takvim WhatsApp veya telefonla netleşir.
+        </p>
+        <p className="text-sm text-muted mb-4">
+          Kayıt numaranızı not alın; Kayıtlarım’da telefon ve numara ile
+          bakarsınız.
         </p>
         {emailSent && (
           <p className="text-sm text-orange mb-4">
@@ -95,35 +100,47 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
           </p>
         )}
         <div className="rounded-xl border border-border bg-card p-4 text-left text-sm text-muted mb-6 space-y-1">
-          <p className="text-white font-semibold">Ödeme durumu</p>
-          <p>Ödenmedi (teklif aşaması)</p>
+          <p className="text-white font-semibold">Kayıt durumu</p>
+          <p>Ön kayıt alındı</p>
           <p className="text-xs">
-            Onay sonrası size havale bilgisi veya güvenli ödeme linki
-            iletilecek.
+            Onay sonrası size ödeme bilgisi veya akademi kaydı iletilecek.
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
-          <a
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <TrackedContactLink
             href={`${whatsappUrl}?text=${waText}`}
+            method="whatsapp"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary justify-center"
           >
             WhatsApp ile Teyit Et
-          </a>
-          <Button href={`/odeme?orderNo=${encodeURIComponent(orderNo)}&phone=${encodeURIComponent(phone)}`} variant="outline">
-            Ödeme bilgisi
-          </Button>
-          <Button href={printUrl} variant="outline">
-            PDF / Yazdır
-          </Button>
+          </TrackedContactLink>
           <Button href="/tekliflerim" variant="outline">
-            Tekliflerim
-          </Button>
-          <Button href="/hizmetler" variant="outline">
-            Alışverişe Devam
+            Kayıtlarım
           </Button>
         </div>
+        <details className="mt-5 text-left">
+          <summary className="cursor-pointer text-sm text-muted hover:text-orange text-center">
+            Daha fazla (PDF, havale)
+          </summary>
+          <div className="mt-3 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              href={`/odeme?orderNo=${encodeURIComponent(orderNo)}&phone=${encodeURIComponent(phone)}`}
+              variant="outline"
+            >
+              Havale bilgisi
+            </Button>
+            <Button href={printUrl} variant="outline">
+              PDF / Yazdır
+            </Button>
+          </div>
+        </details>
+        <p className="mt-6">
+          <SiteLink href="/hizmetler" className="text-sm text-orange hover:underline">
+            Eğitimlere dön
+          </SiteLink>
+        </p>
       </div>
     );
   }
@@ -133,12 +150,12 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
       <div className="text-center py-16">
         <ShoppingBag size={64} className="mx-auto text-muted mb-4" />
         <h2 className="font-display text-2xl font-bold text-white mb-2">
-          Teklif Listeniz Boş
+          Kayıt Sepetiniz Boş
         </h2>
         <p className="text-muted mb-6">
-          Henüz listeye ürün eklemediniz.
+          Henüz kayıt listesine eğitim eklemediniz.
         </p>
-        <Button href="/hizmetler">Hizmetleri İncele</Button>
+        <Button href="/hizmetler">Eğitimleri İncele</Button>
       </div>
     );
   }
@@ -149,11 +166,12 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
     setError(null);
     try {
       const data = await createOrder("WEB");
+      trackLead(total);
       setOrderNo(data.order.orderNo);
       setEmailSent(Boolean(data.emailSent));
       dispatch(clearCart());
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Sipariş oluşturulamadı");
+      setError(err instanceof Error ? err.message : "Kayıt oluşturulamadı");
     } finally {
       setLoading(false);
     }
@@ -174,20 +192,12 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
       const data = await createOrder("WHATSAPP");
       const orderNoValue = data.order.orderNo;
       const waText = encodeURIComponent(
-        `Merhaba, ${orderNoValue} numaralı teklif talebim:\n\n${items
-          .map((i) => {
-            const dims = [
-              i.widthCm ? `${i.widthCm}cm` : null,
-              i.heightCm ? `${i.heightCm}cm` : null,
-              i.color || null,
-            ]
-              .filter(Boolean)
-              .join(" ");
-            return `- ${i.name} x${i.quantity}${dims ? ` (${dims})` : ""}`;
-          })
+        `Merhaba, ${orderNoValue} numaralı ön kayıt talebim:\n\n${items
+          .map((i) => `- ${i.name} x${i.quantity}`)
           .join("\n")}\n\nAd: ${name}\nTel: ${phone}\nToplam (tahmini): ${formatPrice(total)}`
       );
       dispatch(clearCart());
+      trackLead(total);
       window.open(`${whatsappUrl}?text=${waText}`, "_blank", "noopener,noreferrer");
       setOrderNo(orderNoValue);
       setEmailSent(Boolean(data.emailSent));
@@ -213,7 +223,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                   <div className="relative w-20 h-20 flex-shrink-0 bg-black rounded-lg overflow-hidden">
                     {item.image ? (
                       <Image
-                        src={item.image}
+                        src={item.image ? toWebpSrc(item.image) : item.image}
                         alt={item.name}
                         fill
                         className="object-cover"
@@ -226,7 +236,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                   </div>
                   <div className="flex-1 min-w-0 space-y-2">
                     <SiteLink
-                      href={`/urun/${item.slug}`}
+                      href={`/egitim/${item.slug}`}
                       className="text-sm font-semibold text-white hover:text-orange transition-colors"
                     >
                       {item.name}
@@ -328,25 +338,25 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
         <div className="lg:col-span-1 space-y-6">
           <div className="p-6 bg-card border border-border sticky top-24 rounded-xl">
             <h3 className="font-display text-lg font-bold text-white mb-4">
-              Teklif Özeti
+              Kayıt Özeti
             </h3>
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-sm">
-                <span className="text-muted">Ara Toplam</span>
+                <span className="text-muted">Eğitim ücreti</span>
                 <span className="text-white">{formatPrice(total)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted">Kayıt / başlangıç</span>
-                <span className="text-white">Teklif ile</span>
+                <span className="text-muted">Kayıt</span>
+                <span className="text-white">Ön kayıt</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted">Ödeme</span>
-                <span className="text-white">Onay sonrası</span>
+                <span className="text-white">WhatsApp / akademi</span>
               </div>
             </div>
             <div className="border-t border-border pt-4 mb-6">
               <div className="flex justify-between">
-                <span className="font-semibold text-white">Tahmini toplam</span>
+                <span className="font-semibold text-white">Toplam</span>
                 <span className="font-display text-xl font-bold text-orange">
                   {formatPrice(total)}
                 </span>
@@ -371,7 +381,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                   ← Listeye dön
                 </button>
                 <p className="text-xs text-muted mb-2">
-                  Teklif listesi kaydı (online ödeme yok). E-posta verirseniz özet
+                  Ön kayıt talebi (online ödeme yok). E-posta opsiyonel; verirseniz özet
                   gönderilir.
                 </p>
                 {error && (
@@ -412,15 +422,16 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                 <div>
                   <label
                     className="block text-xs text-muted mb-1"
-                    htmlFor="o-address"
+                    htmlFor="o-email"
                   >
-                    Adres (opsiyonel)
+                    E-posta (opsiyonel)
                   </label>
                   <input
-                    id="o-address"
+                    id="o-email"
+                    type="email"
                     className="admin-input"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
@@ -464,7 +475,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                 >
                   KVKK metnini
                 </SiteLink>{" "}
-                okudum, teklif iletişimi için verilerimin işlenmesini kabul
+                okudum, kayıt iletişimi için verilerimin işlenmesini kabul
                 ediyorum.
               </span>
             </label>
@@ -473,7 +484,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                   disabled={loading || !kvkkAccepted}
                   className="w-full py-3 bg-orange text-black text-center font-semibold uppercase tracking-wider hover:bg-orange-dark transition-colors disabled:opacity-50 rounded-lg"
                 >
-                  {loading ? "Kaydediliyor..." : "Teklif Talebi Oluştur"}
+                  {loading ? "Kaydediliyor..." : "Ön Kayıt Oluştur"}
                 </button>
                 <button
                   type="button"

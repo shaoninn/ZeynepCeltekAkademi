@@ -19,9 +19,17 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
+  const project = await getProjectBySlug(slug);
+  if (!project) {
+    return {
+      alternates: { canonical: `/projeler/${slug}` },
+      title: "Galeri",
+    };
+  }
   return {
     alternates: { canonical: `/projeler/${slug}` },
-    title: `${slug.replace(/-/g, " ")} | Zeynep Çeltek Güzellik Akademi`,
+    title: project.title,
+    description: project.description || `${project.title} — akademi galerisi.`,
   };
 }
 
@@ -129,9 +137,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                   {project.category.name}{" "}
                   <EditableText
                     contentKey="project_products_suffix"
-                    value={map.project_products_suffix || "Ürünleri"}
+                    value={map.project_products_suffix || "Eğitimleri"}
                     as="span"
-                    help="Kategori CTA son eki (örn. Ürünleri)"
+                    help="Kategori CTA son eki (örn. Eğitimleri)"
                   />
                   <ArrowRight size={16} />
                 </Button>
@@ -139,9 +147,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <Button href="/iletisim" variant="outline">
                 <EditableText
                   contentKey="project_quote_cta"
-                  value={map.project_quote_cta || "Benzer Proje Teklifi Al"}
+                  value={map.project_quote_cta || "Danışmanlık / kayıt için yazın"}
                   as="span"
-                  help="Proje detay teklif butonu"
+                  help="Galeri detay kayıt butonu"
                 />
               </Button>
             </div>
@@ -149,9 +157,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <SiteLink href="/projeler" className="text-orange hover:underline">
                 <EditableText
                   contentKey="project_back_link"
-                  value={map.project_back_link || "← Tüm projelere dön"}
+                  value={map.project_back_link || "← Tüm galeriye dön"}
                   as="span"
-                  help="Projelere dönüş linki"
+                  help="Galeriye dönüş linki"
                 />
               </SiteLink>
             </p>

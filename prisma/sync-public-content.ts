@@ -13,6 +13,7 @@ import { resolveMysqlPoolConfig } from "../src/lib/db-url";
 import { CATEGORIES } from "../src/lib/constants";
 import { COURSES } from "./courses-data";
 import { projectData } from "./projects-data";
+import { BLOGS } from "./blog-data";
 
 const cfg = resolveMysqlPoolConfig();
 const adapter = new PrismaMariaDb({
@@ -29,46 +30,6 @@ const MISSION =
   "Güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmek; canlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak.";
 const VISION =
   "Adana ve çevresinde güzellik eğitiminde referans akademi olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamak.";
-
-const BLOGS = [
-  {
-    title: "Güzellik Uzmanlığına İlk Adım",
-    slug: "guzellik-uzmanligina-ilk-adim",
-    excerpt:
-      "Uygulamalı eğitim ve belgelendirme ile sektöre nasıl hazırlanırsınız?",
-    image: "/images/blog/blog-1.webp",
-    content: `<p>Güzellik sektöründe kalıcı bir kariyer için doğru eğitim modeli kritiktir. Canlı manken üzerinde birebir uygulama, teoriyi sahaya taşır.</p>
-<p>Zeynep Çeltek Güzellik Akademi’de programlar MEB onaylı belge süreçleri ve uluslararası sertifika seçenekleriyle desteklenir. Kısa atölyelerden güzellik uzmanlığına uzanan yol haritanızı birlikte planlarız.</p>
-<p>İlk adım için ücretsiz danışmanlık alın; size uygun programı ve kontenjanı birlikte netleştirelim.</p>`,
-  },
-  {
-    title: "Protez Tırnak Eğitiminde Neler Öğrenilir?",
-    slug: "protez-tirnak-egitiminde-neler-ogrenilir",
-    excerpt: "3 haftalık müfredat: teori, manikür, nail art ve şablon tırnak.",
-    image: "/images/blog/blog-2.webp",
-    content: `<p>Protez tırnak eğitiminde kuru manikür, kalıcı oje, nail art, tips ve şablon tırnak teknikleri canlı manken üzerinde işlenir.</p>
-<p>Haftanın iki günü, 10:00–17:00 arasında yoğun uygulama yapılır. Eğitim sonunda MEB onaylı belge için sınav süreci vardır.</p>
-<p>Detaylı içerik ve güncel kontenjan için Eğitimler sayfasından Protez Tırnak programına göz atın.</p>`,
-  },
-  {
-    title: "Kirpik Lifting ve Kaş Laminasyon: Bir Günde Uzmanlaşın",
-    slug: "kirpik-lifting-kas-laminasyon-bir-gunde",
-    excerpt:
-      "Blok ders modeliyle aynı gün canlı manken uygulaması ve sertifika.",
-    image: "/images/courses/kirpik-lifting-kas-laminasyon.webp",
-    content: `<p>Kirpik lifting ve kaş laminasyon, salonlarda en çok talep gören hızlı uygulamalardandır. Akademimizde bu eğitim blok ders olarak, bir günde 10:00–17:00 arasında tamamlanır.</p>
-<p>Canlı manken üzerinde eğitmen eşliğinde ilk işleminizi uygulayıp sertifikanızı alırsınız. Kısa sürede mesleğe adım atmak isteyenler için ideal bir programdır.</p>`,
-  },
-  {
-    title: "Kalıcı Makyaj Eğitimi Süreci",
-    slug: "kalici-makyaj-egitimi-sureci",
-    excerpt:
-      "2,5–3 aylık programda microblading’den dudak tekniklerine uzanan yolculuk.",
-    image: "/images/blog/blog-3.webp",
-    content: `<p>Kalıcı makyaj eğitiminde teori, microblading, altın oran, shading, eyeliner ve dudak renklendirme uygulamaları birebir yapılır.</p>
-<p>Program Pazartesi günleri 10:00–17:00 arasında ilerler; MEB onaylı belge için sınav süreci vardır. Hijyen, cihaz kullanımı ve müşteri iletişimi müfredatın ayrılmaz parçasıdır.</p>`,
-  },
-];
 
 async function upsertContent(key: string, title: string, content: string) {
   await prisma.siteContent.upsert({
@@ -126,9 +87,9 @@ async function main() {
         image: course.image,
         images: JSON.stringify([course.image]),
         specs: JSON.stringify({
-          duration: course.duration,
-          schedule: course.schedule,
-          certificate: course.certificate,
+          montaj: course.duration,
+          teslimat: course.schedule,
+          garanti: course.certificate,
         }),
         categoryId: category.id,
         sortOrder: course.sortOrder,
@@ -144,9 +105,9 @@ async function main() {
         image: course.image,
         images: JSON.stringify([course.image]),
         specs: JSON.stringify({
-          duration: course.duration,
-          schedule: course.schedule,
-          certificate: course.certificate,
+          montaj: course.duration,
+          teslimat: course.schedule,
+          garanti: course.certificate,
         }),
         categoryId: category.id,
         sortOrder: course.sortOrder,
@@ -228,6 +189,27 @@ async function main() {
         publishedAt: new Date(),
       },
     });
+  }
+
+  console.log("[sync] stats + feature bar…");
+  const STAT_KEYS = [
+    ["stat_1_value", "İstatistik 1", "8+"],
+    ["stat_1_label", "İstatistik 1 Etiket", "Eğitim Programı"],
+    ["stat_2_value", "İstatistik 2", "7+"],
+    ["stat_2_label", "İstatistik 2 Etiket", "Yıl Tecrübe"],
+    ["stat_3_value", "İstatistik 3", "Birebir"],
+    ["stat_3_label", "İstatistik 3 Etiket", "Uygulama"],
+    ["stat_4_value", "İstatistik 4", "MEB"],
+    ["stat_4_label", "İstatistik 4 Etiket", "Belge"],
+    ["feature_bar_4_title", "Özellik 4", "Eğitim Danışmanlığı"],
+    [
+      "feature_bar_4_desc",
+      "Özellik 4 Açıklama",
+      "Mesai saatlerinde kayıt ve program rehberliği.",
+    ],
+  ] as const;
+  for (const [key, title, content] of STAT_KEYS) {
+    await upsertContent(key, title, content);
   }
 
   console.log("[sync] done.");

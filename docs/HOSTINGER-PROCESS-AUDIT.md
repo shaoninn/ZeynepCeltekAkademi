@@ -7,17 +7,17 @@ Kaynaklar:
 - [hostinger/deploy-nextjs](https://github.com/hostinger/deploy-nextjs) (`npm run start -- -p $PORT`)
 
 Metrik: hesap geneli ~106/120 “Maksimum İşlem” = PHP + PHP olmayan (**tek site HTTP sayısı değil**).  
-Siteler: `zeynepceltekakademi.com`, `zeynepceltek.com`, `minnaguzelliksalonu.com.tr` **aynı kotayı paylaşır**.
+Aynı Hostinger hesabındaki diğer Node siteleri **aynı kotayı paylaşır**.
 
 ## P0 — Panel (koddan önce / ile birlikte)
 
 | Adım | Aksiyon |
 |------|---------|
-| 1 | **3 site** Deployments → Settings → **Save and Redeploy** (Next.js process optimization) |
+| 1 | Bu site: Deployments → Settings → **Save and Redeploy** (Next.js process optimization) |
 | 2 | Max Processes = **1** |
 | 3 | Env: `.env` içeriğini içe aktar (`DATABASE_URL` yok) |
 | 4 | Uptime: **`/api/health`** (kök `/?nocache` değil) |
-| 5 | İzolasyon: diğer Node app’leri kapatıp grafiği izle |
+| 5 | İzolasyon: aynı hesaptaki diğer Node app’leri kapatıp grafiği izle |
 
 ## Kod denetimi (checklist)
 
@@ -43,7 +43,7 @@ Prisma, admin, JWT middleware, sepet/ödeme, `/duzenle`, ISR, API routes.
 
 ## Doğrulama
 
-1. Redeploy 3 site + Max Processes=1  
+1. Redeploy + Max Processes=1  
 2. 30–60 dk Max Processes ortalaması  
 3. Runtime Logs: restart / OOM / DB timeout  
 4. `GET /api/health` → `{"database":"up"}`  

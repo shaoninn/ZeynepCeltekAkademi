@@ -5,6 +5,7 @@ import { hashPassword } from "../src/lib/auth";
 import { CATEGORIES } from "../src/lib/constants";
 import { projectData } from "./projects-data";
 import { COURSES } from "./courses-data";
+import { BLOGS } from "./blog-data";
 import { resolveMysqlDatabaseUrl } from "../src/lib/db-url";
 
 if (
@@ -160,25 +161,25 @@ const siteContent = [
   {
     key: "feature_bar_4_title",
     title: "Özellik 4",
-    content: "7/24 Destek & Danışmanlık",
+    content: "Eğitim Danışmanlığı",
   },
   {
     key: "feature_bar_4_desc",
     title: "Özellik 4 Açıklama",
-    content: "Eğitim öncesi ve sonrası rehberlik.",
+    content: "Mesai saatlerinde kayıt ve program rehberliği.",
   },
-  { key: "stat_1_value", title: "İstatistik 1", content: "114K+" },
-  { key: "stat_1_label", title: "İstatistik 1 Etiket", content: "Mutlu Öğrenci" },
-  { key: "stat_2_value", title: "İstatistik 2", content: "60+" },
-  { key: "stat_2_label", title: "İstatistik 2 Etiket", content: "Uzman Eğitmen" },
-  { key: "stat_3_value", title: "İstatistik 3", content: "30+" },
+  { key: "stat_1_value", title: "İstatistik 1", content: "8+" },
+  { key: "stat_1_label", title: "İstatistik 1 Etiket", content: "Eğitim Programı" },
+  { key: "stat_2_value", title: "İstatistik 2", content: "7+" },
+  { key: "stat_2_label", title: "İstatistik 2 Etiket", content: "Yıl Tecrübe" },
+  { key: "stat_3_value", title: "İstatistik 3", content: "Birebir" },
   {
     key: "stat_3_label",
     title: "İstatistik 3 Etiket",
-    content: "Eğitim Programı",
+    content: "Uygulama",
   },
-  { key: "stat_4_value", title: "İstatistik 4", content: "7" },
-  { key: "stat_4_label", title: "İstatistik 4 Etiket", content: "Yıl Tecrübe" },
+  { key: "stat_4_value", title: "İstatistik 4", content: "MEB" },
+  { key: "stat_4_label", title: "İstatistik 4 Etiket", content: "Belge" },
   {
     key: "stats_script",
     title: "İstatistik Script",
@@ -580,51 +581,15 @@ async function main() {
   });
 
   await prisma.blogPost.createMany({
-    data: [
-      {
-        title: "Güzellik Uzmanlığına İlk Adım",
-        slug: "guzellik-uzmanligina-ilk-adim",
-        excerpt:
-          "Uygulamalı eğitim ve belgelendirme ile sektöre nasıl hazırlanırsınız?",
-        content:
-          "<p>Güzellik sektöründe kalıcı bir kariyer için doğru eğitim modeli kritiktir. Canlı manken üzerinde birebir uygulama, teoriyi sahaya taşır.</p><p>Zeynep Çeltek Güzellik Akademi'de programlar MEB onaylı belge süreçleriyle desteklenir. Ücretsiz danışmanlık için iletişime geçin.</p>",
-        image: "/images/blog/blog-1.webp",
-        isPublished: true,
-        publishedAt: new Date(),
-      },
-      {
-        title: "Protez Tırnak Eğitiminde Neler Öğrenilir?",
-        slug: "protez-tirnak-egitiminde-neler-ogrenilir",
-        excerpt: "3 haftalık müfredat: teori, manikür, nail art ve şablon tırnak.",
-        content:
-          "<p>Protez tırnak eğitiminde kuru manikür, kalıcı oje, nail art, tips ve şablon tırnak teknikleri canlı manken üzerinde işlenir.</p><p>Eğitim sonunda MEB onaylı belge için sınav yapılır.</p>",
-        image: "/images/blog/blog-2.webp",
-        isPublished: true,
-        publishedAt: new Date(),
-      },
-      {
-        title: "Kirpik Lifting ve Kaş Laminasyon: Bir Günde Uzmanlaşın",
-        slug: "kirpik-lifting-kas-laminasyon-bir-gunde",
-        excerpt:
-          "Blok ders modeliyle aynı gün canlı manken uygulaması ve sertifika.",
-        content:
-          "<p>Kirpik lifting ve kaş laminasyon eğitimi bir günde 10:00–17:00 arasında tamamlanır. Canlı manken üzerinde ilk işleminizi uygulayıp sertifikanızı alırsınız.</p>",
-        image: "/images/courses/kirpik-lifting-kas-laminasyon.webp",
-        isPublished: true,
-        publishedAt: new Date(),
-      },
-      {
-        title: "Kalıcı Makyaj Eğitimi Süreci",
-        slug: "kalici-makyaj-egitimi-sureci",
-        excerpt:
-          "2,5–3 aylık programda microblading'den dudak tekniklerine uzanan yolculuk.",
-        content:
-          "<p>Kalıcı makyaj eğitiminde teori, microblading, altın oran, shading, eyeliner ve dudak renklendirme uygulamaları birebir yapılır. MEB onaylı belge için sınav süreci vardır.</p>",
-        image: "/images/blog/blog-3.webp",
-        isPublished: true,
-        publishedAt: new Date(),
-      },
-    ],
+    data: BLOGS.map((post, i) => ({
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      content: post.content,
+      image: post.image,
+      isPublished: true,
+      publishedAt: new Date(Date.now() - i * 86_400_000),
+    })),
   });
 
   console.log("Seed completed — 8 eğitim programı yüklendi.");

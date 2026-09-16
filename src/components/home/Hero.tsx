@@ -7,6 +7,9 @@ import { useEditor } from "@/components/editor/EditorProvider";
 import { HeroMedia } from "@/components/home/HeroMedia";
 import { SocialRail } from "@/components/home/SocialRail";
 import { SiteLink } from "@/components/ui/SiteLink";
+import { TrackedContactLink } from "@/components/ads/TrackedContactLink";
+import { WhatsAppIcon } from "@/components/brand/WhatsAppIcon";
+import { WHATSAPP_URL } from "@/lib/constants";
 
 interface HeroProps {
   title: string;
@@ -14,15 +17,26 @@ interface HeroProps {
   body?: string;
   image?: string;
   styles?: Record<string, string>;
+  whatsappUrl?: string;
 }
 
 export const DEFAULT_HERO_IMAGE = "/images/hero/hero-academy.webp";
 const DEFAULT_BODY =
   "Uluslararası standartlarda uygulamalı eğitimler; canlı manken üzerinde birebir pratik ve belgelendirme ile kariyerinize sağlam temel.";
 
-export function Hero({ title, subtitle, body, image, styles }: HeroProps) {
+export function Hero({
+  title,
+  subtitle,
+  body,
+  image,
+  styles,
+  whatsappUrl = WHATSAPP_URL,
+}: HeroProps) {
   const { enabled } = useEditor();
   const bg = image || DEFAULT_HERO_IMAGE;
+  const waHref = `${whatsappUrl}?text=${encodeURIComponent(
+    "Merhaba, eğitimler hakkında bilgi ve kayıt istiyorum."
+  )}`;
 
   const commaIdx = title.indexOf(",");
   const before =
@@ -85,14 +99,24 @@ export function Hero({ title, subtitle, body, image, styles }: HeroProps) {
               textStyle={styles?.hero_body}
             />
 
-            <div className="animate-hero-delay-2">
+            <div className="animate-hero-delay-2 flex flex-wrap gap-3">
               <SiteLink
-                href="/hakkimizda"
-                className="inline-flex items-center gap-2.5 min-h-11 rounded-full border border-orange/70 px-6 py-3.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-orange hover:bg-orange hover:text-black transition-colors"
+                href="/hizmetler"
+                className="inline-flex items-center gap-2.5 min-h-11 rounded-full bg-orange text-black px-6 py-3.5 text-[11px] font-semibold tracking-[0.18em] uppercase hover:bg-orange-dark transition-colors"
               >
-                Akademiyi Keşfet
+                Eğitimleri İncele
                 <ArrowRight size={16} />
               </SiteLink>
+              <TrackedContactLink
+                href={waHref}
+                method="whatsapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 min-h-11 rounded-full border border-[#25D366]/70 px-6 py-3.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-[#25D366] hover:bg-[#25D366] hover:text-black transition-colors"
+              >
+                <WhatsAppIcon size={16} />
+                WhatsApp
+              </TrackedContactLink>
             </div>
           </div>
 

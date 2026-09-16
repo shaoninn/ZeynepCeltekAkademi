@@ -5,7 +5,7 @@ import { ShoppingCart, Check, Minus, Plus } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cartSlice";
 import { formatPrice } from "@/lib/utils";
-import { WishlistButton } from "@/components/shop/WishlistButton";
+import { trackAddToCart } from "@/lib/ads";
 import type { Product } from "@/types";
 
 type ConfigProduct = Product & {
@@ -51,6 +51,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         optionsNote: JSON.stringify({ type: "egitim-kaydi" }),
       })
     );
+    trackAddToCart({ id: product.id, name: product.name, price: unitPrice });
     setAdded(true);
     if (addedTimer.current) clearTimeout(addedTimer.current);
     addedTimer.current = setTimeout(() => setAdded(false), 1800);
@@ -67,7 +68,6 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
             {formatPrice(unitPrice)}
           </p>
         </div>
-        <WishlistButton productId={product.id} />
       </div>
 
       <div className="flex items-center gap-3">
@@ -101,7 +101,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         {added ? (
           <>
             <Check size={18} />
-            Sepete eklendi
+            Listeye eklendi
           </>
         ) : (
           <>

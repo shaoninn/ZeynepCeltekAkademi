@@ -5,8 +5,11 @@ import Image from "next/image";
 import { SiteLink } from "@/components/ui/SiteLink";
 import { ArrowRight, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { parseProductSpecs } from "@/lib/catalog-meta";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cartSlice";
+import { trackAddToCart } from "@/lib/ads";
+import { toWebpSrc, toWebpSrcMobile } from "@/lib/image-optimize";
 import { EditableText } from "@/components/editor/EditableText";
 import type { Product } from "@/types";
 
@@ -39,11 +42,11 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
           <EditableText
             contentKey="featured_products_title"
-            value={title || "En Çok Tercih Edilen Ürünler"}
+            value={title || "Öne çıkan eğitim programları"}
             as="h2"
             block
             className="font-display text-2xl sm:text-3xl font-bold text-white"
-            help="Öne çıkan ürünler başlığı"
+            help="Öne çıkan eğitimler başlığı"
           />
           <div className="flex items-center gap-3">
             <div className="flex gap-2">
@@ -51,7 +54,7 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
                 type="button"
                 onClick={() => scrollByCard(-1)}
                 className="w-10 h-10 rounded-lg flex items-center justify-center border border-border text-white hover:border-orange hover:text-orange transition-colors"
-                aria-label="Önceki ürünler"
+                aria-label="Önceki eğitimler"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -59,7 +62,7 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
                 type="button"
                 onClick={() => scrollByCard(1)}
                 className="w-10 h-10 rounded-lg flex items-center justify-center border border-border text-white hover:border-orange hover:text-orange transition-colors"
-                aria-label="Sonraki ürünler"
+                aria-label="Sonraki eğitimler"
               >
                 <ChevronRight size={18} />
               </button>
@@ -68,7 +71,7 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
               href="/hizmetler"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-orange hover:text-orange-dark transition-colors"
             >
-              Tüm Ürünleri Gör
+              Tüm Eğitimleri Gör
               <ArrowRight size={16} />
             </SiteLink>
           </div>
@@ -85,10 +88,10 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
               data-product-card
               className="snap-start shrink-0 w-[72vw] max-w-[280px] sm:w-64 rounded-xl bg-card border border-border overflow-hidden flex flex-col"
             >
-              <SiteLink href={`/urun/${product.slug}`} className="relative aspect-[4/3] bg-black block">
+              <SiteLink href={`/egitim/${product.slug}`} className="relative aspect-[4/3] bg-black block">
                 {product.image ? (
                   <Image
-                    src={product.image}
+                    src={toWebpSrcMobile(product.image) || toWebpSrc(product.image)}
                     alt={product.name}
                     fill
                     className="object-cover"
@@ -104,7 +107,7 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
                 )}
               </SiteLink>
               <div className="p-4 flex flex-col flex-1 gap-2">
-                <SiteLink href={`/urun/${product.slug}`}>
+                <SiteLink href={`/egitim/${product.slug}`}>
                   <h3 className="font-display text-base font-bold text-white hover:text-orange transition-colors">
                     {product.name}
                   </h3>
@@ -112,13 +115,17 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
                 {product.category && (
                   <p className="text-xs text-muted">{product.category.name}</p>
                 )}
+                {parseProductSpecs(product.specs).montaj ? (
+                  <p className="text-xs text-orange">
+                    {parseProductSpecs(product.specs).montaj}
+                  </p>
+                ) : null}
                 <p className="font-display text-lg font-bold text-orange mt-auto">
                   {formatPrice(product.price)}
-                  <span className="text-xs font-medium text-muted ml-1">/ mt</span>
                 </p>
                 <button
                   type="button"
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       addToCart({
                         productId: product.id,
@@ -132,12 +139,17 @@ export function FeaturedProducts({ products, title }: FeaturedProductsProps) {
                         heightCm: null,
                         color: null,
                       })
-                    )
-                  }
-                  className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-lg bg-orange text-black text-xs font-bold uppercase tracking-wider py-2.5 hover:bg-orange-dark transition-colors"
+                    );
+                    trackAddToCart({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                    });
+                  }}
+                  className="mt-1 w-full min-h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-orange text-black text-xs font-bold uppercase tracking-wider py-2.5 hover:bg-orange-dark transition-colors"
                 >
                   <ShoppingCart size={14} />
-                  Sepete Ekle
+                  Kayıt sepetine
                 </button>
               </div>
             </article>

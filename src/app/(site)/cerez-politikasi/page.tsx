@@ -26,18 +26,22 @@ export default function CookiePolicyPage() {
           çerezler.
         </li>
         <li>
-          <strong>Yerel depolama (localStorage):</strong> Teklif listeniz
+          <strong>Yerel depolama (localStorage):</strong> Kayıt listeniz
           (sepet) tarayıcınızda saklanır; sunucuya otomatik gönderilmez.
         </li>
         <li>
-          <strong>Analitik (opsiyonel):</strong> Google Analytics veya benzeri
-          araçlar etkinse anonim kullanım istatistikleri toplanabilir.
+          <strong>Analitik (opsiyonel):</strong> Google Analytics, onayınızla
+          kullanım istatistikleri toplanabilir.
+        </li>
+        <li>
+          <strong>Pazarlama (opsiyonel):</strong> Google Ads ve Meta Pixel,
+          reklam dönüşümlerini ölçmek için yalnızca onayınızla yüklenir.
         </li>
       </ul>
       <h2>Yönetim</h2>
       <p>
         Tarayıcı ayarlarından çerezleri silebilir veya engelleyebilirsiniz.
-        Engelleme bazı özelliklerin (ör. teklif listesi) çalışmasını
+        Engelleme bazı özelliklerin (ör. kayıt sepeti) çalışmasını
         etkileyebilir.
       </p>
       <h2>İletişim</h2>

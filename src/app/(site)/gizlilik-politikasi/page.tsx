@@ -3,7 +3,7 @@ import { COMPANY } from "@/lib/legal";
 
 export const metadata = {
   alternates: { canonical: "/gizlilik-politikasi" },
-  title: "Gizlilik Politikası | Zeynep Çeltek Güzellik Akademi",
+  title: "Gizlilik Politikası",
 };
 
 export default function PrivacyPage() {

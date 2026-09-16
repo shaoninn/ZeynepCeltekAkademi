@@ -65,7 +65,7 @@ export default function TekliflerimPage() {
       });
       const data = (await res.json()) as LookupResult & { error?: string };
       if (!res.ok) {
-        setError(data.error || "Teklif bulunamadı.");
+        setError(data.error || "Kayıt bulunamadı.");
         return;
       }
       setResult(data);
@@ -119,8 +119,8 @@ export default function TekliflerimPage() {
           Kayıtlarım
         </h1>
         <p className="text-muted text-sm mb-8">
-          Kayıt numaranız ve telefon numaranız ile teklif, fatura ve eğitim
-          randevu durumunuzu yönetin.
+          Kayıt numaranız ve telefon numaranız ile ön kayıt özeti, fatura
+          taslağı ve eğitim randevu durumunuzu yönetin.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4 admin-card p-6">
@@ -139,7 +139,7 @@ export default function TekliflerimPage() {
           </div>
           <div>
             <label className="block text-xs text-muted mb-1" htmlFor="lookup-order">
-              Sipariş / teklif no
+              Kayıt no
             </label>
             <input
               id="lookup-order"
@@ -194,7 +194,7 @@ export default function TekliflerimPage() {
                 href={`/teklif/${encodeURIComponent(result.orderNo)}/yazdir?phone=${encodeURIComponent(phone)}`}
                 className="text-xs px-3 py-2 border border-border rounded-lg text-orange hover:border-orange"
               >
-                Teklif PDF / Yazdır
+                Kayıt özeti PDF
               </SiteLink>
               <SiteLink
                 href={`/teklif/${encodeURIComponent(result.orderNo)}/fatura?phone=${encodeURIComponent(phone)}`}
@@ -221,21 +221,10 @@ export default function TekliflerimPage() {
               <h3 className="text-sm font-semibold text-white mb-3">Kalemler</h3>
               <ul className="space-y-2 text-sm">
                 {result.items.map((item, i) => {
-                  const dims = [
-                    item.widthCm != null
-                      ? `${item.widthCm}×${item.heightCm ?? "?"} cm`
-                      : null,
-                    item.color || null,
-                  ]
-                    .filter(Boolean)
-                    .join(" · ");
                   return (
                     <li key={i} className="flex justify-between gap-4">
                       <span>
                         {item.productName} × {item.quantity}
-                        {dims && (
-                          <span className="block text-xs text-muted">{dims}</span>
-                        )}
                       </span>
                       <span className="text-orange shrink-0">
                         {formatPrice(item.lineTotal)}

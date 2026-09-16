@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiJson } from "@/components/admin/AdminForm";
 
@@ -16,6 +17,7 @@ interface Msg {
 
 export function MessagesClient({ initial }: { initial: Msg[] }) {
   const router = useRouter();
+  const [filter, setFilter] = useState<"unread" | "all">("unread");
 
   async function markRead(id: string, isRead: boolean) {
     await apiJson("/api/messages", {
@@ -31,12 +33,42 @@ export function MessagesClient({ initial }: { initial: Msg[] }) {
     router.refresh();
   }
 
+  const visible =
+    filter === "unread" ? initial.filter((m) => !m.isRead) : initial;
+  const unreadCount = initial.filter((m) => !m.isRead).length;
+
   return (
     <div className="space-y-4">
-      {initial.length === 0 && (
-        <p className="text-[#666]">Henüz mesaj yok.</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => setFilter("unread")}
+          className={`text-xs px-3 py-2 rounded-lg border min-h-11 ${
+            filter === "unread"
+              ? "border-orange text-orange"
+              : "border-[#333] text-[#888]"
+          }`}
+        >
+          Okunmadı ({unreadCount})
+        </button>
+        <button
+          type="button"
+          onClick={() => setFilter("all")}
+          className={`text-xs px-3 py-2 rounded-lg border min-h-11 ${
+            filter === "all"
+              ? "border-orange text-orange"
+              : "border-[#333] text-[#888]"
+          }`}
+        >
+          Tümü ({initial.length})
+        </button>
+      </div>
+      {visible.length === 0 && (
+        <p className="text-[#666]">
+          {filter === "unread" ? "Okunmamış mesaj yok." : "Henüz mesaj yok."}
+        </p>
       )}
-      {initial.map((m) => (
+      {visible.map((m) => (
         <div
           key={m.id}
           className={`admin-card p-5 ${m.isRead ? "opacity-70" : "border-orange/30"}`}
@@ -76,6 +108,16 @@ export function MessagesClient({ initial }: { initial: Msg[] }) {
             <p className="text-sm text-[#aaa] mb-1">Konu: {m.subject}</p>
           )}
           <p className="text-sm text-[#ccc] whitespace-pre-wrap">{m.message}</p>
+          {m.phone.replace(/\D/g, "").length >= 10 ? (
+            <a
+              href={`https://wa.me/${m.phone.replace(/\D/g, "").replace(/^0/, "90")}?text=${encodeURIComponent(`Merhaba ${m.name}, Zeynep Çeltek Güzellik Akademi’den yazıyoruz.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex mt-3 min-h-11 items-center text-sm text-[#25D366] hover:underline"
+            >
+              WhatsApp’ta yanıtla
+            </a>
+          ) : null}
         </div>
       ))}
     </div>

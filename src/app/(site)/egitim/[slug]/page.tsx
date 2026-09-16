@@ -8,11 +8,17 @@ import { ProductConfigurator } from "@/components/shop/ProductConfigurator";
 import { SimilarProducts } from "@/components/shop/SimilarProducts";
 import { TrackProductView } from "@/components/shop/TrackProductView";
 import { ProjectGallery } from "@/components/projects/ProjectGallery";
-import { productJsonLd } from "@/lib/seo";
+import { productJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import type { ProductSpecs } from "@/types";
-import { MapPin, Check, Truck } from "lucide-react";
+import { MapPin, Check } from "lucide-react";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 import { ProductBadges } from "@/components/shop/ProductBadges";
+import { CourseStickyBar } from "@/components/shop/CourseStickyBar";
+import { getSiteSettings } from "@/lib/site";
+import { WHATSAPP_URL } from "@/lib/constants";
+import { parseProductSpecs, SPEC_FIELD_LABELS } from "@/lib/catalog-meta";
+import { WhatsAppIcon } from "@/components/brand/WhatsAppIcon";
+import { TrackedContactLink } from "@/components/ads/TrackedContactLink";
 
 export const revalidate = 600;
 
@@ -38,29 +44,36 @@ export async function generateMetadata({ params }: Props) {
   const product = await getProductBySlug(slug);
   if (!product) {
     return {
-      alternates: { canonical: `/urun/${slug}` },
-      title: "Ürün Bulunamadı",
+      alternates: { canonical: `/egitim/${slug}` },
+      title: "Eğitim bulunamadı",
     };
   }
+  const description =
+    product.shortDesc ||
+    `Adana’da ${product.name}. Uygulamalı program, belge ve kayıt.`;
   return {
-    alternates: { canonical: `/urun/${slug}` },
+    alternates: { canonical: `/egitim/${slug}` },
     title: product.name,
-    description: product.shortDesc || product.description || undefined,
+    description,
     openGraph: {
       title: product.name,
-      description: product.shortDesc || undefined,
-      images: product.image ? [product.image] : undefined,
+      description,
+      images: product.image ? [product.image] : ["/images/og.jpg"],
     },
   };
 }
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const [product, settings] = await Promise.all([
+    getProductBySlug(slug),
+    getSiteSettings(),
+  ]);
 
   if (!product || !product.isActive) notFound();
 
   const specs = parseJsonObject<ProductSpecs>(product.specs, {});
+  const specFlags = parseProductSpecs(product.specs);
   const gallery = parseJsonArray<string>(product.images);
   const images =
     gallery.length > 0
@@ -95,13 +108,47 @@ export default async function ProductPage({ params }: Props) {
     { ttlMs: 120_000, skipEmpty: true }
   );
 
+  const waUrl = settings.whatsappUrl || WHATSAPP_URL;
+  const waText = encodeURIComponent(
+    `Merhaba, ${product.name} eğitimi hakkında bilgi ve kayıt istiyorum.`
+  );
+  const crumbs = [
+    { name: "Ana Sayfa", path: "/" },
+    { name: "Eğitimler", path: "/hizmetler" },
+    ...(product.category
+      ? [
+          {
+            name: product.category.name,
+            path: `/hizmetler/${product.category.slug}`,
+          },
+        ]
+      : []),
+    { name: product.name, path: `/egitim/${product.slug}` },
+  ];
+
   return (
-    <section className="py-16 lg:py-24">
-      <TrackProductView productId={product.id} />
+    <section className="py-16 lg:py-24 pb-28 md:pb-16">
+      <TrackProductView
+        productId={product.id}
+        name={product.name}
+        price={unitPrice}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd(product)),
+          __html: JSON.stringify(
+            productJsonLd({
+              ...product,
+              price: unitPrice,
+              inStock: product.inStock,
+            })
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd(crumbs)),
         }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,7 +158,7 @@ export default async function ProductPage({ params }: Props) {
           </SiteLink>
           <span className="mx-2">/</span>
           <SiteLink href="/hizmetler" className="hover:text-orange">
-            Hizmetler
+            Eğitimler
           </SiteLink>
           {product.category && (
             <>
@@ -129,10 +176,10 @@ export default async function ProductPage({ params }: Props) {
         </nav>
 
         <CatalogAdminHint
-          title="Bu ürün sayfasının tamamı"
+          title="Bu eğitim sayfasının tamamı"
           adminHref="/admin/urunler"
-          adminLabel="Admin → Ürünler"
-          detail="ad, fiyat, özellikler, görseller, açıklama ürün eklerken girilir; canlı editörden düzenlenmez."
+          adminLabel="Admin → Eğitimler"
+          detail="ad, fiyat, süre ve görseller eğitim kaydında girilir; canlı editörden düzenlenmez."
         />
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
@@ -173,15 +220,10 @@ export default async function ProductPage({ params }: Props) {
                 )}
             </div>
             <p className="text-xs text-muted mb-6">
-              Başlangıç / örnek fiyat — kesin teklif keşif sonrası verilir.
+              Sabit eğitim ücreti; kayıt WhatsApp veya ön kayıt ile netleşir.
+              {specFlags.montaj ? ` Süre: ${specFlags.montaj}.` : ""}
+              {specFlags.garanti ? ` Belge: ${specFlags.garanti}.` : ""}
             </p>
-
-            {product.shippingLabel && (
-              <p className="flex items-center gap-2 text-sm text-muted mb-4">
-                <Truck size={16} className="text-orange" />
-                {product.shippingLabel}
-              </p>
-            )}
 
             {product.shortDesc && (
               <p className="text-muted mb-6">{product.shortDesc}</p>
@@ -190,7 +232,7 @@ export default async function ProductPage({ params }: Props) {
             {Object.keys(specs).length > 0 && (
               <div className="mb-6 p-4 bg-card border border-border rounded-xl">
                 <h3 className="text-sm font-semibold text-white mb-3 uppercase tracking-wider">
-                  Özellikler
+                  Program
                 </h3>
                 <dl className="space-y-2">
                   {Object.entries(specs).map(([key, value]) => (
@@ -198,7 +240,9 @@ export default async function ProductPage({ params }: Props) {
                       key={key}
                       className="flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4 text-sm"
                     >
-                      <dt className="text-muted capitalize shrink-0">{key}</dt>
+                      <dt className="text-muted capitalize shrink-0">
+                        {SPEC_FIELD_LABELS[key] || key}
+                      </dt>
                       <dd className="text-white sm:text-right break-words">
                         {value}
                       </dd>
@@ -219,9 +263,20 @@ export default async function ProductPage({ params }: Props) {
               </div>
               <div className="flex items-center gap-2 text-sm text-muted">
                 <MapPin size={16} className="text-orange" />
-                Seyhan / Adana
+                Seyhan / Cemalpaşa, Adana
               </div>
             </div>
+
+            <TrackedContactLink
+              href={`${waUrl}?text=${waText}`}
+              method="whatsapp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-4 w-full min-h-11 hidden md:inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] text-white font-semibold text-sm hover:brightness-110 transition-colors"
+            >
+              <WhatsAppIcon size={18} />
+              WhatsApp ile kayıt
+            </TrackedContactLink>
 
             <ProductConfigurator product={product} />
 
@@ -240,6 +295,7 @@ export default async function ProductPage({ params }: Props) {
 
         <SimilarProducts products={similar} />
       </div>
+      <CourseStickyBar whatsappUrl={waUrl} courseName={product.name} />
     </section>
   );
 }

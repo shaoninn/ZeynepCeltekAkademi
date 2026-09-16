@@ -7,6 +7,7 @@ import {
   SITE_TAGLINE,
   WORK_HOURS,
 } from "@/lib/constants";
+import { toWebpSrc } from "@/lib/image-optimize";
 
 export function getSiteUrl(): string {
   return (
@@ -16,23 +17,29 @@ export function getSiteUrl(): string {
   );
 }
 
+function absUrl(path: string): string {
+  if (path.startsWith("http")) return path;
+  return `${getSiteUrl()}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 export function localBusinessJsonLd() {
   const url = getSiteUrl();
   return {
     "@context": "https://schema.org",
-    "@type": "BeautySalon",
+    "@type": ["EducationalOrganization", "LocalBusiness"],
     "@id": `${url}/#business`,
     name: SITE_NAME,
     description: SITE_TAGLINE,
     url,
     telephone: `+${PHONE_RAW}`,
-    image: `${url}/images/logo/logo-nobg.png`,
+    image: `${url}/images/og.jpg`,
     logo: `${url}/images/logo/logo-nobg.png`,
     address: {
       "@type": "PostalAddress",
       streetAddress: ADDRESS,
-      addressLocality: "Seyhan",
+      addressLocality: "Cemalpaşa",
       addressRegion: "Adana",
+      postalCode: "01120",
       addressCountry: "TR",
     },
     openingHoursSpecification: [
@@ -52,7 +59,7 @@ export function localBusinessJsonLd() {
     ],
     areaServed: {
       "@type": "AdministrativeArea",
-      name: "Seyhan / Adana",
+      name: "Adana",
     },
     sameAs: [
       ...INSTAGRAM_ACCOUNTS.map((a) => a.href),
@@ -62,7 +69,6 @@ export function localBusinessJsonLd() {
   };
 }
 
-/** Helps Google understand primary site sections (sitelinks are still Google-decided). */
 export function siteNavigationJsonLd() {
   const url = getSiteUrl();
   const items = [
@@ -96,31 +102,85 @@ export function webSiteJsonLd() {
   };
 }
 
+export function faqPageJsonLd(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+export function articleJsonLd(post: {
+  title: string;
+  excerpt?: string | null;
+  image?: string | null;
+  slug: string;
+  publishedAt?: Date | string | null;
+}) {
+  const url = `${getSiteUrl()}/blog/${post.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt || undefined,
+    image: post.image ? absUrl(post.image) : undefined,
+    url,
+    datePublished: post.publishedAt
+      ? new Date(post.publishedAt).toISOString()
+      : undefined,
+    author: { "@type": "Organization", name: SITE_NAME },
+    publisher: { "@id": `${getSiteUrl()}/#business` },
+  };
+}
+
+export function breadcrumbJsonLd(
+  items: { name: string; path: string }[]
+) {
+  const url = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${url}${item.path}`,
+    })),
+  };
+}
+
 export function productJsonLd(product: {
   name: string;
   description?: string | null;
   image?: string | null;
   slug: string;
   price: number;
+  inStock?: boolean;
 }) {
+  const url = `${getSiteUrl()}/egitim/${product.slug}`;
+  const image = product.image ? absUrl(toWebpSrc(product.image)) : undefined;
+  const available = product.inStock !== false;
   return {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "Course",
     name: product.name,
     description: product.description || undefined,
-    image: product.image
-      ? product.image.startsWith("http")
-        ? product.image
-        : `${getSiteUrl()}${product.image}`
-      : undefined,
-    url: `${getSiteUrl()}/urun/${product.slug}`,
-    brand: { "@type": "Brand", name: SITE_NAME },
+    image,
+    url,
+    provider: { "@id": `${getSiteUrl()}/#business` },
     offers: {
       "@type": "Offer",
       priceCurrency: "TRY",
       price: product.price,
-      availability: "https://schema.org/InStock",
-      url: `${getSiteUrl()}/urun/${product.slug}`,
+      availability: available
+        ? "https://schema.org/InStock"
+        : "https://schema.org/SoldOut",
+      url,
+      category: "EducationEvent",
     },
   };
 }

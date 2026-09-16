@@ -61,13 +61,13 @@ export default async function AdminOrderDetailPage({
           href="/admin/siparisler"
           className="text-sm text-orange hover:underline"
         >
-          ← Siparişlere dön
+          ← Kayıtlara dön
         </Link>
         <Link
           href="/admin/siparisler/kanban"
           className="text-sm text-[#888] hover:text-orange"
         >
-          Sipariş Panosu
+          Kayıt panosu
         </Link>
         <Link
           href={`/admin/siparisler/${order.id}/yazdir`}
@@ -97,9 +97,8 @@ export default async function AdminOrderDetailPage({
       </div>
 
       <div className="admin-warning mb-6">
-        Bu kayıt teklif talebidir. Online ödeme iskeleti hazır; sanal POS
-        bağlanınca paymentStatus güncellenecek. Şimdilik müşteriyle telefon veya
-        WhatsApp üzerinden iletişime geçin.
+        Bu kayıt bir ön kayıt talebidir. Sanal POS yoktur; öğrenciyle telefon
+        veya WhatsApp üzerinden iletişime geçin.
       </div>
 
       <div className="mb-6">
@@ -145,20 +144,10 @@ export default async function AdminOrderDetailPage({
         <h2 className="font-semibold mb-3">Kalemler</h2>
         <ul className="space-y-2 text-sm">
           {order.items.map((item) => {
-            const dims = [
-              item.widthCm != null ? `En ${item.widthCm} cm` : null,
-              item.heightCm != null ? `Boy ${item.heightCm} cm` : null,
-              item.color || null,
-            ]
-              .filter(Boolean)
-              .join(" · ");
             return (
               <li key={item.id} className="flex justify-between gap-4">
                 <span>
                   {item.productName} × {item.quantity}
-                  {dims ? (
-                    <span className="block text-xs text-[#888]">{dims}</span>
-                  ) : null}
                   {item.optionsNote ? (
                     <span className="block text-xs text-[#666] break-all">
                       {item.optionsNote}

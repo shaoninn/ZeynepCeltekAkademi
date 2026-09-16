@@ -31,7 +31,7 @@ export default function DistanceSalesPage() {
         belgelendirme hizmetleridir. Program özellikleri kayıt formunda ve
         onaylanan teklifte belirtilir.
       </p>
-      <h2>Sipariş ve ödeme</h2>
+      <h2>Kayıt ve ödeme</h2>
       <p>
         Katılımcı kayıt sepeti veya iletişim formu ile talep iletir.{" "}
         {COMPANY.name} görüşme sonrası yazılı program ve ödeme bilgisi sunar.

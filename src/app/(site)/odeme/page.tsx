@@ -64,17 +64,17 @@ export default async function PaymentPage({ searchParams }: Props) {
     <section className="py-16 lg:py-24">
       <div className="max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="font-display text-3xl font-bold text-white mb-2">
-          Ödeme
+          Havale bilgisi
         </h1>
         <p className="text-muted text-sm mb-8">
-          Hazır ürün / onaylı teklifler için havale bilgisi. Sanal POS sonraki
-          adımda bağlanabilir; şimdilik güvenli havale iskeleti aktif.
+          Sitede sanal POS yoktur. Kayıt ücreti havale veya akademide yüz yüze
+          netleşir. IBAN bilgisi onay sonrası iletilir.
         </p>
 
         {!enabled && (
           <div className="rounded-xl border border-border bg-card p-5 text-sm text-muted mb-6">
-            Online ödeme paneli henüz açılmadı. Teklif onayı sonrası ekibimiz
-            size havale veya link iletecek. İletişim:{" "}
+            Online ödeme paneli yoktur. Kayıt onayı sonrası ekibimiz havale
+            bilgisi veya yüz yüze ödeme için sizinle iletişime geçer. İletişim:{" "}
             <a href={`tel:${settings.phoneRaw}`} className="text-orange">
               {settings.phone}
             </a>
@@ -107,7 +107,8 @@ export default async function PaymentPage({ searchParams }: Props) {
           <p>
             <span className="text-muted">IBAN:</span>{" "}
             <span className="text-white break-all">
-              {map.bank_iban || "TR00 0000 0000 0000 0000 0000 00"}
+              {map.bank_iban ||
+                "IBAN henüz girilmedi — Admin → Ayarlar’dan ekleyin veya WhatsApp’tan sorun."}
             </span>
           </p>
           <p>
@@ -116,13 +117,13 @@ export default async function PaymentPage({ searchParams }: Props) {
           </p>
           <p className="text-xs text-muted">
             {map.payment_note ||
-              "Açıklamaya teklif numaranızı yazın. Dekontu WhatsApp’tan iletin."}
+              "Açıklamaya kayıt numaranızı yazın. Dekontu WhatsApp’tan iletin."}
           </p>
         </div>
 
         <p className="mt-6 text-sm">
           <SiteLink href="/tekliflerim" className="text-orange hover:underline">
-            ← Tekliflerime dön
+            ← Kayıtlarıma dön
           </SiteLink>
         </p>
       </div>

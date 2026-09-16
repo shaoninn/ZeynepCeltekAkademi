@@ -39,17 +39,16 @@ export default async function InvoicePage({ params, searchParams }: Props) {
             {PHONE}
           </p>
           <p className="mt-4 text-lg font-semibold">
-            Fatura taslağı — {order.invoiceNo || order.orderNo}
+            Ön kayıt dökümü — {order.invoiceNo || order.orderNo}
           </p>
           <p className="text-xs text-neutral-600">
-            Bu bir ön fatura / teklif dökümüdür; resmi e-fatura entegrasyonu
-            sonradan bağlanır.
+            Bu bir ön kayıt dökümüdür. Resmi fatura akademiden düzenlenir.
           </p>
         </header>
 
         <div className="grid sm:grid-cols-2 gap-4 text-sm mb-6">
           <div>
-            <p className="font-semibold">Müşteri</p>
+            <p className="font-semibold">Öğrenci</p>
             <p>{order.name}</p>
             <p>{order.phone}</p>
             {order.email && <p>{order.email}</p>}
@@ -57,7 +56,7 @@ export default async function InvoicePage({ params, searchParams }: Props) {
           </div>
           <div>
             <p>
-              <span className="font-semibold">Teklif no:</span> {order.orderNo}
+              <span className="font-semibold">Kayıt no:</span> {order.orderNo}
             </p>
             <p>
               <span className="font-semibold">Tarih:</span>{" "}
@@ -72,8 +71,8 @@ export default async function InvoicePage({ params, searchParams }: Props) {
         <table className="w-full text-sm border-collapse mb-6">
           <thead>
             <tr className="border-b-2 border-black text-left">
-              <th className="py-2">Kalem</th>
-              <th className="py-2 text-center">Adet</th>
+              <th className="py-2">Eğitim</th>
+              <th className="py-2 text-center">Kişi</th>
               <th className="py-2 text-right">Tutar</th>
             </tr>
           </thead>
@@ -82,16 +81,6 @@ export default async function InvoicePage({ params, searchParams }: Props) {
               <tr key={item.id} className="border-b border-neutral-300">
                 <td className="py-2">
                   {item.productName}
-                  {(item.widthCm || item.color) && (
-                    <span className="block text-xs text-neutral-600">
-                      {[
-                        item.widthCm != null ? `${item.widthCm}×${item.heightCm ?? "?"} cm` : null,
-                        item.color,
-                      ]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </span>
-                  )}
                 </td>
                 <td className="py-2 text-center">{item.quantity}</td>
                 <td className="py-2 text-right">{formatPrice(item.lineTotal)}</td>

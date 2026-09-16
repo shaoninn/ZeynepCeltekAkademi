@@ -9,10 +9,11 @@ export default async function CustomersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl font-bold mb-2">Müşteriler</h1>
+      <h1 className="font-display text-3xl font-bold mb-2">Öğrenciler</h1>
       <p className="text-sm text-[#888] mb-6">
-        Teklif taleplerinden otomatik oluşan hafif CRM listesi.
+        Kayıt taleplerinden otomatik oluşan hafif CRM listesi.
       </p>
+      <p className="text-[11px] text-[#666] mb-2 lg:hidden">Tabloyu yatay kaydırın.</p>
       <div className="admin-card overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
@@ -27,7 +28,7 @@ export default async function CustomersPage() {
             {customers.length === 0 ? (
               <tr>
                 <td colSpan={4} className="p-6 text-[#666]">
-                  Henüz müşteri kaydı yok.
+                  Henüz öğrenci kaydı yok.
                 </td>
               </tr>
             ) : (

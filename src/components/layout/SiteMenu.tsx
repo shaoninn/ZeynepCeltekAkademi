@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { ChevronRight, Menu, Phone, X } from "lucide-react";
 import { SiteLink } from "@/components/ui/SiteLink";
 import { WhatsAppIcon } from "@/components/brand/WhatsAppIcon";
+import { TrackedContactLink } from "@/components/ads/TrackedContactLink";
 import { LEGAL_LINKS, PRIMARY_NAV_HREFS } from "@/lib/constants";
 import type { NavLinkItem } from "@/lib/site";
 
@@ -39,7 +40,6 @@ const DRAWER_LINKS: { href: string; label: string; sub?: SubPanel }[] = [
   { href: "/blog", label: "Blog", sub: "blog" },
   { href: "/tekliflerim", label: "Kayıtlarım" },
   { href: "/sepet", label: "Kayıt Sepeti" },
-  { href: "/odeme", label: "Ödeme" },
   { href: "/hizmet-bolgeleri", label: "Eğitim Bölgeleri" },
   { href: "/hakkimizda", label: "Akademi" },
   { href: "/iletisim", label: "İletişim" },
@@ -233,20 +233,22 @@ export function SiteMenu({
                 </div>
 
                 <div className="p-3 border-t border-border grid grid-cols-1 gap-2">
-                  <a
+                  <TrackedContactLink
                     href={`tel:+${phoneRaw}`}
-                    className="flex items-center justify-center gap-2 px-4 py-3 border border-border text-sm font-semibold text-white hover:border-orange hover:text-orange rounded-lg"
+                    method="phone"
+                    className="flex items-center justify-center gap-2 min-h-11 px-4 py-3 border border-border text-sm font-semibold text-white hover:border-orange hover:text-orange rounded-lg"
                   >
                     <Phone size={16} /> Ara
-                  </a>
-                  <a
+                  </TrackedContactLink>
+                  <TrackedContactLink
                     href={waHref}
+                    method="whatsapp"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white text-sm font-semibold rounded-lg hover:brightness-110"
+                    className="flex items-center justify-center gap-2 min-h-11 px-4 py-3 bg-[#25D366] text-white text-sm font-semibold rounded-lg hover:brightness-110"
                   >
                     <WhatsAppIcon size={16} /> WhatsApp
-                  </a>
+                  </TrackedContactLink>
                   <p className="text-center text-xs text-muted">{phone}</p>
                 </div>
               </nav>

@@ -1,6 +1,6 @@
 export const metadata = {
   alternates: { canonical: "/tekliflerim" },
-  title: "Tekliflerim | Zeynep Çeltek Güzellik Akademi",
+  title: "Kayıtlarım",
   robots: { index: false, follow: false },
 };
 

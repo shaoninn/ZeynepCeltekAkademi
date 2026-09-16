@@ -7,8 +7,8 @@ export const revalidate = 600;
 
 export const metadata = {
   alternates: { canonical: "/iletisim" },
-  title: "İletişim | Zeynep Çeltek Güzellik Akademi",
-  description: "Zeynep Çeltek Güzellik Akademi iletişim bilgileri ve teklif formu.",
+  title: "İletişim",
+  description: "Zeynep Çeltek Güzellik Akademi iletişim, kayıt danışmanlığı ve WhatsApp hattı. Adana Cemalpaşa.",
 };
 
 export default async function ContactPage() {

@@ -80,7 +80,7 @@ export function CategoriesClient({ initial }: { initial: Cat[] }) {
   async function onDelete(cat: Cat) {
     if (cat._count.products > 0) {
       alert(
-        `Bu kategoride ${cat._count.products} ürün var. Önce ürünleri silin veya taşıyın.`
+        `Bu kategoride ${cat._count.products} eğitim var. Önce eğitimleri silin veya taşıyın.`
       );
       return;
     }
@@ -168,7 +168,7 @@ export function CategoriesClient({ initial }: { initial: Cat[] }) {
             <div>
               <p className="font-semibold text-white">{cat.name}</p>
               <p className="text-xs text-[#666]">
-                /{cat.slug} · {cat._count.products} ürün
+                /{cat.slug} · {cat._count.products} eğitim
               </p>
             </div>
             <div className="flex gap-2 text-sm shrink-0">

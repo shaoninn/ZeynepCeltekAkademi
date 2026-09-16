@@ -8,6 +8,7 @@ export type ProcessedImage = {
   bytes: Buffer;
   mime: string;
   ext: string;
+  smBytes?: Buffer;
 };
 
 async function loadSharp() {
@@ -76,5 +77,20 @@ export async function processUploadImage(
     });
 
   const webp = await pipeline.webp({ quality: 82, effort: 4 }).toBuffer();
-  return { bytes: webp, mime: "image/webp", ext: "webp" };
+  const sm = await sharp(bytes, { failOn: "none" })
+    .rotate()
+    .resize({
+      width: 640,
+      height: 640,
+      fit: "inside",
+      withoutEnlargement: true,
+    })
+    .webp({ quality: 72, effort: 4 })
+    .toBuffer();
+  return {
+    bytes: webp,
+    mime: "image/webp",
+    ext: "webp",
+    smBytes: sm,
+  };
 }

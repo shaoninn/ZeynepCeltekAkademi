@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   alternates: { canonical: "/sepet" },
-  title: "Kayıt Sepeti | Zeynep Çeltek Güzellik Akademi",
+  title: "Kayıt Sepeti",
   description: "Eğitim kayıt listeniz",
   robots: { index: false, follow: false },
 };

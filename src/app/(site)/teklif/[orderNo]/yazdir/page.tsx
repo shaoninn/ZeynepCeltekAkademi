@@ -20,7 +20,7 @@ export default async function PublicQuotePrintPage({ params, searchParams }: Pro
       <section className="py-16">
         <div className="max-w-lg mx-auto px-4 text-center">
           <h1 className="font-display text-2xl font-bold text-white mb-4">
-            Teklif Yazdır
+            Kayıt özeti
           </h1>
           <p className="text-muted text-sm">
             Güvenlik için telefon numaranızı URL&apos;de{" "}
@@ -49,7 +49,7 @@ export default async function PublicQuotePrintPage({ params, searchParams }: Pro
         <PrintActions />
 
         <header className="border-b border-gray-300 pb-6 mb-6">
-          <h1 className="text-2xl font-bold">Zeynep Çeltek Güzellik Akademi — Teklif</h1>
+          <h1 className="text-2xl font-bold">Zeynep Çeltek Güzellik Akademi — Kayıt özeti</h1>
           <p className="text-sm text-gray-600 mt-2">
             {order.orderNo} · {new Date(order.createdAt).toLocaleDateString("tr-TR")}
           </p>
@@ -57,7 +57,7 @@ export default async function PublicQuotePrintPage({ params, searchParams }: Pro
 
         <section className="mb-6 text-sm space-y-1">
           <p>
-            <strong>Müşteri:</strong> {order.name}
+            <strong>Öğrenci:</strong> {order.name}
           </p>
           <p>
             <strong>Telefon:</strong> {order.phone}
@@ -80,26 +80,17 @@ export default async function PublicQuotePrintPage({ params, searchParams }: Pro
         <table className="w-full text-sm mb-6 border-collapse">
           <thead>
             <tr className="border-b border-gray-400">
-              <th className="text-left py-2">Ürün</th>
-              <th className="text-right py-2">Adet</th>
+              <th className="text-left py-2">Eğitim</th>
+              <th className="text-right py-2">Kişi</th>
               <th className="text-right py-2">Tutar</th>
             </tr>
           </thead>
           <tbody>
             {order.items.map((item) => {
-              const dims = [
-                item.widthCm != null ? `${item.widthCm}×${item.heightCm ?? "?"} cm` : null,
-                item.color || null,
-              ]
-                .filter(Boolean)
-                .join(" · ");
               return (
                 <tr key={item.id} className="border-b border-gray-200">
                   <td className="py-2">
                     {item.productName}
-                    {dims && (
-                      <span className="block text-xs text-gray-500">{dims}</span>
-                    )}
                   </td>
                   <td className="text-right py-2">{item.quantity}</td>
                   <td className="text-right py-2">{formatPrice(item.lineTotal)}</td>

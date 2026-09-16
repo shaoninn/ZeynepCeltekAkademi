@@ -21,6 +21,7 @@ export type FallbackCategory = {
   createdAt: Date;
   updatedAt: Date;
   _count: { products: number };
+  products: { specs: string; price: number }[];
 };
 
 /** Used when MySQL is unreachable so /hizmetler is never a blank page. */
@@ -38,6 +39,14 @@ export function getFallbackCategories(): FallbackCategory[] {
     createdAt: now,
     updatedAt: now,
     _count: { products: 1 },
+    products: COURSES.filter((course) => course.slug === c.slug).map((course) => ({
+      specs: JSON.stringify({
+        montaj: course.duration,
+        teslimat: course.schedule,
+        garanti: course.certificate,
+      }),
+      price: course.price,
+    })),
   }));
 }
 

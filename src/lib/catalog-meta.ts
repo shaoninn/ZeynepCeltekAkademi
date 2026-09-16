@@ -4,14 +4,34 @@ import type { ProductSpecs } from "@/types";
 export type SpecFlags = {
   malzeme: string;
   garanti: string;
+  montaj: string;
+  teslimat: string;
 };
 
 export function parseProductSpecs(specsJson: string | null | undefined): SpecFlags {
   const specs = parseJsonObject<ProductSpecs>(specsJson || "{}", {});
-  const malzeme = (specs.malzeme || "").trim();
-  const garanti = (specs.garanti || "").trim();
-  return { malzeme, garanti };
+  const extra = specs as ProductSpecs & {
+    duration?: string;
+    certificate?: string;
+    schedule?: string;
+  };
+  return {
+    malzeme: (specs.malzeme || "").trim(),
+    garanti: (specs.garanti || extra.certificate || "").trim(),
+    montaj: (specs.montaj || extra.duration || "").trim(),
+    teslimat: (specs.teslimat || extra.schedule || "").trim(),
+  };
 }
+
+export const SPEC_FIELD_LABELS: Record<string, string> = {
+  malzeme: "İçerik",
+  garanti: "Belge",
+  montaj: "Süre",
+  teslimat: "Program",
+  duration: "Süre",
+  certificate: "Belge",
+  schedule: "Program",
+};
 
 export function productSeoScore(input: {
   name: string;
@@ -25,7 +45,7 @@ export function productSeoScore(input: {
   let score = 0;
 
   if (input.name.length >= 8) score += 15;
-  else tips.push("Ürün adı en az 8 karakter olmalı");
+  else tips.push("Eğitim adı en az 8 karakter olmalı");
 
   if (/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.slug)) score += 15;
   else tips.push("Slug küçük harf ve tire ile olmalı");
@@ -42,7 +62,7 @@ export function productSeoScore(input: {
   const specs = parseJsonObject<Record<string, string>>(input.specs || "{}", {});
   const filled = Object.values(specs).filter((v) => (v || "").trim().length > 0).length;
   if (filled >= 2) score += 20;
-  else tips.push("En az 2 özellik (eğitim içeriği, garanti…) doldurun");
+  else tips.push("En az 2 özellik (eğitim içeriği, belge…) doldurun");
 
   return { score: Math.min(100, score), tips };
 }

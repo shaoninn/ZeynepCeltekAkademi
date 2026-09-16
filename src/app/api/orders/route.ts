@@ -81,6 +81,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
     console.error(error);
-    return NextResponse.json({ error: "Sipariş oluşturulamadı" }, { status: 500 });
+    return NextResponse.json({ error: "Kayıt oluşturulamadı" }, { status: 500 });
   }
 }

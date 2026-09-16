@@ -9,6 +9,7 @@ import {
 } from "@/lib/constants";
 import { EditableText } from "@/components/editor/EditableText";
 import { EditableSetting } from "@/components/editor/EditableSetting";
+import { trackLead } from "@/lib/ads";
 
 export type ContactFormCopy = {
   cardTitle: string;
@@ -35,7 +36,7 @@ const DEFAULT_COPY: ContactFormCopy = {
     "okudum, kişisel verilerimin iletişim amacıyla işlenmesini kabul ediyorum.",
   mapLabel: "Konum — Google Haritalar",
   mapOpen: "Google'da aç",
-  success: "Mesajınız alındı. En kısa sürede size dönüş yapacağız.",
+  success: "Mesajınız alındı. Mesai içinde 24 saat içinde dönüş yapacağız. Acil için WhatsApp.",
 };
 
 export function ContactForm({
@@ -50,7 +51,7 @@ export function ContactForm({
     name: "",
     phone: "",
     email: "",
-    subject: "Teklif",
+    subject: "Eğitim Bilgisi",
     message: "",
     kvkkAccepted: false,
   });
@@ -58,7 +59,6 @@ export function ContactForm({
     "idle"
   );
   const [error, setError] = useState("");
-  const [showMap, setShowMap] = useState(false);
 
   const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
     GOOGLE_MAPS_EMBED_QUERY
@@ -96,11 +96,12 @@ export function ContactForm({
       }
 
       setStatus("success");
+      trackLead();
       setForm({
         name: "",
         phone: "",
         email: "",
-        subject: "Teklif",
+        subject: "Eğitim Bilgisi",
         message: "",
         kvkkAccepted: false,
       });
@@ -209,6 +210,7 @@ export function ContactForm({
               help="WhatsApp ana buton metni"
             />
           </a>
+          {process.env.NODE_ENV === "development" ? (
           <p className="mt-2 text-[11px] text-[#666]">
             Prefill:{" "}
             <EditableText
@@ -218,6 +220,7 @@ export function ContactForm({
               help="WhatsApp’a tıklanınca hazır mesaj"
             />
           </p>
+          ) : null}
         </div>
 
         <form
@@ -317,6 +320,10 @@ export function ContactForm({
             />
           )}
 
+          <p className="text-xs text-muted leading-relaxed">
+            Mesai içinde 24 saat içinde dönüş. Acil için WhatsApp.
+          </p>
+
           <button
             type="submit"
             disabled={status === "loading"}
@@ -360,26 +367,14 @@ export function ContactForm({
             <ExternalLink size={12} />
           </a>
         </div>
-        {showMap ? (
-          <iframe
-            title="Zeynep Çeltek Güzellik Akademi konumu — Adana"
-            src={mapsEmbed}
-            className="w-full h-[240px] sm:h-[320px] md:h-[400px] grayscale-[20%] contrast-110"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
-        ) : (
-          <button
-            type="button"
-            onClick={() => setShowMap(true)}
-            className="w-full h-[240px] sm:h-[320px] md:h-[400px] flex flex-col items-center justify-center gap-2 bg-black/40 text-white/70 hover:text-orange hover:bg-black/50 transition-colors"
-          >
-            <MapPin size={22} className="text-orange" />
-            <span className="text-sm font-medium">Haritayı yükle</span>
-            <span className="text-xs text-muted">Google Maps yalnızca tıklanınca açılır</span>
-          </button>
-        )}
+        <iframe
+          title="Zeynep Çeltek Güzellik Akademi konumu — Adana"
+          src={mapsEmbed}
+          className="w-full h-[240px] sm:h-[320px] md:h-[400px] grayscale-[20%] contrast-110"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
     </div>
   );

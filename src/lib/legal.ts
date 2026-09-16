@@ -19,5 +19,14 @@ export const COMPANY = {
   address: ADDRESS,
   email: "",
   phone: PHONE,
-  site: "https://zeynepceltekakademi.local",
+  site: legalSiteUrl(),
 };
+
+function legalSiteUrl(): string {
+  const fromEnv =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+    process.env.SITE_URL?.replace(/\/$/, "") ||
+    "";
+  if (fromEnv && !/localhost|127\.0\.0\.1/i.test(fromEnv)) return fromEnv;
+  return "https://zeynepceltekakademi.com";
+}

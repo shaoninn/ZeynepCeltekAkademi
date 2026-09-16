@@ -1,25 +1,7 @@
 "use client";
 
 import { EditableText } from "@/components/editor/EditableText";
-
-const DEFAULT_FAQS = [
-  {
-    q: "Eğitimler kimler için uygun?",
-    a: "Sıfırdan başlayanlar ve mesleğini geliştirmek isteyenler için uygulamalı programlar sunuyoruz. Seviye ve kontenjan için iletişime geçebilirsiniz.",
-  },
-  {
-    q: "Kayıt sepeti ne anlama geliyor?",
-    a: "Sitedeki sepet online ödeme değildir. Eğitim kayıt listesidir; kaydınız bize düşer, WhatsApp veya telefonla süreci netleştiririz.",
-  },
-  {
-    q: "Sertifika veriyor musunuz?",
-    a: "Evet. Programlara göre MEB onaylı belge ve/veya uluslararası sertifika seçenekleri sunulur.",
-  },
-  {
-    q: "Akademi nerede?",
-    a: "Adana’dayız. Detaylı adres ve randevu için iletişim sayfasından veya WhatsApp’tan yazabilirsiniz.",
-  },
-];
+import { HOME_FAQS } from "@/lib/home-faq";
 
 export function FaqSection({
   sectionTitle,
@@ -32,7 +14,7 @@ export function FaqSection({
   items?: { q: string; a: string }[];
   styles?: Record<string, string>;
 }) {
-  const list = DEFAULT_FAQS.map((d, i) => ({
+  const list = HOME_FAQS.map((d, i) => ({
     q: items?.[i]?.q || d.q,
     a: items?.[i]?.a || d.a,
   }));

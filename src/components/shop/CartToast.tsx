@@ -38,7 +38,7 @@ export function CartToast() {
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-600 text-white">
             <Check size={12} strokeWidth={3} />
           </span>
-          Listeye eklendi
+          Kayıt listesine eklendi
         </p>
         <button
           type="button"
@@ -65,7 +65,7 @@ export function CartToast() {
       </div>
 
       <div className="flex items-center justify-between px-3 pb-2 text-xs text-muted">
-        <span>{count} ürün listede</span>
+        <span>{count} eğitim listede</span>
         <span className="text-white font-semibold">{formatPrice(total)}</span>
       </div>
 
@@ -75,14 +75,14 @@ export function CartToast() {
           onClick={() => dispatch(clearCartToast())}
           className="py-2.5 border border-orange text-orange text-xs font-semibold uppercase tracking-wider hover:bg-orange/10"
         >
-          Alışverişe devam
+          Keşfetmeye devam
         </button>
         <SiteLink
           href="/sepet"
           onClick={() => dispatch(clearCartToast())}
           className="py-2.5 bg-orange text-white text-center text-xs font-semibold uppercase tracking-wider hover:bg-orange-dark"
         >
-          Sepete git →
+          Kayıt listesine git →
         </SiteLink>
       </div>
     </div>

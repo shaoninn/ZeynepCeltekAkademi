@@ -5,6 +5,8 @@ import { SiteLink } from "@/components/ui/SiteLink";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { EditableText } from "@/components/editor/EditableText";
 import { toWebpSrc, toWebpSrcMobile } from "@/lib/image-optimize";
+import { parseProductSpecs } from "@/lib/catalog-meta";
+import { formatPrice } from "@/lib/utils";
 import type { CategoryListItem } from "@/lib/catalog";
 
 interface CategoriesGridProps {
@@ -124,6 +126,23 @@ export function CategoriesGrid({
                 <h3 className="font-display text-sm font-semibold text-ink uppercase tracking-[0.12em] text-center group-hover:text-orange transition-colors line-clamp-2 px-1">
                   {cat.name}
                 </h3>
+                {(() => {
+                  const first = cat.products?.[0];
+                  const duration = first
+                    ? parseProductSpecs(first.specs).montaj
+                    : "";
+                  return duration || first?.price != null ? (
+                    <p className="mt-1 text-[11px] text-[#a67c52] text-center">
+                      {duration}
+                      {duration && first?.price != null ? " · " : ""}
+                      {first?.price != null ? formatPrice(first.price) : ""}
+                    </p>
+                  ) : cat.description ? (
+                    <p className="mt-1 text-[11px] text-[#888] text-center line-clamp-2 px-1">
+                      {cat.description}
+                    </p>
+                  ) : null;
+                })()}
               </SiteLink>
             );
           })}

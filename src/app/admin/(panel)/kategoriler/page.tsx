@@ -17,7 +17,7 @@ export default async function AdminCategoriesPage() {
         silmeden kategori silemezsiniz.
       </p>
       <div className="admin-warning mb-6">
-        İçinde ürün olan kategori silinemez. Önce ürünleri başka kategoriye taşıyın
+        İçinde eğitim olan kategori silinemez. Önce eğitimleri başka kategoriye taşıyın
         veya silin. <strong>Slug</strong> = adres eki (örn. /hizmetler/kutu-harf).
         Değiştirmek eski linkleri bozabilir.
       </div>

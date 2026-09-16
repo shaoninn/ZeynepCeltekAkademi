@@ -20,10 +20,10 @@ export function ProductBadges({
     badges.push({ label: "Yeni", className: "bg-orange text-black" });
   }
   if (badgeBestseller) {
-    badges.push({ label: "Çok satan", className: "bg-white/90 text-black" });
+    badges.push({ label: "Çok tercih edilen", className: "bg-white/90 text-black" });
   }
   if (!inStock) {
-    badges.push({ label: "Stok yok", className: "bg-black/80 text-red-400 border border-red-400/50" });
+    badges.push({ label: "Kayıda kapalı", className: "bg-black/80 text-red-400 border border-red-400/50" });
   }
 
   if (badges.length === 0) return null;

@@ -1,12 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
+import { trackViewContent } from "@/lib/ads";
 import { addRecent } from "@/lib/local-lists";
 
-/** Records product id in localStorage — no network. */
-export function TrackProductView({ productId }: { productId: string }) {
+export function TrackProductView({
+  productId,
+  name,
+  price,
+}: {
+  productId: string;
+  name: string;
+  price: number;
+}) {
   useEffect(() => {
     addRecent(productId);
-  }, [productId]);
+    trackViewContent({ id: productId, name, price });
+  }, [productId, name, price]);
   return null;
 }

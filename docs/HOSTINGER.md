@@ -22,7 +22,7 @@ hPanel → **Websites → Add website → Node.js Web App**
 | **Max Processes** | **`1`** (Deployments → Settings — zorunlu) |
 
 **Kritik:** `npm run dev` asla canlıda çalıştırmayın. Sadece `build` + `start`.  
-Hostinger Business’ta **Maksimum işlem (120)** ve **Giriş işlemi / Entry (60)** hesap genelinde 3 site ile ortaktır; hPanel site bazında ayırmaz.
+Hostinger Business’ta **Maksimum işlem (120)** ve **Giriş işlemi / Entry (60)** hesap genelinde birden fazla Node sitesi ile ortaktır; hPanel site bazında ayırmaz.
 
 ## Ortam değişkenleri (Hostinger paneli)
 
@@ -74,14 +74,14 @@ ALLOW_PROD_SEED=true ADMIN_PASSWORD='GucluSifre123!' npm run db:seed
 
 ### P0 — Hostinger platform (koddan önce)
 
-Grafikte **~106/120** çoğu zaman **3 Node sitesinin ortak kotası** + Hostinger’ın eski Next.js process spawn davranışıdır; “106 HTTP bağlantısı” değildir.
+Grafikte yüksek Max Processes çoğu zaman **aynı Hostinger hesabındaki birden fazla Node sitesinin ortak kotası** + Hostinger’ın eski Next.js process spawn davranışıdır; “HTTP bağlantısı sayısı” değildir.
 
-1. **Her Node sitesi** (`zeynepceltekakademi`, `zeynepceltek`, `minnaguzelliksalonu`):  
+1. **Bu site** (`zeynepceltekakademi`):  
    hPanel → Website → **Deployments → Settings → Save and Redeploy**  
    Hostinger’ın Next.js process optimizasyonu mevcut app’lere böyle uygulanır ([resmi rehber](https://www.hostinger.com/support/1583532-what-to-do-if-your-hosting-plan-limits-are-reached-in-hostinger/)).
 2. Aynı Settings’te **Max Processes = 1**
 3. Uptime/monitoring: kök `/?nocache=` yerine **`/api/health`**, aralık ≥ 5 dk
-4. Hangi site şişiriyor: diğer Node app’leri geçici kapatıp Resources grafiğine bak  
+4. Kotayı şişiren başka Node app varsa geçici kapatıp Resources grafiğine bak  
    Ayrıntılı audit: [`HOSTINGER-PROCESS-AUDIT.md`](./HOSTINGER-PROCESS-AUDIT.md)
 
 | Önlem | Ne yapar |
@@ -104,12 +104,12 @@ Grafikte **~106/120** çoğu zaman **3 Node sitesinin ortak kotası** + Hostinge
 
 ### Hostinger destek checklist (hPanel)
 
-1. **Üç site:** Deployments → Settings → **Save and Redeploy** (Next.js process optimization)  
-2. Bu site: **Max Processes = 1** → redeploy  
+1. Bu site: Deployments → Settings → **Save and Redeploy** (Next.js process optimization)  
+2. **Max Processes = 1** → redeploy  
 3. Env: `NODE_ENV=production`, `MYSQL_POOL_SIZE=1`  
 4. Start komutu: `npm run start` (dev değil)  
 5. Kullanılmayan Node deployment / eski preview / cron’ları durdur  
-6. Hangi site şişiriyor: diğer 2 siteyi geçici kapatıp Resources grafiğine bak  
+6. Ortak kota şişiyorsa aynı hesaptaki diğer Node app’leri geçici kapatıp Resources grafiğine bak  
 7. PHP sitelerde cache açık tut; gereksiz eklenti/cron azalt  
 
 Kod tarafında (bu repo): in-process `start`, prefetch kapalı, ISR 300s, sitemap cache, ölü home DB yok, probe short-circuit — sonsuz polling / cluster / PM2 yok.

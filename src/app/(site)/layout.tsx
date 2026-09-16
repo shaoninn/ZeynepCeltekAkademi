@@ -56,13 +56,14 @@ export default async function SiteLayout({
         projects={menuProjects}
         blogPosts={menuPosts}
       />
-      <main id="main-content" className="min-h-screen pt-[calc(4.25rem+env(safe-area-inset-top,0px))] lg:pt-[calc(4.75rem+env(safe-area-inset-top,0px))] pb-[max(5.5rem,env(safe-area-inset-bottom))] xl:pb-0 overflow-x-clip">
+      <main id="main-content" className="min-h-screen pt-[calc(4.25rem+env(safe-area-inset-top,0px))] lg:pt-[calc(4.75rem+env(safe-area-inset-top,0px))] pb-[max(5.5rem,env(safe-area-inset-bottom))] overflow-x-clip">
         {children}
       </main>
       <Footer
         settings={settings}
         navLinks={navLinks}
         footerBlurb={content.footer_blurb}
+        categories={menuCategories}
       />
       <FloatingContact
         phone={settings.phone}

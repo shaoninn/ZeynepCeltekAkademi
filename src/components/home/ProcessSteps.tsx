@@ -5,23 +5,23 @@ import { EditableText } from "@/components/editor/EditableText";
 const DEFAULT_STEPS = [
   {
     n: "01",
-    title: "Ön Görüşme",
-    desc: "Hedefinizi ve uygun eğitim programını birlikte netleştiririz.",
+    title: "Eğitim seç",
+    desc: "Programı inceleyin; süre, belge ve içeriği netleştirin.",
   },
   {
     n: "02",
-    title: "Kayıt & Plan",
-    desc: "Program içeriği, süre ve ödeme planını şeffaf şekilde paylaşırız.",
+    title: "Ön kayıt",
+    desc: "Kayıt sepetinden talebinizi gönderin — online ödeme yoktur.",
   },
   {
     n: "03",
-    title: "Uygulamalı Eğitim",
-    desc: "Teori + canlı manken uygulaması ile atölyede ilerlersiniz.",
+    title: "WhatsApp teyit",
+    desc: "Kontenjan ve takvim için WhatsApp veya telefonla netleşiriz.",
   },
   {
     n: "04",
-    title: "Belge & Destek",
-    desc: "Eğitim sonrası belgelendirme ve kariyer danışmanlığı devam eder.",
+    title: "Kayıt / ödeme",
+    desc: "Onay sonrası havale veya akademide yüz yüze ödeme planı.",
   },
 ];
 
@@ -65,7 +65,7 @@ export function ProcessSteps({
           />
           <EditableText
             contentKey="process_section_title"
-            value={sectionTitle || "Kayıttan mezuniyete net adımlar"}
+            value={sectionTitle || "Kayıt süreci dört adımda"}
             as="h2"
             block
             className="font-display text-2xl sm:text-3xl font-bold text-white mb-3"

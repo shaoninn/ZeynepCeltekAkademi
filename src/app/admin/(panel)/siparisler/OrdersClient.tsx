@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
+import { OWNER_WORKFLOW_STEPS, ownerColumnId, workflowLabel } from "@/lib/order-workflow";
 import { Trash2 } from "lucide-react";
 
 export type OrderListItem = {
@@ -12,6 +13,7 @@ export type OrderListItem = {
   name: string;
   phone: string;
   status: string;
+  workflow: string;
   total: number;
   createdAt: string;
   itemCount: number;
@@ -30,6 +32,7 @@ function toDateInputValue(d: Date): string {
 export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
   const router = useRouter();
   const [status, setStatus] = useState("ALL");
+  const [workflow, setWorkflow] = useState("ALL");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [q, setQ] = useState("");
@@ -39,6 +42,9 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
   const filtered = useMemo(() => {
     return initial.filter((o) => {
       if (status !== "ALL" && o.status !== status) return false;
+      if (workflow !== "ALL" && ownerColumnId(o.workflow || "INTAKE") !== workflow) {
+        return false;
+      }
       const created = new Date(o.createdAt);
       if (from) {
         const start = new Date(`${from}T00:00:00`);
@@ -55,7 +61,7 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
       }
       return true;
     });
-  }, [initial, status, from, to, q]);
+  }, [initial, status, workflow, from, to, q]);
 
   async function deleteOrder(id: string, orderNo: string) {
     if (
@@ -82,14 +88,21 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
   async function deleteFilteredOlder() {
     const ids = filtered.map((o) => o.id);
     if (ids.length === 0) {
-      setError("Filtrelenen sipariş yok.");
+      setError("Filtrelenen kayıt yok.");
       return;
     }
     if (
       !confirm(
-        `Filtrelenen ${ids.length} sipariş silinsin mi? Bu işlem geri alınamaz.`
+        `Filtrelenen ${ids.length} kayıt silinsin mi? Bu işlem geri alınamaz.`
       )
     ) {
+      return;
+    }
+    const typed = window.prompt(
+      `Kalıcı silmek için SİL yazın (${ids.length} kayıt).`
+    );
+    if (typed !== "SİL") {
+      setError("Toplu silme iptal edildi.");
       return;
     }
     setError(null);
@@ -121,7 +134,7 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
   return (
     <div>
       <div className="admin-card p-4 mb-6 space-y-3">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
           <div>
             <label className="block text-xs text-[#888] mb-1">Durum</label>
             <select
@@ -133,6 +146,21 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
               <option value="PENDING">Beklemede</option>
               <option value="CONFIRMED">Onaylandı</option>
               <option value="CANCELLED">İptal</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-[#888] mb-1">Aşama</label>
+            <select
+              className="admin-input"
+              value={workflow}
+              onChange={(e) => setWorkflow(e.target.value)}
+            >
+              <option value="ALL">Tümü</option>
+              {OWNER_WORKFLOW_STEPS.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.label}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -182,6 +210,7 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
             type="button"
             onClick={() => {
               setStatus("ALL");
+              setWorkflow("ALL");
               setFrom("");
               setTo("");
               setQ("");
@@ -191,7 +220,7 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
             Filtreleri temizle
           </button>
           <span className="text-xs text-[#666] ml-auto">
-            {filtered.length} / {initial.length} sipariş
+            {filtered.length} / {initial.length} kayıt
           </span>
           <button
             type="button"
@@ -207,7 +236,7 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
 
       <div className="space-y-3">
         {filtered.length === 0 && (
-          <p className="text-[#666]">Filtreye uyan sipariş yok.</p>
+          <p className="text-[#666]">Filtreye uyan kayıt yok.</p>
         )}
         {filtered.map((o) => (
           <div
@@ -225,7 +254,7 @@ export function OrdersClient({ initial }: { initial: OrderListItem[] }) {
                     {o.name} · {o.phone}
                   </p>
                   <p className="text-xs text-[#666] mt-1">
-                    {o.itemCount} kalem ·{" "}
+                    {workflowLabel(o.workflow)} · {o.itemCount} kalem ·{" "}
                     {new Date(o.createdAt).toLocaleString("tr-TR")}
                   </p>
                 </div>

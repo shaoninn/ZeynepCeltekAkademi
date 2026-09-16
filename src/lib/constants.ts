@@ -25,7 +25,7 @@ export const INSTAGRAM_ACCOUNTS = [
 export const GOOGLE_BUSINESS_URL = "https://share.google/URWo0MWX0f2nTAswo";
 /** Harita gömme — işletme adı + adres araması */
 export const GOOGLE_MAPS_EMBED_QUERY =
-  "Cemalpaşa Mahallesi Gazipaşa Bulvarı, Adana 01120";
+  "Zeynep Çeltek Güzellik Akademi, Cemalpaşa Mahallesi Gazipaşa Bulvarı, Adana 01120";
 /** Eski vitrin — yok */
 export const LEGACY_SITE_URL = "";
 export const WORK_HOURS = {
@@ -39,7 +39,7 @@ export const LEGAL_LINKS = [
   { href: "/kvkk", label: "KVKK" },
   { href: "/mesafeli-satis", label: "Mesafeli Satış" },
   { href: "/iade-politikasi", label: "İade Politikası" },
-  { href: "/teslimat", label: "Teslimat" },
+  { href: "/teslimat", label: "Eğitim Süreci" },
   { href: "/cerez-politikasi", label: "Çerez Politikası" },
 ] as const;
 
@@ -114,16 +114,16 @@ export const FEATURE_BAR = [
   },
   {
     icon: "support",
-    title: "7/24 Destek & Danışmanlık",
-    desc: "Eğitim öncesi ve sonrası rehberlik.",
+    title: "Eğitim Danışmanlığı",
+    desc: "Mesai saatlerinde kayıt ve program rehberliği.",
   },
 ] as const;
 
 export const STATS = [
-  { value: "114K+", label: "Mutlu Öğrenci" },
-  { value: "60+", label: "Uzman Eğitmen" },
-  { value: "30+", label: "Eğitim Programı" },
-  { value: "7", label: "Yıl Tecrübe" },
+  { value: "8+", label: "Eğitim Programı" },
+  { value: "7+", label: "Yıl Tecrübe" },
+  { value: "Birebir", label: "Uygulama" },
+  { value: "MEB", label: "Belge" },
 ] as const;
 
 export const WHY_US = [

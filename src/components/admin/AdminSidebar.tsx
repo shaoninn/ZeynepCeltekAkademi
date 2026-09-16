@@ -29,21 +29,24 @@ import { Logo } from "@/components/brand/Logo";
 const NAV = [
   { href: "/admin", label: "Panel", icon: LayoutDashboard, exact: true },
   { href: "/duzenle", label: "Siteyi Düzenle", icon: Pencil },
-  { href: "/admin/urunler", label: "Ürünler", icon: Package },
+  { href: "/admin/urunler", label: "Eğitimler", icon: Package },
   { href: "/admin/kategoriler", label: "Kategoriler", icon: FolderTree },
-  { href: "/admin/projeler", label: "Projeler", icon: Images },
+  { href: "/admin/projeler", label: "Galeri", icon: Images },
   { href: "/admin/blog", label: "Blog", icon: FileText },
-  { href: "/admin/siparisler", label: "Siparişler", icon: ShoppingBag },
-  { href: "/admin/siparisler/kanban", label: "Sipariş Panosu", icon: LayoutDashboard },
-  { href: "/admin/crm", label: "CRM", icon: MessageSquare },
-  { href: "/admin/musteriler", label: "Müşteriler", icon: UserRound },
+  { href: "/admin/siparisler", label: "Kayıtlar", icon: ShoppingBag },
   { href: "/admin/mesajlar", label: "Mesajlar", icon: MessageSquare },
+  { href: "/admin/ayarlar", label: "Ayarlar", icon: Settings },
+];
+
+const ADVANCED = [
   { href: "/admin/icerikler", label: "Site Yazıları", icon: Type },
   { href: "/admin/menuler", label: "Menüler", icon: Menu },
   { href: "/admin/medya", label: "Medya", icon: Upload },
   { href: "/admin/kullanicilar", label: "Kullanıcılar", icon: Users },
+  { href: "/admin/siparisler/kanban", label: "Kayıt Panosu", icon: LayoutDashboard },
+  { href: "/admin/crm", label: "CRM", icon: MessageSquare },
+  { href: "/admin/musteriler", label: "Öğrenciler", icon: UserRound },
   { href: "/admin/audit", label: "Audit", icon: ScrollText },
-  { href: "/admin/ayarlar", label: "Ayarlar", icon: Settings },
 ];
 
 function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
@@ -95,6 +98,33 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
             </Link>
           );
         })}
+        <details className="pt-2 group">
+          <summary className="cursor-pointer list-none px-3 py-2.5 min-h-11 rounded-lg text-xs uppercase tracking-wider text-muted hover:text-white flex items-center">
+            Gelişmiş
+          </summary>
+          <div className="space-y-0.5 mt-1">
+            {ADVANCED.map((item) => {
+              const active = pathname.startsWith(item.href);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onNavigate}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors min-h-11",
+                    active
+                      ? "bg-orange/15 text-orange border border-orange/25"
+                      : "text-muted hover:bg-white/5 hover:text-white border border-transparent"
+                  )}
+                >
+                  <Icon size={18} className="shrink-0" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        </details>
       </nav>
 
       <div className="p-3 border-t border-border space-y-1">
@@ -142,7 +172,7 @@ export function AdminSidebar() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="w-10 h-10 flex items-center justify-center text-muted hover:text-orange transition-colors"
+          className="w-11 h-11 flex items-center justify-center text-muted hover:text-orange transition-colors"
           aria-label="Menüyü aç"
         >
           <Menu size={22} />
@@ -170,7 +200,7 @@ export function AdminSidebar() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="w-10 h-10 flex items-center justify-center text-muted hover:text-white"
+                className="w-11 h-11 flex items-center justify-center text-muted hover:text-white"
                 aria-label="Menüyü kapat"
               >
                 <X size={20} />

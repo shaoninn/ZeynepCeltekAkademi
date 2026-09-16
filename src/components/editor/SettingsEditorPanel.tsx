@@ -13,7 +13,7 @@ const FIELDS = [
   {
     key: "whatsapp",
     label: "WhatsApp (ülke kodlu)",
-    help: "Örn: 905327359884 — sadece rakam.",
+    help: "Örn: 905340809873 — sadece rakam.",
   },
   {
     key: "whatsapp_label",
@@ -28,18 +28,18 @@ const FIELDS = [
   { key: "address", label: "Adres", help: "İletişim sayfası ve harita sorgusu." },
   {
     key: "instagram",
-    label: "Instagram (Adana)",
+    label: "Instagram",
     help: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
   },
   {
     key: "instagram_2",
-    label: "Instagram (T. Özal)",
-    help: "https://www.instagram.com/zeynepceltek_t.ozal/",
+    label: "İkinci Instagram (opsiyonel)",
+    help: "Boş bırakılabilir. Ana hesap: @zeynepceltek_guzellik.kursu",
   },
   {
     key: "instagram_3",
-    label: "Instagram (Güzellik Kursu)",
-    help: "https://www.instagram.com/zeynepceltek_guzellik.kursu/",
+    label: "Üçüncü Instagram (opsiyonel)",
+    help: "Boş bırakılabilir.",
   },
   {
     key: "google_reviews_url",

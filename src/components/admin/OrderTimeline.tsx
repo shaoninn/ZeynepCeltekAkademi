@@ -1,4 +1,4 @@
-import { WORKFLOW_STEPS, workflowIndex } from "@/lib/order-workflow";
+import { OWNER_WORKFLOW_STEPS, workflowIndex } from "@/lib/order-workflow";
 import { cn } from "@/lib/utils";
 
 interface OrderTimelineProps {
@@ -11,7 +11,7 @@ export function OrderTimeline({ current, compact }: OrderTimelineProps) {
 
   return (
     <ol className={cn("flex", compact ? "flex-col gap-2" : "flex-wrap gap-2 sm:gap-0 sm:flex-nowrap sm:justify-between")}>
-      {WORKFLOW_STEPS.map((step, idx) => {
+      {OWNER_WORKFLOW_STEPS.map((step, idx) => {
         const done = idx < activeIdx;
         const active = idx === activeIdx;
         return (

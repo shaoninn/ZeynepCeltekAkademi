@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminButton, AdminField, apiJson } from "@/components/admin/AdminForm";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
-import { WORKFLOW_STEPS } from "@/lib/order-workflow";
+import { OWNER_WORKFLOW_STEPS, ownerColumnId } from "@/lib/order-workflow";
 
 export function OrderProductionPanel({
   id,
@@ -65,10 +65,10 @@ export function OrderProductionPanel({
       <AdminField label="İş akışı aşaması">
         <select
           className="admin-input"
-          value={stage}
+          value={ownerColumnId(stage)}
           onChange={(e) => setStage(e.target.value)}
         >
-          {WORKFLOW_STEPS.map((s) => (
+          {OWNER_WORKFLOW_STEPS.map((s) => (
             <option key={s.id} value={s.id}>
               {s.label}
             </option>

@@ -13,6 +13,11 @@ interface CTASectionProps {
   bannerImages?: string[];
   sectionOffset?: string;
   styles?: Record<string, string>;
+  phone?: string;
+  phoneRaw?: string;
+  address?: string;
+  workHoursWeekdays?: string;
+  workHoursSunday?: string;
 }
 
 export function CTASection({
@@ -21,9 +26,19 @@ export function CTASection({
   bannerImages,
   sectionOffset = "0",
   styles,
+  phone,
+  phoneRaw,
+  address,
+  workHoursWeekdays,
+  workHoursSunday,
 }: CTASectionProps) {
   const consultImg =
     bannerImages?.[0] || "/images/gallery/gallery-2.webp";
+  const displayPhone = phone || PHONE;
+  const displayPhoneRaw = phoneRaw || PHONE_RAW;
+  const displayAddress = address || ADDRESS;
+  const hoursWeekdays = workHoursWeekdays || WORK_HOURS.weekdays;
+  const hoursSunday = workHoursSunday || WORK_HOURS.sunday;
 
   return (
     <EditableSectionShift
@@ -79,22 +94,22 @@ export function CTASection({
                 İletişim
               </h3>
               <a
-                href={`tel:+${PHONE_RAW}`}
+                href={`tel:+${displayPhoneRaw}`}
                 className="flex items-start gap-3 text-sm text-white/85 hover:text-orange transition-colors"
               >
                 <Phone size={16} className="mt-0.5 text-orange shrink-0" />
-                {PHONE}
+                {displayPhone}
               </a>
               <p className="flex items-start gap-3 text-sm text-white/85">
                 <MapPin size={16} className="mt-0.5 text-orange shrink-0" />
-                <span>{ADDRESS}</span>
+                <span>{displayAddress}</span>
               </p>
               <p className="flex items-start gap-3 text-sm text-white/85">
                 <Clock size={16} className="mt-0.5 text-orange shrink-0" />
                 <span>
-                  {WORK_HOURS.weekdays}
+                  {hoursWeekdays}
                   <br />
-                  {WORK_HOURS.sunday}
+                  {hoursSunday}
                 </span>
               </p>
             </div>

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import { generateOrderNo } from "@/lib/api";
-import { sendOrderConfirmation, sendManufacturerBrief } from "@/lib/mail";
+import { sendOrderConfirmation, sendOwnerLeadAlert } from "@/lib/mail";
 import { writeAuditLog } from "@/lib/audit";
 
 export interface QuoteItemInput {
@@ -84,7 +84,7 @@ export async function createQuoteOrder(input: {
       throw new Error("Sepette geçersiz veya pasif ürün var. Sepeti güncelleyin.");
     }
     if (!product.inStock) {
-      throw new Error(`${product.name} şu an teklife kapalı.`);
+      throw new Error(`${product.name} şu an kayda kapalı.`);
     }
     const unit =
       product.badgeSale &&
@@ -168,13 +168,15 @@ export async function createQuoteOrder(input: {
     items: order.items,
   });
 
-  const manufacturer = await sendManufacturerBrief(order);
-  if (manufacturer.sent) {
-    await prisma.order.update({
-      where: { id: order.id },
-      data: { manufacturerNotified: true },
-    });
-  }
+  void sendOwnerLeadAlert({
+    kind: "order",
+    name: order.name,
+    phone: order.phone,
+    email: order.email,
+    message: order.note,
+    orderNo: order.orderNo,
+    adminPath: `/admin/siparisler/${order.id}`,
+  }).catch((err) => console.error("owner lead alert failed:", err));
 
-  return { order, mail, manufacturer };
+  return { order, mail, manufacturer: { sent: false, reason: "academy-skip" } };
 }

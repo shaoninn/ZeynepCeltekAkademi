@@ -99,6 +99,7 @@ export async function POST(request: NextRequest) {
     let outMime = match.mime;
     let outExt = match.ext;
     let converted = false;
+    let processedSm: Buffer | undefined;
 
     if (!skipConvert) {
       try {
@@ -107,6 +108,7 @@ export async function POST(request: NextRequest) {
         outMime = processed.mime;
         outExt = processed.ext;
         converted = true;
+        if (processed.smBytes) processedSm = Buffer.from(processed.smBytes);
       } catch (error) {
         console.error("[upload] process failed, storing original:", error);
         if (removeBg) {
@@ -142,6 +144,11 @@ export async function POST(request: NextRequest) {
         size: outBytes.length,
       },
     });
+
+    if (converted && processedSm) {
+      const smName = safeName.replace(/\.webp$/i, "-sm.webp");
+      await storeUpload(smName, processedSm, "image/webp");
+    }
 
     await writeAuditLog({
       action: "media.upload",

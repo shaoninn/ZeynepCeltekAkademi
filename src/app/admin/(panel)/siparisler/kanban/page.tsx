@@ -34,11 +34,10 @@ export default async function AdminOrdersKanbanPage() {
         ← Liste görünümü
       </Link>
       <h1 className="font-display text-3xl font-bold mb-2">
-        Sipariş Panosu (Kanban)
+        Kayıt panosu
       </h1>
       <p className="text-sm text-[#888] mb-6">
-        Kayıt / teklifleri aşamalara göre sütunlarda yönetin. İleri / geri ile
-        aşama değiştirin.
+        Kayıt taleplerini Yeni → Görüşüldü → Kayıt tamam aşamalarında yönetin.
       </p>
       <OrderKanban initialOrders={initial} />
     </div>

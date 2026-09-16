@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { sendOwnerLeadAlert } from "@/lib/mail";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Ad en az 2 karakter olmalı"),
@@ -37,6 +38,15 @@ export async function POST(request: NextRequest) {
         message: data.message,
       },
     });
+
+    void sendOwnerLeadAlert({
+      kind: "contact",
+      name: data.name,
+      phone: data.phone,
+      email: data.email || null,
+      message: [data.subject, data.message].filter(Boolean).join("\n"),
+      adminPath: "/admin/mesajlar",
+    }).catch((err) => console.error("owner lead alert failed:", err));
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -6,7 +6,7 @@ export const revalidate = 600;
 
 export const metadata = {
   alternates: { canonical: "/hakkimizda" },
-  title: "Hakkımızda | Zeynep Çeltek Güzellik Akademi",
+  title: "Hakkımızda",
   description: "Zeynep Çeltek Güzellik Akademi hakkında bilgi edinin. Misyon, vizyon ve değerlerimiz.",
 };
 

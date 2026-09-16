@@ -16,7 +16,6 @@ export type CatalogProduct = Product & {
   badgeBestseller?: boolean;
   badgeSale?: boolean;
   salePrice?: number | null;
-  nightImage?: string | null;
   campaignEndsAt?: string | Date | null;
 };
 
@@ -104,14 +103,14 @@ export function CatalogProductGrid({ products }: CatalogProductGridProps) {
             placeholder="Eğitim ara…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="admin-input pl-9 text-sm"
+            className="admin-input pl-9 min-h-11"
           />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
           <select
             value={stock}
             onChange={(e) => setStock(e.target.value as StockFilter)}
-            className="admin-input text-sm"
+            className="admin-input min-h-11"
             aria-label="Kontenjan filtresi"
           >
             <option value="all">Tümü</option>
@@ -120,7 +119,7 @@ export function CatalogProductGrid({ products }: CatalogProductGridProps) {
           <select
             value={badge}
             onChange={(e) => setBadge(e.target.value as BadgeFilter)}
-            className="admin-input text-sm"
+            className="admin-input min-h-11"
             aria-label="Rozet filtresi"
           >
             <option value="all">Tüm rozetler</option>
@@ -131,7 +130,7 @@ export function CatalogProductGrid({ products }: CatalogProductGridProps) {
           <select
             value={material}
             onChange={(e) => setMaterial(e.target.value)}
-            className="admin-input text-sm"
+            className="admin-input min-h-11"
             aria-label="Eğitim içeriği filtresi"
           >
             <option value="all">Eğitim içeriği</option>
@@ -144,7 +143,7 @@ export function CatalogProductGrid({ products }: CatalogProductGridProps) {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
-            className="admin-input text-sm"
+            className="admin-input min-h-11"
             aria-label="Sıralama"
           >
             <option value="default">Varsayılan</option>

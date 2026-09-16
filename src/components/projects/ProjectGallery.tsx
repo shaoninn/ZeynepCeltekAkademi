@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { toWebpSrc, toWebpSrcMobile } from "@/lib/image-optimize";
 
 interface ProjectGalleryProps {
   title: string;
@@ -10,7 +11,13 @@ interface ProjectGalleryProps {
 }
 
 export function ProjectGallery({ title, images }: ProjectGalleryProps) {
-  const slides = images.filter(Boolean);
+  const slides = useMemo(
+    () =>
+      images
+        .filter(Boolean)
+        .map((src) => toWebpSrcMobile(src) || toWebpSrc(src)),
+    [images]
+  );
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = slides.length;

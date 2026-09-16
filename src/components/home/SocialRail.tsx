@@ -1,8 +1,9 @@
 "use client";
 
-import { Camera, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { WHATSAPP_URL, INSTAGRAM_ACCOUNTS } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/brand/WhatsAppIcon";
+import { InstagramIcon } from "@/components/brand/InstagramIcon";
 
 /** Vertical social rail — Instagram hesapları + WhatsApp + iletişim */
 export function SocialRail() {
@@ -10,7 +11,7 @@ export function SocialRail() {
     ...INSTAGRAM_ACCOUNTS.map((acc) => ({
       href: acc.href,
       label: acc.handle,
-      icon: <Camera size={16} />,
+      icon: <InstagramIcon size={16} />,
       external: true,
     })),
     {

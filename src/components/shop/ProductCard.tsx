@@ -1,21 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import { SiteLink } from "@/components/ui/SiteLink";
 import Image from "next/image";
-import { Moon, ShoppingCart, Sun, Truck, Shield } from "lucide-react";
+import { ShoppingCart, Shield, Clock } from "lucide-react";
 import { formatPrice, parseJsonArray } from "@/lib/utils";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cartSlice";
 import { ProductBadges } from "@/components/shop/ProductBadges";
-import { WishlistButton } from "@/components/shop/WishlistButton";
 import { parseProductSpecs } from "@/lib/catalog-meta";
+import { trackAddToCart } from "@/lib/ads";
+import { toWebpSrc, toWebpSrcMobile } from "@/lib/image-optimize";
 import type { Product } from "@/types";
 
 interface ProductCardProps {
   product: Product & {
     category?: { name: string; slug: string };
-    nightImage?: string | null;
     campaignEndsAt?: string | Date | null;
   };
 }
@@ -36,20 +35,15 @@ function displayPrice(product: Product): { current: number; list?: number } {
 
 export function ProductCard({ product }: ProductCardProps) {
   const dispatch = useAppDispatch();
-  const [night, setNight] = useState(false);
   const gallery = parseJsonArray<string>(product.images);
   const hoverImage =
     gallery.find((src) => src && src !== product.image) || null;
-  const nightSrc = product.nightImage || null;
   const pricing = displayPrice(product);
   const unitPrice = pricing.current;
   const specs = parseProductSpecs(product.specs);
-  const showNight = Boolean(nightSrc || product.image);
-
-  const primarySrc =
-    night && nightSrc
-      ? nightSrc
-      : product.image;
+  const primarySrc = product.image ? toWebpSrc(product.image) : "";
+  const primaryMobile = product.image ? toWebpSrcMobile(product.image) : null;
+  const hoverSrc = hoverImage ? toWebpSrc(hoverImage) : null;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -68,37 +62,30 @@ export function ProductCard({ product }: ProductCardProps) {
         color: null,
       })
     );
+    trackAddToCart({ id: product.id, name: product.name, price: unitPrice });
   };
 
   return (
     <SiteLink
-      href={`/urun/${product.slug}`}
+      href={`/egitim/${product.slug}`}
       prefetch={false}
       className="group block bg-card border border-border hover:border-orange/50 transition-all rounded-xl overflow-hidden"
     >
-      <div
-        className={`relative aspect-square overflow-hidden ${
-          night && !nightSrc ? "bg-[#050505]" : "bg-black"
-        }`}
-      >
+      <div className="relative aspect-square overflow-hidden bg-black">
         {primarySrc ? (
           <>
             <Image
-              src={primarySrc}
+              src={primaryMobile || primarySrc}
               alt={product.name}
               fill
               className={`object-cover transition-all duration-500 ${
-                night && !nightSrc ? "brightness-[0.55] contrast-125 saturate-150" : ""
-              } ${
-                hoverImage && !night
-                  ? "group-hover:opacity-0"
-                  : "group-hover:scale-105"
+                hoverImage ? "group-hover:opacity-0" : "group-hover:scale-105"
               }`}
               sizes="(max-width:640px) 50vw, 280px"
             />
-            {hoverImage && !night ? (
+            {hoverSrc ? (
               <Image
-                src={hoverImage}
+                src={hoverSrc}
                 alt=""
                 fill
                 className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -125,29 +112,10 @@ export function ProductCard({ product }: ProductCardProps) {
             {specs.garanti}
           </span>
         ) : null}
-        <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
-          {showNight ? (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setNight((v) => !v);
-              }}
-              className="w-9 h-9 rounded-lg flex items-center justify-center bg-black/60 border border-white/10 text-white/80 hover:text-orange hover:border-orange/50"
-              aria-label={night ? "Gündüz görünümü" : "Gece görünümü"}
-            >
-              {night ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
-          ) : null}
-          <div onClick={(e) => e.preventDefault()}>
-            <WishlistButton productId={product.id} />
-          </div>
-        </div>
         <button
           onClick={handleAddToCart}
-          className="absolute bottom-3 right-3 w-10 h-10 rounded-lg flex items-center justify-center bg-orange text-black hover:bg-orange-dark transition-colors z-10"
-          aria-label="Teklif listesine ekle"
+          className="absolute bottom-3 right-3 w-11 h-11 rounded-lg flex items-center justify-center bg-orange text-black hover:bg-orange-dark transition-colors z-10"
+          aria-label="Kayıt listesine ekle"
           type="button"
         >
           <ShoppingCart size={18} />
@@ -174,15 +142,21 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
           <span className="text-[10px] uppercase tracking-wider text-muted">
-            Teklif
+            Kayıt
           </span>
         </div>
-        {product.shippingLabel && (
+        {specs.montaj ? (
           <p className="mt-2 flex items-center gap-1 text-[11px] text-muted">
-            <Truck size={12} className="text-orange shrink-0" />
-            {product.shippingLabel}
+            <Clock size={12} className="text-orange shrink-0" />
+            {specs.montaj}
+            {specs.teslimat ? ` · ${specs.teslimat}` : ""}
           </p>
-        )}
+        ) : specs.teslimat ? (
+          <p className="mt-2 text-[11px] text-muted">{specs.teslimat}</p>
+        ) : null}
+        {product.shippingLabel ? (
+          <p className="mt-1 text-[11px] text-orange/90">{product.shippingLabel}</p>
+        ) : null}
       </div>
     </SiteLink>
   );

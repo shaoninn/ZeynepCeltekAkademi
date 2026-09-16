@@ -14,6 +14,7 @@ export default async function AuditPage() {
       <p className="text-sm text-[#888] mb-6">
         Son 200 güvenlik / operasyon kaydı.
       </p>
+      <p className="text-[11px] text-[#666] mb-2 lg:hidden">Tabloyu yatay kaydırın.</p>
       <div className="admin-card overflow-x-auto">
         <table className="w-full text-sm">
           <thead>

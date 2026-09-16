@@ -35,7 +35,10 @@ export function toWebpSrc(src: string): string {
   if (!src || src.startsWith("data:") || src.startsWith("blob:")) return src;
   const p = pathOnly(src);
   if (LOCAL_WEBP_MAP[p]) return LOCAL_WEBP_MAP[p];
-  if (p.startsWith("/images/") && /\.(jpe?g|png|webp)$/i.test(p)) {
+  if (
+    (p.startsWith("/images/") || p.startsWith("/uploads/")) &&
+    /\.(jpe?g|png|webp)$/i.test(p)
+  ) {
     return toWebpPath(p);
   }
   return src;
@@ -45,7 +48,10 @@ export function toWebpSrcMobile(src: string): string | null {
   if (!src) return null;
   const p = pathOnly(src);
   if (LOCAL_WEBP_SM[p]) return LOCAL_WEBP_SM[p];
-  if (p.startsWith("/images/") && /\.(jpe?g|png|webp)$/i.test(p)) {
+  if (
+    (p.startsWith("/images/") || p.startsWith("/uploads/")) &&
+    /\.(jpe?g|png|webp)$/i.test(p)
+  ) {
     if (p.includes("/logo/")) return null;
     return toSmWebpPath(p);
   }

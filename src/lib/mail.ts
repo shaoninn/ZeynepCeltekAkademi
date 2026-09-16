@@ -1,4 +1,5 @@
 import { formatPrice } from "@/lib/utils";
+import { getSiteUrl } from "@/lib/seo";
 
 interface OrderEmailItem {
   productName: string;
@@ -8,6 +9,19 @@ interface OrderEmailItem {
   widthCm?: number | null;
   heightCm?: number | null;
   color?: string | null;
+}
+
+function mailFromFallback(kind: "resend" | "smtp"): string {
+  if (process.env.MAIL_FROM) return process.env.MAIL_FROM;
+  if (process.env.NODE_ENV === "production") {
+    console.warn(
+      "[mail] MAIL_FROM tanımlı değil; production’da gerçek domain e-posta adresi ayarlayın."
+    );
+  }
+  if (kind === "resend") {
+    return "Zeynep Çeltek Güzellik Akademi <onboarding@resend.dev>";
+  }
+  return "noreply@zeynepceltekakademi.com";
 }
 
 interface OrderEmailPayload {
@@ -24,15 +38,8 @@ interface OrderEmailPayload {
 function orderHtml(order: OrderEmailPayload): string {
   const lines = order.items
     .map((i) => {
-      const dims = [
-        i.widthCm != null ? `${i.widthCm} cm` : null,
-        i.heightCm != null ? `${i.heightCm} cm` : null,
-        i.color || null,
-      ]
-        .filter(Boolean)
-        .join(" · ");
       return `<tr>
-        <td style="padding:8px;border-bottom:1px solid #eee">${i.productName}${dims ? `<br/><small>${dims}</small>` : ""}</td>
+        <td style="padding:8px;border-bottom:1px solid #eee">${i.productName}</td>
         <td style="padding:8px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
         <td style="padding:8px;border-bottom:1px solid #eee;text-align:right">${formatPrice(i.lineTotal)}</td>
       </tr>`;
@@ -40,19 +47,19 @@ function orderHtml(order: OrderEmailPayload): string {
     .join("");
 
   return `<!DOCTYPE html><html><body style="font-family:sans-serif;color:#222">
-    <h2>Teklif talebiniz alındı — ${order.orderNo}</h2>
+    <h2>Ön kayıt talebiniz alındı — ${order.orderNo}</h2>
     <p>Merhaba ${order.name},</p>
-    <p>Talebiniz Zeynep Çeltek Güzellik Akademi sistemine kaydedildi. En kısa sürede sizinle iletişime geçeceğiz.</p>
+    <p>Kayıt talebiniz Zeynep Çeltek Güzellik Akademi sistemine düştü. Kontenjan ve program için en kısa sürede sizinle iletişime geçeceğiz.</p>
     <table style="width:100%;border-collapse:collapse;margin:16px 0">
       <thead><tr>
-        <th style="text-align:left;padding:8px;border-bottom:2px solid #f97316">Ürün</th>
-        <th style="padding:8px;border-bottom:2px solid #f97316">Adet</th>
+        <th style="text-align:left;padding:8px;border-bottom:2px solid #f97316">Eğitim</th>
+        <th style="padding:8px;border-bottom:2px solid #f97316">Kişi</th>
         <th style="text-align:right;padding:8px;border-bottom:2px solid #f97316">Tutar</th>
       </tr></thead>
       <tbody>${lines}</tbody>
     </table>
-    <p><strong>Toplam (tahmini):</strong> ${formatPrice(order.total)}</p>
-    <p style="color:#666;font-size:13px">Fiyatlar keşif sonrası netleşir. Online ödeme yoktur; bu bir teklif kaydıdır.</p>
+    <p><strong>Eğitim ücreti (kayıt):</strong> ${formatPrice(order.total)}</p>
+    <p style="color:#666;font-size:13px">Sabit eğitim ücreti; kayıt WhatsApp veya ön kayıt ile netleşir. Sitede online ödeme yoktur.</p>
     <p>Telefon: ${order.phone}${order.address ? `<br/>Adres: ${order.address}` : ""}</p>
   </body></html>`;
 }
@@ -64,13 +71,13 @@ export async function sendOrderConfirmation(
     return { sent: false, reason: "no-email" };
   }
 
-  const subject = `Zeynep Çeltek Güzellik Akademi teklif özeti — ${order.orderNo}`;
+  const subject = `Zeynep Çeltek Güzellik Akademi ön kayıt özeti — ${order.orderNo}`;
   const html = orderHtml(order);
-  const text = `Teklif talebiniz alındı: ${order.orderNo}. Toplam (tahmini): ${formatPrice(order.total)}`;
+  const text = `Ön kayıt talebiniz alındı: ${order.orderNo}. Eğitim ücreti: ${formatPrice(order.total)}`;
 
   const resendKey = process.env.RESEND_API_KEY;
   if (resendKey) {
-    const from = process.env.MAIL_FROM || "Zeynep Çeltek Güzellik Akademi <onboarding@resend.dev>";
+    const from = mailFromFallback("resend");
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -99,7 +106,7 @@ export async function sendOrderConfirmation(
       const nodemailer = await import("nodemailer");
       const transporter = nodemailer.createTransport(smtpUrl);
       await transporter.sendMail({
-        from: process.env.MAIL_FROM || "noreply@zeynepceltekakademi.local",
+        from: mailFromFallback("smtp"),
         to: order.email,
         subject,
         html,
@@ -128,7 +135,7 @@ async function deliverMail(opts: {
 }): Promise<{ sent: boolean; reason?: string }> {
   const resendKey = process.env.RESEND_API_KEY;
   if (resendKey) {
-    const from = process.env.MAIL_FROM || "Zeynep Çeltek Güzellik Akademi <onboarding@resend.dev>";
+    const from = mailFromFallback("resend");
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -156,7 +163,7 @@ async function deliverMail(opts: {
       const nodemailer = await import("nodemailer");
       const transporter = nodemailer.createTransport(smtpUrl);
       await transporter.sendMail({
-        from: process.env.MAIL_FROM || "noreply@zeynepceltekakademi.local",
+        from: mailFromFallback("smtp"),
         to: opts.to,
         subject: opts.subject,
         html: opts.html,
@@ -176,51 +183,48 @@ async function deliverMail(opts: {
   return { sent: false, reason: "no-mail-provider" };
 }
 
-/** Atölye / üretici özeti — SiteSetting manufacturer_email veya MAIL_MANUFACTURER */
-export async function sendManufacturerBrief(order: {
-  orderNo: string;
-  name: string;
-  phone: string;
-  total: number;
-  note?: string | null;
-  productionNotes?: string | null;
-  items: Array<{
-    productName: string;
-    quantity: number;
-    widthCm?: number | null;
-    heightCm?: number | null;
-    color?: string | null;
-    optionsNote?: string | null;
-    lineTotal: number;
-  }>;
-}): Promise<{ sent: boolean; reason?: string }> {
+async function ownerNotifyTo(): Promise<string | null> {
   const { prisma } = await import("@/lib/db");
   const row = await prisma.siteSetting.findUnique({
-    where: { key: "manufacturer_email" },
+    where: { key: "notify_email" },
   });
-  const to =
+  return (
     row?.value?.trim() ||
+    process.env.MAIL_FROM_NOTIFY?.trim() ||
     process.env.MAIL_MANUFACTURER?.trim() ||
-    process.env.MAIL_FROM_NOTIFY?.trim();
-  if (!to) return { sent: false, reason: "no-manufacturer-email" };
+    null
+  );
+}
 
-  const lines = order.items
-    .map((i) => {
-      const dims = [
-        i.widthCm != null ? `en ${i.widthCm}` : null,
-        i.heightCm != null ? `boy ${i.heightCm}` : null,
-        i.color || null,
-      ]
-        .filter(Boolean)
-        .join(", ");
-      return `• ${i.productName} x${i.quantity}${dims ? ` (${dims})` : ""}${
-        i.optionsNote ? ` | ${i.optionsNote}` : ""
-      }`;
-    })
+export async function sendOwnerLeadAlert(opts: {
+  kind: "contact" | "order";
+  name: string;
+  phone: string;
+  email?: string | null;
+  message?: string | null;
+  orderNo?: string;
+  adminPath: string;
+}): Promise<{ sent: boolean; reason?: string }> {
+  const to = await ownerNotifyTo();
+  if (!to) return { sent: false, reason: "no-notify-email" };
+
+  const site = getSiteUrl();
+  const adminUrl = `${site}${opts.adminPath}`;
+  const subject =
+    opts.kind === "order"
+      ? `[Kayıt] ${opts.orderNo || ""} — ${opts.name}`
+      : `[Mesaj] ${opts.name}`;
+  const text = [
+    opts.kind === "order" ? "Yeni eğitim kayıt talebi" : "Yeni iletişim mesajı",
+    `Ad: ${opts.name}`,
+    `Telefon: ${opts.phone}`,
+    opts.email ? `E-posta: ${opts.email}` : null,
+    opts.orderNo ? `Kayıt no: ${opts.orderNo}` : null,
+    opts.message ? `Mesaj: ${opts.message}` : null,
+    `Panel: ${adminUrl}`,
+  ]
+    .filter(Boolean)
     .join("\n");
-
-  const subject = `[Kayıt] ${order.orderNo} — ${order.name}`;
-  const text = `Yeni eğitim kayıt talebi\n\n${order.orderNo}\nÖğrenci: ${order.name} / ${order.phone}\nToplam: ${formatPrice(order.total)}\nNot: ${order.note || "-"}\n\nKalemler:\n${lines}`;
   const html = `<pre style="font-family:sans-serif;white-space:pre-wrap">${text}</pre>`;
 
   return deliverMail({ to, subject, html, text });

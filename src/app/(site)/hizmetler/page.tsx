@@ -5,12 +5,14 @@ import { PageIntro } from "@/components/editor/PageIntro";
 import { CatalogAdminHint } from "@/components/editor/CatalogAdminHint";
 import Image from "next/image";
 import { ArrowRight, GraduationCap } from "lucide-react";
+import { parseProductSpecs } from "@/lib/catalog-meta";
+import { formatPrice } from "@/lib/utils";
 
 export const revalidate = 600;
 
 export const metadata = {
   alternates: { canonical: "/hizmetler" },
-  title: "Eğitimler | Zeynep Çeltek Güzellik Akademi",
+  title: "Eğitimler",
   description:
     "Adana’da güzellik eğitimleri: protez tırnak, kalıcı makyaj, ipek kirpik, cilt bakımı ve daha fazlası.",
 };
@@ -75,11 +77,23 @@ export default async function ServicesPage() {
               <h2 className="font-display text-sm font-semibold text-white uppercase tracking-[0.12em] text-center group-hover:text-orange transition-colors">
                 {category.name}
               </h2>
-              {category.description ? (
-                <p className="mt-2 text-xs text-muted text-center line-clamp-2 px-2">
-                  {category.description}
-                </p>
-              ) : null}
+              {(() => {
+                const first = category.products?.[0];
+                const duration = first
+                  ? parseProductSpecs(first.specs).montaj
+                  : "";
+                return duration || first?.price != null ? (
+                  <p className="mt-2 text-xs text-orange text-center">
+                    {duration}
+                    {duration && first?.price != null ? " · " : ""}
+                    {first?.price != null ? formatPrice(first.price) : ""}
+                  </p>
+                ) : category.description ? (
+                  <p className="mt-2 text-xs text-muted text-center line-clamp-2 px-2">
+                    {category.description}
+                  </p>
+                ) : null;
+              })()}
               <p className="mt-2 text-[11px] text-orange text-center tracking-wider uppercase">
                 {category._count.products} eğitim
               </p>

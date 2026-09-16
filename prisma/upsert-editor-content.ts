@@ -72,12 +72,12 @@ const keys: { key: string; title: string; content: string }[] = [
   {
     key: "feature_bar_4_title",
     title: "Özellik Çubuğu 4",
-    content: "7/24 Destek",
+    content: "Eğitim Danışmanlığı",
   },
   {
     key: "feature_bar_4_desc",
     title: "Özellik Çubuğu 4 Açıklama",
-    content: "Eğitim öncesi ve sonrası danışmanlık hattımız açık.",
+    content: "Mesai saatlerinde kayıt ve program rehberliği.",
   },
   {
     key: "feature_bar_5_title",
@@ -93,7 +93,7 @@ const keys: { key: string; title: string; content: string }[] = [
     key: "footer_blurb",
     title: "Footer Tanıtım",
     content:
-      "Güzelliği bilimle, sanata dönüştürüyoruz. Adana'da uygulamalı güzellik eğitimleri. Instagram: @zeynepceltekakademi",
+      "Güzelliği bilimle, sanata dönüştürüyoruz. Adana'da uygulamalı güzellik eğitimleri. Instagram: @zeynepceltek_guzellik.kursu",
   },
   {
     key: "about_headline",

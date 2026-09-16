@@ -82,7 +82,7 @@ export function MediaClient({ initial }: { initial: Asset[] }) {
   async function onDelete(id: string) {
     if (
       !confirm(
-        "Bu görseli silmek istediğinize emin misiniz? Ürünlerde kullanılıyorsa bağlantı kırılır."
+        "Bu görseli silmek istediğinize emin misiniz? Eğitimlerde kullanılıyorsa bağlantı kırılır."
       )
     ) {
       return;

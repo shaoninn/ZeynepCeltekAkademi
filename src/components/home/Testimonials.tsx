@@ -86,7 +86,7 @@ export function Testimonials({
               href={googleReviewsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-3 text-sm text-orange hover:underline"
+              className="inline-flex items-center min-h-11 mt-4 rounded-full border border-orange/70 px-5 py-2.5 text-sm text-orange hover:bg-orange hover:text-black transition-colors"
             >
               <EditableText
                 contentKey="google_reviews_link_label"
@@ -95,7 +95,7 @@ export function Testimonials({
                   "Google’da yorumları gör / yorum bırak →"
                 }
                 as="span"
-                className="text-orange"
+                className="text-inherit"
                 help="Google yorumları bağlantı yazısı"
                 textStyle={styles?.google_reviews_link_label}
               />

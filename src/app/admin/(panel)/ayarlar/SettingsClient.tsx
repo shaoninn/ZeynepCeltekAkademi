@@ -12,6 +12,7 @@ const FIELDS = [
   { key: "phone", label: "Telefon", help: "Sitede ve WhatsApp butonunda görünür." },
   { key: "whatsapp", label: "WhatsApp (ülke kodlu)", help: "Örn: 905340809873 — sadece rakam." },
   { key: "address", label: "Adres" },
+  { key: "notify_email", label: "Bildirim e-postası", help: "Yeni mesaj ve kayıt talebi bu adrese düşer. Boşsa MAIL_FROM_NOTIFY kullanılır." },
   { key: "instagram", label: "Instagram", help: "zeynepceltek_guzellik.kursu" },
   { key: "instagram_2", label: "Instagram (T. Özal)", help: "zeynepceltek_t.ozal" },
   {
@@ -19,20 +20,10 @@ const FIELDS = [
     label: "Instagram (Güzellik Kursu)",
     help: "zeynepceltek_guzellik.kursu",
   },
-  {
-    key: "instagram_access_token",
-    label: "Instagram Access Token",
-    help: "Meta Graph / Instagram Basic Display long-lived token. Canlı feed için.",
-  },
-  {
-    key: "instagram_user_id",
-    label: "Instagram Business User ID",
-    help: "Graph API için IG kullanıcı ID (opsiyonel; boşsa /me/media denenir).",
-  },
   { key: "google_reviews_url", label: "Google işletme / yorum linki", help: "Örn: share.google/... veya maps profil linki." },
   { key: "work_hours_weekdays", label: "Hafta içi çalışma saati" },
   { key: "work_hours_sunday", label: "Pazar" },
-  { key: "payment_enabled", label: "Ödeme paneli (1=açık)", help: "1 veya true yazınca /odeme banka bilgilerini vurgular." },
+  { key: "payment_enabled", label: "Havale bilgisi (1=açık)", help: "1 veya true yazınca /odeme banka bilgilerini vurgular." },
   { key: "bank_name", label: "Banka adı" },
   { key: "bank_iban", label: "IBAN" },
   { key: "bank_holder", label: "Hesap sahibi" },
@@ -199,6 +190,34 @@ export function SettingsClient({
           Ayarları Kaydet
         </AdminButton>
       </form>
+
+      <div className="admin-card p-6">
+        <h2 className="font-display text-lg font-bold mb-3">Reklam / analitik</h2>
+        <p className="text-xs text-[#888] mb-4">
+          Kimlikler ortam değişkeninden okunur (Ayarlar formuna yazılmaz).
+          GA / Ads / Pixel env değişince siteyi yeniden derleyin (rebuild).
+        </p>
+        <ul className="text-sm space-y-2">
+          <li>
+            GA4:{" "}
+            <span className={process.env.NEXT_PUBLIC_GA_ID ? "text-green-400" : "text-[#888]"}>
+              {process.env.NEXT_PUBLIC_GA_ID ? "tanımlı" : "boş"}
+            </span>
+          </li>
+          <li>
+            Google Ads:{" "}
+            <span className={process.env.NEXT_PUBLIC_AW_ID ? "text-green-400" : "text-[#888]"}>
+              {process.env.NEXT_PUBLIC_AW_ID ? "tanımlı" : "boş"}
+            </span>
+          </li>
+          <li>
+            Meta Pixel:{" "}
+            <span className={process.env.NEXT_PUBLIC_META_PIXEL_ID ? "text-green-400" : "text-[#888]"}>
+              {process.env.NEXT_PUBLIC_META_PIXEL_ID ? "tanımlı" : "boş"}
+            </span>
+          </li>
+        </ul>
+      </div>
 
       <form onSubmit={onPassword} className="admin-card p-6">
         <h2 className="font-display text-lg font-bold mb-4">Şifre Değiştir</h2>

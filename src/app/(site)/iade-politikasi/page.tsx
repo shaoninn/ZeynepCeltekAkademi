@@ -19,7 +19,7 @@ export default function ReturnPolicyPage() {
       <p>
         Onaylanan program ve kontenjan ile eğitime alınan kayıtlarda; eğitim
         başladıktan sonra iade kabul edilmez. Eğitim öncesi iptalde yapılan
-        kapora / avans kesintisi teklifte belirtilen oranda uygulanabilir.
+        kapora / avans kesintisi kayıtta belirtilen oranda uygulanabilir.
       </p>
       <h2>Akademi kaynaklı aksaklık</h2>
       <p>
@@ -27,15 +27,15 @@ export default function ReturnPolicyPage() {
         iadesi veya alternatif tarih sunulur. Katılımcı kaynaklı gecikme /
         devamsızlıklarda ek düzenleme teklif edilebilir.
       </p>
-      <h2>Standart ürün / paketler</h2>
+      <h2>Eğitim paketleri</h2>
       <p>
-        Stoktan verilen (varsa) standart ürün veya eğitim paketlerinde,
-        kullanılmamış hallerde iade talepleri {COMPANY.phone} üzerinden
-        iletilmelidir. İnceleme sonrası süreç netleştirilir.
+        Eğitim paketlerinde (varsa malzeme seti vb.), kullanılmamış hallerde
+        iade talepleri {COMPANY.phone} üzerinden iletilmelidir. İnceleme sonrası
+        süreç netleştirilir.
       </p>
       <h2>Başvuru</h2>
       <p>
-        İade / iptal taleplerinizi kayıt veya teklif referansınızla birlikte{" "}
+        İade / iptal taleplerinizi kayıt referansınızla birlikte{" "}
         {COMPANY.phone} üzerinden iletin.
       </p>
     </LegalShell>

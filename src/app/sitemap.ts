@@ -68,7 +68,7 @@ async function buildSitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       })),
       ...products.map((p) => ({
-        url: `${base}/urun/${p.slug}`,
+        url: `${base}/egitim/${p.slug}`,
         lastModified: p.updatedAt,
         changeFrequency: "weekly" as const,
         priority: 0.6,

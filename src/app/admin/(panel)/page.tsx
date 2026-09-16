@@ -8,7 +8,6 @@ import {
   Pencil,
   TrendingUp,
   Clock,
-  CreditCard,
 } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
@@ -25,7 +24,6 @@ async function getStats() {
     projects,
     pendingOrders,
     todayQuotes,
-    unpaid,
     confirmed,
     recentOrders,
   ] = await Promise.all([
@@ -35,14 +33,11 @@ async function getStats() {
     prisma.project.count(),
     prisma.order.count({ where: { status: "PENDING" } }),
     prisma.order.count({ where: { createdAt: { gte: startOfDay } } }),
-    prisma.order.count({
-      where: { paymentStatus: { in: ["UNPAID", "PENDING"] }, status: { not: "CANCELLED" } },
-    }),
     prisma.order.count({ where: { status: "CONFIRMED" } }),
     prisma.order.findMany({
       orderBy: { createdAt: "desc" },
       take: 5,
-      select: { orderNo: true, name: true, total: true, status: true, createdAt: true },
+      select: { id: true, orderNo: true, name: true, total: true, status: true, createdAt: true },
     }),
   ]);
 
@@ -56,7 +51,6 @@ async function getStats() {
     projects,
     pendingOrders,
     todayQuotes,
-    unpaid,
     conversion,
     recentOrders,
   };
@@ -67,11 +61,11 @@ export default async function AdminDashboard() {
 
   const cards = [
     {
-      label: "Bugün teklif",
+      label: "Bugün kayıt",
       value: stats.todayQuotes,
       href: "/admin/siparisler",
       icon: Clock,
-      hint: "Bugün gelen teklif talepleri",
+      hint: "Bugün gelen ön kayıt talepleri",
     },
     {
       label: "Bekleyen",
@@ -81,25 +75,18 @@ export default async function AdminDashboard() {
       hint: "Onay bekleyen kayıtlar",
     },
     {
-      label: "Ödeme açık",
-      value: stats.unpaid,
-      href: "/admin/siparisler",
-      icon: CreditCard,
-      hint: "UNPAID / PENDING ödemeler",
-    },
-    {
       label: "Dönüşüm %",
       value: stats.conversion,
       href: "/admin/siparisler/kanban",
       icon: TrendingUp,
-      hint: "Onaylanan / tüm teklifler",
+      hint: "Onaylanan / tüm kayıtlar",
     },
     {
-      label: "Ürünler",
+      label: "Eğitimler",
       value: stats.products,
       href: "/admin/urunler",
       icon: Package,
-      hint: "Katalog",
+      hint: "Programlar",
     },
     {
       label: "Mesajlar",
@@ -109,11 +96,11 @@ export default async function AdminDashboard() {
       hint: "Okunmamış",
     },
     {
-      label: "Projeler",
+      label: "Galeri",
       value: stats.projects,
       href: "/admin/projeler",
       icon: Images,
-      hint: "Portföy",
+      hint: "Atölye görselleri",
     },
   ];
 
@@ -121,8 +108,7 @@ export default async function AdminDashboard() {
     <div>
       <h1 className="font-display text-3xl font-bold mb-2">Hoş Geldiniz</h1>
       <p className="text-muted mb-8">
-        KPI özeti: bugünkü teklifler, dönüşüm ve ödeme durumu. Sol menüden
-        kanban, CRM hatırlatma ve ürün SEO skoruna ulaşın.
+        KPI özeti: bugünkü kayıtlar ve dönüşüm.
       </p>
 
       <Link
@@ -141,6 +127,53 @@ export default async function AdminDashboard() {
           </p>
         </div>
       </Link>
+
+      <div className="admin-card p-5 mb-8">
+        <h2 className="font-semibold mb-3">Başlangıç kontrol listesi</h2>
+        <ul className="text-sm text-[#aaa] space-y-2">
+          <li>
+            WhatsApp numarası —{" "}
+            <Link href="/admin/ayarlar" className="text-orange hover:underline">
+              Ayarlar
+            </Link>
+          </li>
+          <li>
+            Google yorum linki —{" "}
+            <Link href="/admin/ayarlar" className="text-orange hover:underline">
+              Ayarlar
+            </Link>
+          </li>
+          <li>
+            Galeri görselleri —{" "}
+            <Link href="/admin/projeler" className="text-orange hover:underline">
+              Galeri
+            </Link>
+          </li>
+          <li>
+            İstatistik metinleri —{" "}
+            <Link href="/duzenle" className="text-orange hover:underline">
+              Siteyi düzenle
+            </Link>
+          </li>
+          <li>
+            İçerik için her zaman{" "}
+            <Link href="/duzenle" className="text-orange hover:underline">
+              Siteyi Düzenle
+            </Link>{" "}
+            kullanın
+          </li>
+          <li>
+            Gerçek mezun yorumu yazmak için ana sayfa referans kartlarındaki
+            isim alanını düzenleyin
+          </li>
+          <li>
+            Lead e-postası —{" "}
+            <Link href="/admin/ayarlar" className="text-orange hover:underline">
+              Ayarlar → Bildirim e-postası
+            </Link>
+          </li>
+        </ul>
+      </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {cards.map((card) => (
@@ -164,23 +197,33 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="admin-card p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold">Son teklifler</h2>
-          <Link href="/admin/crm" className="text-xs text-orange hover:underline">
-            CRM hatırlatmalar →
-          </Link>
+        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+          <h2 className="font-semibold">Son kayıtlar</h2>
+          <div className="flex items-center gap-3">
+            <Link href="/admin/crm" className="text-xs text-orange hover:underline">
+              CRM hatırlatma →
+            </Link>
+            <Link href="/admin/siparisler" className="text-xs text-orange hover:underline">
+              Kayıtlar →
+            </Link>
+          </div>
         </div>
+        {stats.todayQuotes > 0 && (
+          <p className="text-xs text-[#888] mb-3">
+            Bugün {stats.todayQuotes} yeni kayıt talebi.
+          </p>
+        )}
         <ul className="space-y-2 text-sm">
           {stats.recentOrders.length === 0 && (
             <li className="text-[#888]">Henüz kayıt yok.</li>
           )}
           {stats.recentOrders.map((o) => (
             <li
-              key={o.orderNo}
+              key={o.id}
               className="flex justify-between gap-3 border-b border-[#222] pb-2"
             >
               <Link
-                href={`/admin/siparisler`}
+                href={`/admin/siparisler/${o.id}`}
                 className="text-orange hover:underline"
               >
                 {o.orderNo}

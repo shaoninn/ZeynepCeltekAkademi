@@ -8,6 +8,7 @@ import { buildStats } from "@/lib/page-content";
 import { FEATURE_BAR } from "@/lib/constants";
 import { styleContentKey } from "@/lib/text-style";
 import { toWebpSrc } from "@/lib/image-optimize";
+import { getFeaturedProducts } from "@/lib/catalog";
 
 const DEFAULT_HERO_IMAGE = "/images/hero/hero-academy.webp";
 const DEFAULT_HERO_TITLE = "Güzelliği bilimle, sanata dönüştürüyoruz.";
@@ -50,6 +51,9 @@ const HOME_CONTENT_KEYS = [
   "stat_3_label",
   "stat_4_value",
   "stat_4_label",
+  "featured_products_title",
+  "process_section_title",
+  "faq_section_title",
 ] as const;
 
 const STYLE_BASE_KEYS = [
@@ -110,15 +114,27 @@ const emptyHome = {
   sectionFeatureBarOffset: "0",
   projects: [] as Awaited<ReturnType<typeof getFeaturedProjects>>,
   categories: [] as Awaited<ReturnType<typeof getActiveCategories>>,
+  featuredProducts: [] as Awaited<ReturnType<typeof getFeaturedProducts>>,
+  featuredTitle: undefined as string | undefined,
+  processTitle: undefined as string | undefined,
+  contact: {
+    phone: undefined as string | undefined,
+    phoneRaw: undefined as string | undefined,
+    address: undefined as string | undefined,
+    whatsappUrl: undefined as string | undefined,
+    workHoursWeekdays: undefined as string | undefined,
+    workHoursSunday: undefined as string | undefined,
+  },
 };
 
 export async function loadHomePageData() {
   try {
-    const [map, projects, settings, categories] = await Promise.all([
+    const [map, projects, settings, categories, featuredProducts] = await Promise.all([
       getContentMap([...HOME_KEYS]),
       getFeaturedProjects(),
       getSiteSettings(),
       getActiveCategories(),
+      getFeaturedProducts(),
     ]);
 
     const featureBarItems = FEATURE_BAR.map((_, i) => {
@@ -153,6 +169,17 @@ export async function loadHomePageData() {
       sectionFeatureBarOffset: settings.sectionFeatureBarOffset,
       projects,
       categories,
+      featuredProducts,
+      featuredTitle: map.featured_products_title || undefined,
+      processTitle: map.process_section_title || undefined,
+      contact: {
+        phone: settings.phone,
+        phoneRaw: settings.phoneRaw,
+        address: settings.address,
+        whatsappUrl: settings.whatsappUrl,
+        workHoursWeekdays: settings.workHoursWeekdays,
+        workHoursSunday: settings.workHoursSunday,
+      },
     };
   } catch (error) {
     console.error("loadHomePageData failed:", error);

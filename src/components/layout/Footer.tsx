@@ -1,8 +1,7 @@
 import { SiteLink } from "@/components/ui/SiteLink";
-import { Camera, MapPin, Phone } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import {
   SITE_NAME,
-  CATEGORIES,
   LEGAL_LINKS,
   PRIMARY_NAV_LINKS,
   INSTAGRAM_ACCOUNTS,
@@ -10,15 +9,22 @@ import {
 import { Logo } from "@/components/brand/Logo";
 import { FooterBlurb } from "@/components/layout/FooterBlurb";
 import { WhatsAppIcon } from "@/components/brand/WhatsAppIcon";
+import { InstagramIcon } from "@/components/brand/InstagramIcon";
 import type { NavLinkItem, SiteSettingsMap } from "@/lib/site";
 
 interface FooterProps {
   settings: SiteSettingsMap;
   navLinks: NavLinkItem[];
   footerBlurb?: string;
+  categories?: { href: string; label: string }[];
 }
 
-export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
+export function Footer({
+  settings,
+  navLinks,
+  footerBlurb,
+  categories = [],
+}: FooterProps) {
   const currentYear = new Date().getFullYear();
   const quick =
     navLinks.length > 0
@@ -45,7 +51,7 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
                   aria-label={acc.handle}
                   title={acc.handle}
                 >
-                  <Camera size={15} />
+                  <InstagramIcon size={15} />
                 </a>
               ))}
               <a
@@ -97,13 +103,13 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
               Eğitimlerimiz
             </h3>
             <ul className="space-y-2.5">
-              {CATEGORIES.slice(0, 6).map((cat) => (
-                <li key={cat.slug}>
+              {categories.slice(0, 6).map((cat) => (
+                <li key={cat.href}>
                   <SiteLink
-                    href={`/hizmetler/${cat.slug}`}
+                    href={cat.href}
                     className="text-muted text-sm hover:text-orange transition-colors"
                   >
-                    {cat.name}
+                    {cat.label}
                   </SiteLink>
                 </li>
               ))}
@@ -113,6 +119,14 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
                   className="text-orange text-sm font-semibold hover:text-orange-dark transition-colors"
                 >
                   Tüm eğitimler →
+                </SiteLink>
+              </li>
+              <li>
+                <SiteLink
+                  href="/hizmet-bolgeleri"
+                  className="text-muted text-sm hover:text-orange transition-colors"
+                >
+                  Eğitim bölgeleri
                 </SiteLink>
               </li>
             </ul>
@@ -149,7 +163,7 @@ export function Footer({ settings, navLinks, footerBlurb }: FooterProps) {
             © {currentYear} {SITE_NAME}. Tüm hakları saklıdır.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-            {LEGAL_LINKS.slice(0, 4).map((link) => (
+            {LEGAL_LINKS.map((link) => (
               <SiteLink
                 key={link.href}
                 href={link.href}

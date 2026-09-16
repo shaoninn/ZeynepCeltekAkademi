@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Siteyi Düzenle | Zeynep Çeltek Güzellik Akademi",
+  title: "Siteyi Düzenle",
   robots: { index: false, follow: false },
 };
 
@@ -71,6 +71,7 @@ export default async function EditorLayout({
               settings={settings}
               navLinks={editorNav}
               footerBlurb={content.footer_blurb}
+              categories={menuCategories}
             />
           </div>
           <EditorHelp />

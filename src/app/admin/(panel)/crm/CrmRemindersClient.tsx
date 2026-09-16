@@ -49,7 +49,7 @@ export function CrmRemindersClient({ initial }: { initial: ReminderOrder[] }) {
         ? `90${digits.slice(1)}`
         : `90${digits}`;
     const text = encodeURIComponent(
-      `Merhaba ${name}, ${orderNo} numaralı teklifiniz için kısa bir teyit görüşmesi yapabilir miyiz? — Zeynep Çeltek Güzellik Akademi`
+      `Merhaba ${name}, ${orderNo} numaralı kayıt talebiniz için kısa bir teyit görüşmesi yapabilir miyiz? — Zeynep Çeltek Güzellik Akademi`
     );
     return `https://wa.me/${to}?text=${text}`;
   }
@@ -59,7 +59,7 @@ export function CrmRemindersClient({ initial }: { initial: ReminderOrder[] }) {
       {msg && <p className="text-sm text-[#888] mb-4">{msg}</p>}
       <div className="space-y-3">
         {rows.length === 0 && (
-          <p className="text-sm text-[#888]">Hatırlatılacak teklif yok.</p>
+          <p className="text-sm text-[#888]">Hatırlatılacak kayıt yok.</p>
         )}
         {rows.map((o) => (
           <div

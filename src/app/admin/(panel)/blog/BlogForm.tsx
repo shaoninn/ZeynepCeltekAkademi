@@ -107,7 +107,10 @@ export function BlogForm({ initial }: BlogFormProps) {
         help="Yazının liste ve detay sayfasında görünen fotoğrafı."
       />
 
-      <AdminField label="İçerik *" help="En az 10 karakter.">
+      <AdminField
+        label="İçerik *"
+        help="HTML desteklenir: p, h2, h3, ul, ol, li, strong, em, a. En az 10 karakter."
+      >
         <textarea
           className="admin-input min-h-[200px]"
           value={content}

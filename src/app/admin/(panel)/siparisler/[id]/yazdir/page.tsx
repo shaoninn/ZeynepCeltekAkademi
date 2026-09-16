@@ -27,13 +27,13 @@ export default async function AdminOrderPrintPage({ params }: Props) {
             href={`/admin/siparisler/${order.id}`}
             className="text-sm text-orange hover:underline"
           >
-            ← Sipariş detayı
+            ← Kayıt detayı
           </Link>
           <AdminPrintButton />
         </div>
 
         <header className="border-b border-gray-300 pb-6 mb-6">
-          <h1 className="text-2xl font-bold">Zeynep Çeltek Güzellik Akademi — Teklif (Admin)</h1>
+          <h1 className="text-2xl font-bold">Zeynep Çeltek Güzellik Akademi — Kayıt özeti (Admin)</h1>
           <p className="text-sm text-gray-600 mt-2">
             {order.orderNo} · {new Date(order.createdAt).toLocaleDateString("tr-TR")}
           </p>
@@ -41,7 +41,7 @@ export default async function AdminOrderPrintPage({ params }: Props) {
 
         <section className="mb-6 text-sm space-y-1">
           <p>
-            <strong>Müşteri:</strong> {order.name}
+            <strong>Öğrenci:</strong> {order.name}
           </p>
           <p>
             <strong>Telefon:</strong> {order.phone}
@@ -72,28 +72,18 @@ export default async function AdminOrderPrintPage({ params }: Props) {
         <table className="w-full text-sm mb-6 border-collapse">
           <thead>
             <tr className="border-b border-gray-400">
-              <th className="text-left py-2">Ürün</th>
-              <th className="text-right py-2">Adet</th>
+              <th className="text-left py-2">Eğitim</th>
+              <th className="text-right py-2">Kişi</th>
               <th className="text-right py-2">Birim</th>
               <th className="text-right py-2">Tutar</th>
             </tr>
           </thead>
           <tbody>
             {order.items.map((item) => {
-              const dims = [
-                item.widthCm != null ? `${item.widthCm}×${item.heightCm ?? "?"} cm` : null,
-                item.color || null,
-                item.optionsNote || null,
-              ]
-                .filter(Boolean)
-                .join(" · ");
               return (
                 <tr key={item.id} className="border-b border-gray-200">
                   <td className="py-2">
                     {item.productName}
-                    {dims && (
-                      <span className="block text-xs text-gray-500">{dims}</span>
-                    )}
                   </td>
                   <td className="text-right py-2">{item.quantity}</td>
                   <td className="text-right py-2">{formatPrice(item.unitPrice)}</td>
