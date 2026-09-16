@@ -42,7 +42,6 @@ export const projectData: Array<{
     image: "/images/facility/facility-1.webp",
     images: [
       "/images/facility/facility-1.webp",
-      "/images/facility/facility-2.webp",
       "/images/facility/facility-3.webp",
     ],
     categorySlug: "guzellik-uzmanligi",

@@ -25,9 +25,9 @@ export function FacilitySection({
   const main =
     projects[0]?.image || "/images/facility/facility-1.webp";
   const sideA =
-    projects[1]?.image || "/images/facility/facility-2.webp";
+    projects[1]?.image || "/images/facility/facility-3.webp";
   const sideB =
-    projects[2]?.image || "/images/facility/facility-3.webp";
+    projects[2]?.image || "/images/about/about-1.webp";
 
   return (
     <section className="bg-cream-section py-16 lg:py-20">
