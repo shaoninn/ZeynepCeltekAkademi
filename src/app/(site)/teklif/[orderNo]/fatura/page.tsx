@@ -39,10 +39,10 @@ export default async function InvoicePage({ params, searchParams }: Props) {
             {PHONE}
           </p>
           <p className="mt-4 text-lg font-semibold">
-            Ön kayıt dökümü — {order.invoiceNo || order.orderNo}
+            Kayıt dökümü — {order.invoiceNo || order.orderNo}
           </p>
           <p className="text-xs text-neutral-600">
-            Bu bir ön kayıt dökümüdür. Resmi fatura akademiden düzenlenir.
+            Bu bir kayıt dökümüdür. Resmi fatura akademiden düzenlenir.
           </p>
         </header>
 

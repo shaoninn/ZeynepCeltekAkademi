@@ -47,7 +47,7 @@ function orderHtml(order: OrderEmailPayload): string {
     .join("");
 
   return `<!DOCTYPE html><html><body style="font-family:sans-serif;color:#222">
-    <h2>Ön kayıt talebiniz alındı — ${order.orderNo}</h2>
+    <h2>Kayıt talebiniz alındı — ${order.orderNo}</h2>
     <p>Merhaba ${order.name},</p>
     <p>Kayıt talebiniz Zeynep Çeltek Güzellik Akademi sistemine düştü. Kontenjan ve program için en kısa sürede sizinle iletişime geçeceğiz.</p>
     <table style="width:100%;border-collapse:collapse;margin:16px 0">
@@ -59,7 +59,7 @@ function orderHtml(order: OrderEmailPayload): string {
       <tbody>${lines}</tbody>
     </table>
     <p><strong>Eğitim ücreti (kayıt):</strong> ${formatPrice(order.total)}</p>
-    <p style="color:#666;font-size:13px">Sabit eğitim ücreti; kayıt WhatsApp veya ön kayıt ile netleşir. Sitede online ödeme yoktur.</p>
+    <p style="color:#666;font-size:13px">Eğitim ücretini kayıt numaranızla PayTR (kart) veya havale ile ödeyebilirsiniz. Kontenjan teyidi WhatsApp / telefonla tamamlanır. Ödeme: ${getSiteUrl()}/odeme</p>
     <p>Telefon: ${order.phone}${order.address ? `<br/>Adres: ${order.address}` : ""}</p>
   </body></html>`;
 }
@@ -71,9 +71,9 @@ export async function sendOrderConfirmation(
     return { sent: false, reason: "no-email" };
   }
 
-  const subject = `Zeynep Çeltek Güzellik Akademi ön kayıt özeti — ${order.orderNo}`;
+  const subject = `Zeynep Çeltek Güzellik Akademi kayıt özeti — ${order.orderNo}`;
   const html = orderHtml(order);
-  const text = `Ön kayıt talebiniz alındı: ${order.orderNo}. Eğitim ücreti: ${formatPrice(order.total)}`;
+  const text = `Kayıt talebiniz alındı: ${order.orderNo}. Eğitim ücreti: ${formatPrice(order.total)}. Ödeme: ${getSiteUrl()}/odeme`;
 
   const resendKey = process.env.RESEND_API_KEY;
   if (resendKey) {

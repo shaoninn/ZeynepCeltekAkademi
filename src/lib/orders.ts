@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { generateOrderNo } from "@/lib/api";
 import { sendOrderConfirmation, sendOwnerLeadAlert } from "@/lib/mail";
 import { writeAuditLog } from "@/lib/audit";
+import { isPaytrConfigured } from "@/lib/paytr";
 
 export interface QuoteItemInput {
   productId: string;
@@ -139,7 +140,11 @@ export async function createQuoteOrder(input: {
       source: input.source || "WEB",
       status: "PENDING",
       paymentStatus: input.wantPayment ? "PENDING" : "UNPAID",
-      paymentProvider: input.wantPayment ? "BANK_TRANSFER" : null,
+      paymentProvider: input.wantPayment
+        ? isPaytrConfigured()
+          ? "PAYTR"
+          : "BANK_TRANSFER"
+        : null,
       invoiceNo: `F-${Date.now().toString(36).toUpperCase()}`,
       reminderAt,
       total,

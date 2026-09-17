@@ -10,18 +10,18 @@ const DEFAULT_STEPS = [
   },
   {
     n: "02",
-    title: "Ön kayıt",
-    desc: "Kayıt sepetinden talebinizi gönderin — online ödeme yoktur.",
+    title: "Kayıt talebi",
+    desc: "Kayıt sepetinden talebinizi gönderin; numaranızı not alın.",
   },
   {
     n: "03",
-    title: "WhatsApp teyit",
-    desc: "Kontenjan ve takvim için WhatsApp veya telefonla netleşiriz.",
+    title: "Güvenli ödeme",
+    desc: "PayTR kart veya havale ile eğitim ücretini tamamlayın.",
   },
   {
     n: "04",
-    title: "Kayıt / ödeme",
-    desc: "Onay sonrası havale veya akademide yüz yüze ödeme planı.",
+    title: "Teyit & belge",
+    desc: "Kontenjan netleşir; eğitim ve belgelendirme süreci başlar.",
   },
 ];
 

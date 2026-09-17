@@ -97,8 +97,9 @@ export default async function AdminOrderDetailPage({
       </div>
 
       <div className="admin-warning mb-6">
-        Bu kayıt bir ön kayıt talebidir. Sanal POS yoktur; öğrenciyle telefon
-        veya WhatsApp üzerinden iletişime geçin.
+        Kayıt talebi. Ödeme durumu (PayTR / havale) paneldedir; öğrenciyle
+        telefon veya WhatsApp üzerinden kontenjan teyidi yapın. PayTR callback
+        başarılıysa ödeme otomatik PAID olur.
       </div>
 
       <div className="mb-6">

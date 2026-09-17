@@ -32,7 +32,7 @@ const MISSION =
 const VISION =
   "Vizyonumuz; Adana ve çevresinde güzellik eğitiminin referans akademilerinden biri olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamaktır.\n\nUygulamalı müfredatımızı, güncel teknikleri ve belgelendirme seçeneklerini güçlendirerek hem yeni başlayanlara hem de kendini geliştirmek isteyen profesyonellere tutarlı bir kalite sunmayı amaçlıyoruz.\n\nUzun vadede hedefimiz; “herkese aynı kurs” değil, “hedefinize uygun eğitim yolu” anlayışının Adana’daki en bilinen temsilcilerinden biri olmaktır.";
 const ABOUT_INTRO =
-  "Zeynep Çeltek Güzellik Akademi; Adana Seyhan Cemalpaşa’da, uygulamalı güzellik eğitimleriyle meslek sahibi olmak veya mevcut becerisini güçlendirmek isteyenlere yönelik bir eğitim kurumudur. Protez tırnak, kalıcı makyaj, cilt bakımı, lazer ve iğneli epilasyon, kirpik-kaş uygulamaları, kafa masajı (head spa) ve kapsamlı güzellik uzmanlığı programlarını; canlı manken üzerinde birebir pratik modeliyle sunarız.\n\nBizim için eğitim, yalnızca teori anlatmak değildir. Doğru tekniği güvenli ve hijyenik ortamda deneyimlemek, ilk uygulamaları eğitmen eşliğinde tamamlamak ve belgelendirme sürecini şeffaf yürütmek temel yaklaşımımızdır. MEB onaylı belge, sertifika veya akademi belgesi programın yapısına göre netleştirilir.\n\nKayıt sürecini sade tutarız: WhatsApp veya iletişim formuyla danışmanlık, sitedeki kayıt sepeti ile ön talep; kontenjan ve ücret onayı sonrası eğitime başlangıç. Amacımız, Adana’da güvenilir, uygulamalı ve kariyer odaklı bir güzellik akademisi deneyimi sunmaktır.";
+  "Zeynep Çeltek Güzellik Akademi; Adana Seyhan Cemalpaşa’da, uygulamalı güzellik eğitimleriyle meslek sahibi olmak veya mevcut becerisini güçlendirmek isteyenlere yönelik bir eğitim kurumudur. Protez tırnak, kalıcı makyaj, cilt bakımı, lazer ve iğneli epilasyon, kirpik-kaş uygulamaları, kafa masajı (head spa) ve kapsamlı güzellik uzmanlığı programlarını; canlı manken üzerinde birebir pratik modeliyle sunarız.\n\nBizim için eğitim, yalnızca teori anlatmak değildir. Doğru tekniği güvenli ve hijyenik ortamda deneyimlemek, ilk uygulamaları eğitmen eşliğinde tamamlamak ve belgelendirme sürecini şeffaf yürütmek temel yaklaşımımızdır. MEB onaylı belge, sertifika veya akademi belgesi programın yapısına göre netleştirilir.\n\nKayıt sürecini sade tutarız: WhatsApp veya iletişim formuyla danışmanlık, sitedeki kayıt sepeti ile talep; ardından PayTR (kart) veya havale ile eğitim ücreti; kontenjan teyidi sonrası eğitime başlangıç. Amacımız, Adana’da güvenilir, uygulamalı ve kariyer odaklı bir güzellik akademisi deneyimi sunmaktır.";
 const ABOUT_PHILOSOPHY =
   "Eğitim ilkelerimizin özeti: dinlemek, doğru programı önermek, uygulamada yanınızda olmak ve belge sürecini açık yürütmek.\n\nHer programı standart bir “kurs paketi” gibi değil; ölçülebilir bir öğrenme yolu olarak görürüz. Kayıt öncesinde hedefinizi (sıfırdan meslek, ek uzmanlık, salon kurma vb.) dinleriz. Eğitim sırasında teori ile canlı manken uygulamasını aynı akışta birleştiririz. Eğitim sonrasında ise belge / sınav adımlarını ve sektöre geçiş için gerçekçi yönlendirmeyi paylaşırız.\n\nHijyen, meslek etiği ve birebir rehberlik bizim için slogan değil; günlük eğitim disiplinimizin parçasıdır. Böylece mezunlarımız yalnızca bir sertifika değil, sahada kullanabilecekleri özgüven ve teknik birikimle ayrılır.";
 
@@ -41,7 +41,7 @@ function courseSpecs(course: (typeof COURSES)[number]) {
     montaj: course.duration,
     teslimat: course.schedule,
     garanti: course.certificate,
-    kayit: "Ön kayıt gerekli",
+    kayit: "Kayıt / PayTR ödeme",
     konum: "Adana — Cemalpaşa / Seyhan",
     uygulama: "Canlı manken — birebir",
   });
@@ -168,6 +168,32 @@ async function main() {
     await upsertContent(`faq_${n}_q`, `SSS ${n} Soru`, item.q);
     await upsertContent(`faq_${n}_a`, `SSS ${n} Cevap`, item.a);
   }
+
+  console.log("[sync] process steps…");
+  await upsertContent("process_1_title", "Süreç 1", "Eğitim seç");
+  await upsertContent(
+    "process_1_desc",
+    "Süreç 1 Açıklama",
+    "Programı inceleyin; süre, belge ve içeriği netleştirin."
+  );
+  await upsertContent("process_2_title", "Süreç 2", "Kayıt talebi");
+  await upsertContent(
+    "process_2_desc",
+    "Süreç 2 Açıklama",
+    "Kayıt sepetinden talebinizi gönderin; numaranızı not alın."
+  );
+  await upsertContent("process_3_title", "Süreç 3", "Güvenli ödeme");
+  await upsertContent(
+    "process_3_desc",
+    "Süreç 3 Açıklama",
+    "PayTR kart veya havale ile eğitim ücretini tamamlayın."
+  );
+  await upsertContent("process_4_title", "Süreç 4", "Teyit & belge");
+  await upsertContent(
+    "process_4_desc",
+    "Süreç 4 Açıklama",
+    "Kontenjan netleşir; eğitim ve belgelendirme süreci başlar."
+  );
 
   console.log("[sync] Instagram…");
   await upsertSetting(

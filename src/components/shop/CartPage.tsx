@@ -72,7 +72,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
 
   if (orderNo) {
     const waText = encodeURIComponent(
-      `Merhaba, ${orderNo} numaralı ön kayıt talebimi teyit etmek istiyorum.\nAd: ${name}\nTelefon: ${phone}`
+      `Merhaba, ${orderNo} numaralı kayıt talebimi teyit etmek istiyorum.\nAd: ${name}\nTelefon: ${phone}`
     );
     const printUrl = `/teklif/${encodeURIComponent(orderNo)}/yazdir?phone=${encodeURIComponent(phone)}`;
     return (
@@ -80,15 +80,16 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
         <CartStepper current={3} />
         <CheckCircle size={64} className="mx-auto text-orange mb-4 mt-8" />
         <h2 className="font-display text-2xl font-bold text-white mb-2">
-          Ön Kayıt Talebiniz Alındı
+          Kayıt Talebiniz Alındı
         </h2>
         <p className="text-muted mb-2">
           Kayıt numaranız:{" "}
           <span className="text-orange font-semibold">{orderNo}</span>
         </p>
         <p className="text-sm text-muted mb-2">
-          Online ödeme yoktur; kaydınız ön kayıt talebi olarak alındı.
-          Kontenjan ve takvim WhatsApp veya telefonla netleşir.
+          Kaydınız sisteme düştü. Eğitim ücretini PayTR ile güvenli kart
+          ödemesi veya havale ile tamamlayabilirsiniz; kontenjan teyidi
+          WhatsApp / telefonla netleşir.
         </p>
         <p className="text-sm text-muted mb-4">
           Kayıt numaranızı not alın; Kayıtlarım’da telefon ve numara ile
@@ -101,36 +102,38 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
         )}
         <div className="rounded-xl border border-border bg-card p-4 text-left text-sm text-muted mb-6 space-y-1">
           <p className="text-white font-semibold">Kayıt durumu</p>
-          <p>Ön kayıt alındı</p>
+          <p>Kayıt talebi alındı</p>
           <p className="text-xs">
-            Onay sonrası size ödeme bilgisi veya akademi kaydı iletilecek.
+            Kart ödemesi için Ödeme sayfasına gidin; alternatif olarak havale
+            veya WhatsApp ile ilerleyebilirsiniz.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Button
+            href={`/odeme?orderNo=${encodeURIComponent(orderNo)}&phone=${encodeURIComponent(phone)}`}
+          >
+            Kart / havale ile öde
+          </Button>
           <TrackedContactLink
             href={`${whatsappUrl}?text=${waText}`}
             method="whatsapp"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary justify-center"
+            className="btn-outline justify-center"
           >
             WhatsApp ile Teyit Et
           </TrackedContactLink>
+        </div>
+        <div className="mt-3 flex justify-center">
           <Button href="/tekliflerim" variant="outline">
             Kayıtlarım
           </Button>
         </div>
         <details className="mt-5 text-left">
           <summary className="cursor-pointer text-sm text-muted hover:text-orange text-center">
-            Daha fazla (PDF, havale)
+            Daha fazla (PDF)
           </summary>
           <div className="mt-3 flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              href={`/odeme?orderNo=${encodeURIComponent(orderNo)}&phone=${encodeURIComponent(phone)}`}
-              variant="outline"
-            >
-              Havale bilgisi
-            </Button>
             <Button href={printUrl} variant="outline">
               PDF / Yazdır
             </Button>
@@ -192,7 +195,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
       const data = await createOrder("WHATSAPP");
       const orderNoValue = data.order.orderNo;
       const waText = encodeURIComponent(
-        `Merhaba, ${orderNoValue} numaralı ön kayıt talebim:\n\n${items
+        `Merhaba, ${orderNoValue} numaralı kayıt talebim:\n\n${items
           .map((i) => `- ${i.name} x${i.quantity}`)
           .join("\n")}\n\nAd: ${name}\nTel: ${phone}\nToplam (tahmini): ${formatPrice(total)}`
       );
@@ -347,7 +350,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted">Kayıt</span>
-                <span className="text-white">Ön kayıt</span>
+                <span className="text-white">Kayıt talebi</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted">Ödeme</span>
@@ -381,8 +384,9 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                   ← Listeye dön
                 </button>
                 <p className="text-xs text-muted mb-2">
-                  Ön kayıt talebi (online ödeme yok). E-posta opsiyonel; verirseniz özet
-                  gönderilir.
+                  Kayıt talebi oluşturun. Ardından PayTR kart veya havale ile
+                  eğitim ücretini ödeyebilirsiniz. E-posta opsiyonel; verirseniz
+                  özet gönderilir.
                 </p>
                 {error && (
                   <p className="text-sm text-red-400 border border-red-500/30 bg-red-500/10 p-2">
@@ -456,8 +460,8 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                 className="mt-0.5"
               />
               <span>
-                Onay sonrası havale / ödeme bilgisini de istiyorum (ödeme durumu
-                “bekleniyor” olur).
+                Kayıt sonrası güvenli kart ödemesi (PayTR) / havale bilgisini
+                istiyorum (ödeme durumu “bekleniyor” olur).
               </span>
             </label>
             <label className="flex items-start gap-2 text-xs text-muted cursor-pointer">
@@ -484,7 +488,7 @@ export function CartPage({ whatsappUrl }: { whatsappUrl: string }) {
                   disabled={loading || !kvkkAccepted}
                   className="w-full py-3 bg-orange text-black text-center font-semibold uppercase tracking-wider hover:bg-orange-dark transition-colors disabled:opacity-50 rounded-lg"
                 >
-                  {loading ? "Kaydediliyor..." : "Ön Kayıt Oluştur"}
+                  {loading ? "Kaydediliyor..." : "Kayıt Talebi Oluştur"}
                 </button>
                 <button
                   type="button"

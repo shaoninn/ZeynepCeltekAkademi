@@ -196,37 +196,37 @@ const keys: { key: string; title: string; content: string }[] = [
     content:
       "Şeffaf adımlarla ilerleyen, uygulamalı bir eğitim yolculuğu.",
   },
-  { key: "process_1_title", title: "Süreç 1 Başlık", content: "Danışmanlık" },
+  { key: "process_1_title", title: "Süreç 1 Başlık", content: "Eğitim seç" },
   {
     key: "process_1_desc",
     title: "Süreç 1 Açıklama",
-    content: "Size uygun programı birlikte seçeriz.",
+    content: "Programı inceleyin; süre, belge ve içeriği netleştirin.",
   },
-  { key: "process_2_title", title: "Süreç 2 Başlık", content: "Kayıt" },
+  { key: "process_2_title", title: "Süreç 2 Başlık", content: "Kayıt talebi" },
   {
     key: "process_2_desc",
     title: "Süreç 2 Açıklama",
-    content: "Kontenjan ve takvim netleşir.",
+    content: "Kayıt sepetinden talebinizi gönderin; numaranızı not alın.",
   },
   {
     key: "process_3_title",
     title: "Süreç 3 Başlık",
-    content: "Uygulamalı Eğitim",
+    content: "Güvenli ödeme",
   },
   {
     key: "process_3_desc",
     title: "Süreç 3 Açıklama",
-    content: "Canlı manken üzerinde birebir pratik.",
+    content: "PayTR kart veya havale ile eğitim ücretini tamamlayın.",
   },
   {
     key: "process_4_title",
     title: "Süreç 4 Başlık",
-    content: "Belgelendirme",
+    content: "Teyit & belge",
   },
   {
     key: "process_4_desc",
     title: "Süreç 4 Açıklama",
-    content: "Sertifika / MEB onaylı belge süreci.",
+    content: "Kontenjan netleşir; eğitim ve belgelendirme süreci başlar.",
   },
   ...FAQ_KEYS,
   {

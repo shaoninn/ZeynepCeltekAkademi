@@ -53,8 +53,10 @@ Kural: Kör kopya yok. Aynı UX kalıbı, akademi dili (eğitim / kayıt / serti
 
 ### 8. PayTR
 - [x] Kontrol: online kart ödemesi isteniyor mu?
-- [x] Hayır → atla (mevcut: kayıt sepeti ön kayıt)
-- [ ] Evet → Güzellik PayTR kalıbı
+- [ ] Hayır → atla (mevcut: kayıt sepeti ön kayıt)
+- [x] Evet → Güzellik PayTR kalıbı (akademi dili)
+
+**Canlıya alma:** `PAYTR_MERCHANT_*` + `PAYTR_UI_ENABLED=1` (veya Ayarlar `paytr_ui_enabled=1`); panel bildirim URL: `/api/payments/paytr/callback`
 
 ### 9. Facility / adres / IG
 - [x] Kontrol: eski IG, yanlış adres

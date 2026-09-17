@@ -111,8 +111,9 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         )}
       </button>
       <p className="text-xs text-muted leading-relaxed">
-        Sepet online ödeme değildir. Kayıt talebiniz bize düşer; WhatsApp veya
-        telefonla kontenjan ve takvim netleştirilir.
+        Sepet kayıt talebidir. Talebinizden sonra PayTR ile kart veya havale
+        ile eğitim ücretini ödeyebilirsiniz; kontenjan WhatsApp veya telefonla
+        netleşir.
       </p>
     </div>
   );

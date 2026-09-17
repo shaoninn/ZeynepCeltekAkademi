@@ -220,7 +220,8 @@ export default async function ProductPage({ params }: Props) {
                 )}
             </div>
             <p className="text-xs text-muted mb-6">
-              Sabit eğitim ücreti; kayıt WhatsApp veya ön kayıt ile netleşir.
+              Sabit eğitim ücreti; kayıt talebi sonrası PayTR veya havale ile
+              ödenebilir.
               {specFlags.montaj ? ` Süre: ${specFlags.montaj}.` : ""}
               {specFlags.garanti ? ` Belge: ${specFlags.garanti}.` : ""}
             </p>

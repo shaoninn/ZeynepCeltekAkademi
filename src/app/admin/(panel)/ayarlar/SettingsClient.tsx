@@ -31,7 +31,16 @@ const FIELDS = [
   { key: "google_reviews_url", label: "Google işletme / yorum linki", help: "Örn: share.google/... veya maps profil linki." },
   { key: "work_hours_weekdays", label: "Hafta içi çalışma saati" },
   { key: "work_hours_sunday", label: "Pazar" },
-  { key: "payment_enabled", label: "Havale bilgisi (1=açık)", help: "1 veya true yazınca /odeme banka bilgilerini vurgular." },
+  {
+    key: "paytr_ui_enabled",
+    label: "PayTR kart ödemesi (1=açık)",
+    help: "PAYTR_* env doluyken 1 yazınca /odeme’de kart formu görünür. Env: PAYTR_UI_ENABLED.",
+  },
+  {
+    key: "payment_enabled",
+    label: "Havale bilgisi (1=açık)",
+    help: "1 veya true yazınca /odeme’de IBAN paneli vurgulanır.",
+  },
   { key: "bank_name", label: "Banka adı" },
   { key: "bank_iban", label: "IBAN" },
   { key: "bank_holder", label: "Hesap sahibi" },

@@ -169,7 +169,8 @@ export default async function CategoryPage({ params }: Props) {
                 {formatPrice(unitPrice)}
               </p>
               <p className="text-xs text-muted mb-4">
-                Sabit eğitim ücreti; kayıt WhatsApp veya ön kayıt ile netleşir.
+                Sabit eğitim ücreti; kayıt talebi sonrası PayTR veya havale ile
+                ödenebilir.
               </p>
               <ul className="text-sm text-muted space-y-1 mb-6">
                 {specFlags?.montaj ? <li>Süre: {specFlags.montaj}</li> : null}

@@ -18,9 +18,10 @@ export default function TermsPage() {
       <h2>Hizmetin niteliği</h2>
       <p>
         {COMPANY.name}; güzellik eğitimi, danışmanlık, kayıt ve belgelendirme
-        hizmetleri sunar. Sitede gösterilen fiyatlar örnek / bilgilendirme
-        niteliklidir; kesin kayıt koşulları görüşme sonrası netleşir. Online
-        kart ödemesi alınmayabilir; kayıt onayı ile ilerlenir.
+        hizmetleri sunar. Sitede gösterilen fiyatlar bilgilendirme
+        niteliklidir. Kayıt talebi sonrası eğitim ücreti PayTR (güvenli kart)
+        veya havale / EFT ile ödenebilir; kontenjan ve program teyidi ekiple
+        tamamlanır.
       </p>
       <h2>İçerik ve fikri mülkiyet</h2>
       <p>

@@ -5,11 +5,11 @@ export const HOME_FAQS = [
   },
   {
     q: "Kayıt sepeti ne anlama geliyor?",
-    a: "Sitedeki kayıt sepeti online ödeme değildir; seçtiğiniz eğitimleri bir arada ilettiğiniz ön kayıt / talep listesidir. Formu gönderdiğinizde kaydınız bize düşer; ekibimiz kontenjan, başlangıç tarihi ve ücreti WhatsApp veya telefonla teyit eder. Sepete eklemek tek başına kesin kayıt veya ödeme demek değildir.",
+    a: "Sitedeki kayıt sepeti, seçtiğiniz eğitimleri bir arada ilettiğiniz kayıt talebidir. Formu gönderdiğinizde kaydınız bize düşer; ardından PayTR ile güvenli kart ödemesi yapabilir veya havale / WhatsApp ile ilerleyebilirsiniz. Sepete eklemek tek başına kesin kayıt demek değildir — kontenjan ve başlangıç tarihi teyit edilir.",
   },
   {
     q: "Siteden online ödeme var mı?",
-    a: "Hayır. Kayıt sepeti ön kayıt talebidir. Eğitim ücreti ve ödeme planı (peşin / taksit vb.) kontenjan ve program onayından sonra akademi ile netleşir. Güncel fiyatlar eğitim kartlarında listelenir; kesin tutar kayıt görüşmesinde teyit edilir.",
+    a: "Evet. Kayıt talebinden sonra /odeme sayfasında PayTR 3D Secure ile kart ödemesi alabilirsiniz. Havale / EFT de alternatif olarak sunulur. Güncel fiyatlar eğitim kartlarında listelenir; ödeme sonrası kontenjan ve program teyidi ekibimizle tamamlanır.",
   },
   {
     q: "Sertifika / MEB belgesi veriyor musunuz?",
@@ -33,7 +33,7 @@ export const HOME_FAQS = [
   },
   {
     q: "Kayıt için nasıl ilerlemeliyim?",
-    a: "1) İlgilendiğiniz eğitimi inceleyin. 2) WhatsApp veya iletişim formuyla danışmanlık alın / kayıt sepetine ekleyip talep gönderin. 3) Kontenjan ve tarih teyidi yapılır. 4) Ücret ve belgelendirme süreci netleşir. Ücretsiz ön görüşme ile program seçiminde yanınızdayız.",
+    a: "1) İlgilendiğiniz eğitimi inceleyin. 2) Kayıt sepetine ekleyip talep gönderin (veya WhatsApp). 3) /odeme üzerinden PayTR kart veya havale ile ücreti tamamlayın. 4) Kontenjan ve tarih teyidi yapılır. Ücretsiz ön görüşme ile program seçiminde yanınızdayız.",
   },
   {
     q: "MEB’li program ile sertifikalı kısa eğitim farkı nedir?",

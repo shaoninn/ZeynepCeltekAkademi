@@ -25,7 +25,7 @@ export default async function AdminOrdersPage() {
     <div>
       <h1 className="font-display text-3xl font-bold mb-2">Kayıtlar</h1>
       <p className="text-sm text-[#888] mb-2">
-        Ön kayıt talepleri. Tarih ve durum ile filtreleyin.
+        Kayıt talepleri. Tarih ve durum ile filtreleyin.
       </p>
       <p className="mb-6">
         <a

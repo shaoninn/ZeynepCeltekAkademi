@@ -44,7 +44,7 @@ export function getFallbackCategories(): FallbackCategory[] {
         montaj: course.duration,
         teslimat: course.schedule,
         garanti: course.certificate,
-        kayit: "Ön kayıt gerekli",
+        kayit: "Kayıt / PayTR ödeme",
         konum: "Adana — Cemalpaşa / Seyhan",
         uygulama: "Canlı manken — birebir",
       }),

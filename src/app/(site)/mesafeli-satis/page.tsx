@@ -14,8 +14,9 @@ export default function DistanceSalesPage() {
       <p>
         6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli
         Sözleşmeler Yönetmeliği kapsamında bilgilendirme metnidir.{" "}
-        {COMPANY.name} öncelikle eğitim kaydı / program teklifi ile çalışır;
-        site üzerinden anlık kart ödemesi alınmayabilir.
+        {COMPANY.name} öncelikle eğitim kaydı / program talebi ile çalışır;
+        kayıt sonrası güvenli kart ödemesi PayTR ile veya havale ile
+        tamamlanabilir.
       </p>
       <h2>Satıcı / hizmet sağlayıcı</h2>
       <p>
@@ -34,9 +35,9 @@ export default function DistanceSalesPage() {
       <h2>Kayıt ve ödeme</h2>
       <p>
         Katılımcı kayıt sepeti veya iletişim formu ile talep iletir.{" "}
-        {COMPANY.name} görüşme sonrası yazılı program ve ödeme bilgisi sunar.
-        Ödeme yöntemleri (havale, kapora vb.) teklifte yer alır; web sitesi kart
-        ödemesi almayabilir.
+        {COMPANY.name} kayıt numarası oluşturur; eğitim ücreti güvenli kart
+        (PayTR), havale / EFT veya görüşmede netleşen yöntemle ödenebilir.
+        Ödeme sonrası kontenjan ve başlangıç tarihi teyit edilir.
       </p>
       <h2>Eğitim süreci</h2>
       <p>

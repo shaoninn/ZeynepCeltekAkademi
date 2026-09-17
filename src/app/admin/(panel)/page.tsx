@@ -65,7 +65,7 @@ export default async function AdminDashboard() {
       value: stats.todayQuotes,
       href: "/admin/siparisler",
       icon: Clock,
-      hint: "Bugün gelen ön kayıt talepleri",
+      hint: "Bugün gelen kayıt talepleri",
     },
     {
       label: "Bekleyen",
