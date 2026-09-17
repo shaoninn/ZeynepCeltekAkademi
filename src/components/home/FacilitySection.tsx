@@ -60,8 +60,8 @@ export function FacilitySection({
             </SiteLink>
           </div>
 
-          <div className="relative grid grid-cols-[1.4fr_1fr] gap-3 sm:gap-4">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-ink/10">
+          <div className="relative grid grid-cols-[1.25fr_1fr] gap-2.5 sm:gap-3 max-w-lg lg:max-w-none ml-auto">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-ink/10">
               <EditableImage
                 contentKey="facility_image_1"
                 value={main}
@@ -80,7 +80,7 @@ export function FacilitySection({
                 </span>
               </div>
             </div>
-            <div className="grid grid-rows-2 gap-3 sm:gap-4">
+            <div className="grid grid-rows-2 gap-2.5 sm:gap-3">
               <div className="relative rounded-2xl overflow-hidden border border-ink/10 min-h-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

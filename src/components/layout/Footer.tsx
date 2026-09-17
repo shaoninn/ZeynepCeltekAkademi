@@ -40,44 +40,35 @@ export function Footer({
               <Logo size="lg" />
             </div>
             <FooterBlurb value={footerBlurb} />
-            <div className="flex flex-wrap items-center gap-2.5 mt-5">
+            <div className="flex flex-col gap-2 mt-5">
               {INSTAGRAM_ACCOUNTS.map((acc) => (
                 <a
                   key={acc.href}
                   href={acc.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-orange hover:border-orange transition-colors"
-                  aria-label={acc.handle}
-                  title={acc.handle}
+                  className="inline-flex items-center gap-2.5 text-muted hover:text-orange transition-colors group/ig"
+                  aria-label={`Instagram ${acc.handle}`}
                 >
-                  <InstagramIcon size={15} />
+                  <span className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 group-hover/ig:border-orange transition-colors shrink-0">
+                    <InstagramIcon size={15} />
+                  </span>
+                  <span className="text-sm">{acc.handle}</span>
                 </a>
               ))}
               <a
                 href={settings.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 text-muted hover:text-[#25D366] hover:border-[#25D366] transition-colors"
+                className="inline-flex items-center gap-2.5 text-muted hover:text-[#25D366] transition-colors group/wa"
                 aria-label="WhatsApp"
               >
-                <WhatsAppIcon size={15} />
+                <span className="w-11 h-11 flex items-center justify-center rounded-full border border-white/10 group-hover/wa:border-[#25D366] transition-colors shrink-0">
+                  <WhatsAppIcon size={15} />
+                </span>
+                <span className="text-sm">WhatsApp</span>
               </a>
             </div>
-            <ul className="mt-4 space-y-1.5">
-              {INSTAGRAM_ACCOUNTS.map((acc) => (
-                <li key={`ig-label-${acc.href}`}>
-                  <a
-                    href={acc.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-muted hover:text-orange transition-colors"
-                  >
-                    {acc.handle}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="lg:col-span-2">

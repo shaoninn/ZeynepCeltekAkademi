@@ -24,7 +24,7 @@ export const COURSES: CourseSeed[] = [
     certificate: "MEB",
     image: "/images/courses/protez-tirnak.webp",
     shortDesc:
-      "Teori, kuru manikür, kalıcı oje, nail art, tips ve şablon tırnak — canlı manken üzerinde birebir uygulama.",
+      "3 haftalık MEB belgeli program: teori, kuru manikür, kalıcı oje, nail art, tips ve şablon tırnak. Canlı manken üzerinde eğitmenle birebir uygulama; sınav sonrası resmi belge.",
     description: `Protez Tırnak eğitimimiz 3 hafta sürüyor. Haftanın 2 günü 10.00-17.00 saatleri arasında eğitim alınır.
 
 Eğitim içeriği: Teori, kuru manikür, kalıcı oje, nail art, tips tırnak, şablon tırnak, ıslak manikür.
@@ -43,7 +43,7 @@ Eğitim tamamlandıktan sonra MEB onaylı belgeniz olacağı için sınav olacak
     certificate: "Sertifika",
     image: "/images/courses/kirpik-lifting-kas-laminasyon.webp",
     shortDesc:
-      "Blok ders: bir günde canlı manken üzerinde ilk işleminizi eğitmen eşliğinde tamamlayın.",
+      "Tek günlük blok ders: kirpik lifting ve kaş laminasyon tekniklerini canlı manken üzerinde tamamlayın. Aynı gün sertifika; hızlı uzmanlık kazanımı için ideal.",
     description: `Kirpik lifting - kaş laminasyon eğitimimiz blok ders olarak yapılır.
 
 1 günde 10.00-17.00 saatleri arasında eğitim alınır. Canlı manken üzerinde eğitmen eşliğinde ilk işleminizi yapmış olursunuz.
@@ -60,7 +60,7 @@ Eğitim bitiminde sertifikanızı alırsınız. Artık Kirpik Lifting - Kaş Lam
     certificate: "Sertifika",
     image: "/images/courses/ipek-kirpik.webp",
     shortDesc:
-      "Teori, sünger üzerinde pratik ve canlı manken uygulaması — aynı gün sertifika.",
+      "Blok ders: teori, sünger üzerinde pratik ve canlı manken uygulaması. Aynı gün sertifika ile ipek kirpik uygulamasına güvenle başlayın.",
     description: `İpek kirpik eğitimimiz blok ders olarak yapılır.
 
 1 ders 10.00-17.00 saatleri arasında eğitim alınır.
@@ -79,7 +79,7 @@ Eğitim bitiminde sertifikanızı alırsınız. Artık İpek Kirpik Uzmanısın�
     certificate: "MEB",
     image: "/images/courses/kalici-makyaj.webp",
     shortDesc:
-      "Microblading, shading, eyeliner ve dudak teknikleri — canlı manken ile birebir uygulama.",
+      "2,5–3 aylık MEB programı: microblading, shading, eyeliner ve dudak teknikleri. Canlı manken ile birebir uygulama; sınav sonrası resmi belge.",
     description: `Kalıcı makyaj eğitimimiz 2,5-3 ay sürüyor. Pazartesi günleri 10.00-17.00 saatleri içerisinde eğitim alınır.
 
 Eğitim içeriği: Teori, microblading, altın oran çalışması, shading pudralama, babyliner, eyeliner, dipliner, dudak renklendirme, çerçevelendirme, ruj efekti.
@@ -98,7 +98,7 @@ Eğitim tamamlandıktan sonra MEB onaylı belgeniz olacağı için sınav olacak
     certificate: "Sertifika",
     image: "/images/courses/cilt-bakimi.webp",
     shortDesc:
-      "Yüz temizleme masajı, klasik / medikal / hydrafacial bakım — uygulamalı eğitim.",
+      "3 derslik uygulamalı program: yüz temizleme masajı, klasik / medikal bakım ve Hydrafacial. Canlı manken üzerinde protokol deneyimi; eğitim sonunda sertifika.",
     description: `Cilt bakımı eğitimimiz 3 ders halinde, 10.00-17.00 saatleri arasında yapılır.
 
 Eğitim içeriği: Teori, yüz temizleme masajı, mini - klasik - medikal - hydrafacial bakım.
@@ -117,7 +117,7 @@ Eğitim tamamlandıktan sonra eğitim sertifikanızı alırsınız. Artık Cilt 
     certificate: "MEB",
     image: "/images/courses/lazer-igneli-epilasyon.webp",
     shortDesc:
-      "Teori, lazer epilasyon ve iğneli epilasyon — canlı manken ile uygulamalı MEB belgeli eğitim.",
+      "3 derslik MEB belgeli eğitim: lazer ve iğneli epilasyon teorisi + canlı manken uygulaması. Güvenli parametre bilinci ve sınav sonrası resmi belge.",
     description: `Lazer epilasyon - iğneli epilasyon eğitimimiz 3 ders halinde, 10.00-17.00 saatleri arasında yapılır.
 
 Eğitim içeriği: Teori, lazer epilasyon, iğneli epilasyon.
@@ -136,7 +136,7 @@ Eğitim tamamlandıktan sonra MEB onaylı belgeniz olacağı için sınav olacak
     certificate: "Belge",
     image: "/images/courses/kafa-masaji.webp",
     shortDesc:
-      "Canlı manken üzerinde birebir head spa uygulaması — 2 derslik yoğun program.",
+      "2 derslik yoğun head spa programı: canlı manken üzerinde birebir uygulama. Rahatlatıcı protokolü doğru teknikle öğrenin; eğitim sonunda belge.",
     description: `Kafa masajı eğitimimiz 2 ders halinde, 10.00-17.00 saatleri arasında yapılır.
 
 Tüm eğitimler canlı manken üzerinde eğitmen ile birebir uygulama yapılarak işlenir. Eğitim sürecinde ilk işlemlerinizi doğru tekniklerle uygulamış olursunuz.
@@ -153,7 +153,7 @@ Eğitim tamamlandıktan sonra belgenizi teslim alırsınız. Artık Kafa Masajı
     certificate: "MEB",
     image: "/images/courses/guzellik-uzmanligi.webp",
     shortDesc:
-      "Kapsamlı meslek eğitimi: cilt bakımı, epilasyon, masaj, makyaj ve medikal uygulamalar.",
+      "4 aylık kapsamlı MEB meslek eğitimi: cilt bakımı, epilasyon, masaj, makyaj ve medikal uygulamalar. Canlı manken + sınav; sektöre güçlü başlangıç.",
     description: `Güzellik uzmanlığı eğitimimiz 4 ay sürmektedir. Haftanın 2 günü 10.00-17.00 saatleri arasında eğitim alınır.
 
 Eğitim içeriği: Teori dersleri, yüz temizleme masajı, cilt bakımı (klasik / medikal), karbon peeling, dermapen, hydrafacial, heykeltraş, G5, lazer epilasyon, iğneli epilasyon, temel masaj, temel makyaj eğitimleri canlı manken üzerinde uygulamalı olarak işlenir.

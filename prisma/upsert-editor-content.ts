@@ -1,11 +1,35 @@
 /**
  * Non-destructive insert of missing visual-editor SiteContent keys.
  * Run: npx tsx prisma/upsert-editor-content.ts
+ *
+ * For overwriting existing public copy (FAQ / about / courses), use
+ * `npx tsx prisma/sync-public-content.ts` instead.
  */
 import "dotenv/config";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { resolveMysqlDatabaseUrl } from "../src/lib/db-url";
+import { HOME_FAQS } from "../src/lib/home-faq";
+
+const FAQ_KEYS: { key: string; title: string; content: string }[] = [
+  {
+    key: "faq_section_eyebrow",
+    title: "SSS Üst (bölüm)",
+    content: "SSS",
+  },
+  {
+    key: "faq_section_title",
+    title: "SSS Başlık",
+    content: "Sık sorulan sorular",
+  },
+  ...HOME_FAQS.flatMap((item, i) => {
+    const n = i + 1;
+    return [
+      { key: `faq_${n}_q`, title: `SSS ${n} Soru`, content: item.q },
+      { key: `faq_${n}_a`, title: `SSS ${n} Cevap`, content: item.a },
+    ];
+  }),
+];
 
 const keys: { key: string; title: string; content: string }[] = [
   {
@@ -204,55 +228,7 @@ const keys: { key: string; title: string; content: string }[] = [
     title: "Süreç 4 Açıklama",
     content: "Sertifika / MEB onaylı belge süreci.",
   },
-  {
-    key: "faq_section_title",
-    title: "SSS Başlık",
-    content: "Eğitimler hakkında",
-  },
-  {
-    key: "faq_1_q",
-    title: "SSS 1 Soru",
-    content: "Eğitimler uygulamalı mı?",
-  },
-  {
-    key: "faq_1_a",
-    title: "SSS 1 Cevap",
-    content:
-      "Evet. Tüm eğitimlerde canlı manken üzerinde eğitmen ile birebir uygulama yapılır.",
-  },
-  {
-    key: "faq_2_q",
-    title: "SSS 2 Soru",
-    content: "MEB onaylı belge hangi programlarda var?",
-  },
-  {
-    key: "faq_2_a",
-    title: "SSS 2 Cevap",
-    content:
-      "Protez tırnak, kalıcı makyaj, lazer-iğneli epilasyon ve güzellik uzmanlığı programlarında MEB onaylı belge için sınav süreci uygulanır.",
-  },
-  {
-    key: "faq_3_q",
-    title: "SSS 3 Soru",
-    content: "Kayıt için nasıl ilerlemeliyim?",
-  },
-  {
-    key: "faq_3_a",
-    title: "SSS 3 Cevap",
-    content:
-      "WhatsApp veya iletişim formundan danışmanlık alın; uygun programı seçip kayıt sepetine ekleyebilirsiniz.",
-  },
-  {
-    key: "faq_4_q",
-    title: "SSS 4 Soru",
-    content: "Eğitim saatleri nedir?",
-  },
-  {
-    key: "faq_4_a",
-    title: "SSS 4 Cevap",
-    content:
-      "Programlara göre değişmekle birlikte dersler genellikle 10:00–17:00 arasındadır. Detaylar her eğitimin sayfasında yer alır.",
-  },
+  ...FAQ_KEYS,
   {
     key: "testimonial_section_title",
     title: "Referanslar Başlık",

@@ -240,8 +240,9 @@ export default async function ProductPage({ params }: Props) {
                       key={key}
                       className="flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4 text-sm"
                     >
-                      <dt className="text-muted capitalize shrink-0">
-                        {SPEC_FIELD_LABELS[key] || key}
+                      <dt className="text-muted shrink-0">
+                        {SPEC_FIELD_LABELS[key] ||
+                          key.charAt(0).toUpperCase() + key.slice(1)}
                       </dt>
                       <dd className="text-white sm:text-right break-words">
                         {value}

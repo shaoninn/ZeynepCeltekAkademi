@@ -3,6 +3,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { hashPassword } from "../src/lib/auth";
 import { CATEGORIES } from "../src/lib/constants";
+import { HOME_FAQS } from "../src/lib/home-faq";
 import { projectData } from "./projects-data";
 import { COURSES } from "./courses-data";
 import { BLOGS } from "./blog-data";
@@ -48,49 +49,49 @@ const siteContent = [
     key: "about_intro",
     title: "Hakkımızda Giriş",
     content:
-      "Zeynep Çeltek Güzellik Akademi, Adana Seyhan Cemalpaşa'da uygulamalı güzellik eğitimleri sunar. Amacımız yalnızca teknik öğretmek değil; canlı manken üzerinde doğru uygulamayı deneyimlemenizi sağlamak ve kariyerinize sağlam bir temel kazandırmaktır.\n\nMEB onaylı belgelendirme süreçleri, uzman eğitmen kadrosu ve birebir uygulama modeli ile mezunlarımızı sektöre hazırlıyoruz.",
+      "Zeynep Çeltek Güzellik Akademi; Adana Seyhan Cemalpaşa’da, uygulamalı güzellik eğitimleriyle meslek sahibi olmak veya mevcut becerisini güçlendirmek isteyenlere yönelik bir eğitim kurumudur. Protez tırnak, kalıcı makyaj, cilt bakımı, lazer ve iğneli epilasyon, kirpik-kaş uygulamaları, kafa masajı (head spa) ve kapsamlı güzellik uzmanlığı programlarını; canlı manken üzerinde birebir pratik modeliyle sunarız.\n\nBizim için eğitim, yalnızca teori anlatmak değildir. Doğru tekniği güvenli ve hijyenik ortamda deneyimlemek, ilk uygulamaları eğitmen eşliğinde tamamlamak ve belgelendirme sürecini şeffaf yürütmek temel yaklaşımımızdır. MEB onaylı belge, sertifika veya akademi belgesi programın yapısına göre netleştirilir.\n\nKayıt sürecini sade tutarız: WhatsApp veya iletişim formuyla danışmanlık, sitedeki kayıt sepeti ile ön talep; kontenjan ve ücret onayı sonrası eğitime başlangıç. Amacımız, Adana’da güvenilir, uygulamalı ve kariyer odaklı bir güzellik akademisi deneyimi sunmaktır.",
   },
   {
     key: "about_philosophy",
     title: "Çalışma İlkelerimiz",
     content:
-      "Uygulamalı öğrenme, hijyen ve meslek etiği; her eğitim programımızın ortak zeminidir.",
+      "Eğitim ilkelerimizin özeti: dinlemek, doğru programı önermek, uygulamada yanınızda olmak ve belge sürecini açık yürütmek.\n\nHer programı standart bir “kurs paketi” gibi değil; ölçülebilir bir öğrenme yolu olarak görürüz. Kayıt öncesinde hedefinizi (sıfırdan meslek, ek uzmanlık, salon kurma vb.) dinleriz. Eğitim sırasında teori ile canlı manken uygulamasını aynı akışta birleştiririz. Eğitim sonrasında ise belge / sınav adımlarını ve sektöre geçiş için gerçekçi yönlendirmeyi paylaşırız.\n\nHijyen, meslek etiği ve birebir rehberlik bizim için slogan değil; günlük eğitim disiplinimizin parçasıdır. Böylece mezunlarımız yalnızca bir sertifika değil, sahada kullanabilecekleri özgüven ve teknik birikimle ayrılır.",
   },
   {
     key: "mission",
     title: "Misyon",
     content:
-      "Güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmek; canlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak.",
+      "Misyonumuz; güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmektir.\n\nCanlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak; hijyenik ortamda doğru teknikleri öğretmek ve kariyer yolculuklarında yanlarında olmak istiyoruz. Kısa vadeli vaatler yerine, ölçülebilir öğrenme çıktıları ve dürüst bilgilendirme ile uzun soluklu başarı hedefleriz.\n\nHer programda önceliğimiz: güvenli uygulama ortamı, uzman eğitmen kontrolü ve net belgelendirme sürecidir.",
   },
   {
     key: "vision",
     title: "Vizyon",
     content:
-      "Adana ve çevresinde güzellik eğitiminde referans akademi olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamak.",
+      "Vizyonumuz; Adana ve çevresinde güzellik eğitiminin referans akademilerinden biri olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamaktır.\n\nUygulamalı müfredatımızı, güncel teknikleri ve belgelendirme seçeneklerini güçlendirerek hem yeni başlayanlara hem de kendini geliştirmek isteyen profesyonellere tutarlı bir kalite sunmayı amaçlıyoruz.\n\nUzun vadede hedefimiz; “herkese aynı kurs” değil, “hedefinize uygun eğitim yolu” anlayışının Adana’daki en bilinen temsilcilerinden biri olmaktır.",
   },
   {
     key: "values_hygiene",
     title: "Hijyen & Standart",
     content:
-      "Eğitim ve uygulama alanlarımızda klinik hijyen standartlarına bağlı kalırız.",
+      "Eğitim ve uygulama alanlarımızı klinik hijyen anlayışıyla yönetiriz. Canlı manken çalışmalarında yüzey, ekipman ve malzeme düzeni; misafir ve öğrenci güvenliği için temel koşuldur. Temizlik ek bir vaat değil, her dersin parçasıdır.",
   },
   {
     key: "values_team",
     title: "Uzman Eğitmenler",
     content:
-      "Alanında deneyimli eğitmen kadromuz birebir rehberlik sunar.",
+      "Alanında deneyimli eğitmen kadromuz birebir rehberlik sunar. Parametre, ürün ve teknik seçimleri rastgele değil; eğitimin hedeflerine ve sizin seviyenize göre yönlendirilir. Küçük grup / yoğun uygulama modeli öğrenmeyi hızlandırır.",
   },
   {
     key: "values_products",
     title: "Uygulamalı Müfredat",
     content:
-      "Teori ile canlı manken uygulamasını aynı süreçte birleştiririz.",
+      "Teori ile canlı manken uygulamasını aynı süreçte birleştiririz. Blok derslerden uzun MEB programlarına kadar müfredat; ilk işlemi doğru teknikle tamamlayabileceğiniz şekilde planlanır. Süre, program ve belge türü eğitim kartında açıkça yazar.",
   },
   {
     key: "values_personal",
     title: "Kariyer Odaklı",
     content:
-      "Belgelendirme ve sektöre geçişte danışmanlık desteği sağlarız.",
+      "Belgelendirme sonrası sektöre giriş, salon / stüdyo yönelimi ve mesleki özgüven için danışmanlık desteği sunarız. “Garanti iş” vaadi yerine gerçekçi kariyer yönlendirmesi yaparız; hedefinize uygun sonraki adımları birlikte netleştiririz.",
   },
   {
     key: "cta_title",
@@ -283,57 +284,38 @@ const siteContent = [
   {
     key: "faq_eyebrow",
     title: "SSS Üst",
-    content: "Sıkça sorulanlar",
+    content: "SSS",
   },
   {
     key: "faq_title",
     title: "SSS Başlık",
-    content: "Eğitimler hakkında",
+    content: "Sık sorulan sorular",
   },
   {
-    key: "faq_1_q",
-    title: "SSS 1 Soru",
-    content: "Eğitimler uygulamalı mı?",
+    key: "faq_section_eyebrow",
+    title: "SSS Üst (bölüm)",
+    content: "SSS",
   },
   {
-    key: "faq_1_a",
-    title: "SSS 1 Cevap",
-    content:
-      "Evet. Tüm eğitimlerde canlı manken üzerinde eğitmen ile birebir uygulama yapılır.",
+    key: "faq_section_title",
+    title: "SSS Başlık (bölüm)",
+    content: "Sık sorulan sorular",
   },
-  {
-    key: "faq_2_q",
-    title: "SSS 2 Soru",
-    content: "MEB onaylı belge hangi programlarda var?",
-  },
-  {
-    key: "faq_2_a",
-    title: "SSS 2 Cevap",
-    content:
-      "Protez tırnak, kalıcı makyaj, lazer-iğneli epilasyon ve güzellik uzmanlığı programlarında MEB onaylı belge için sınav süreci uygulanır.",
-  },
-  {
-    key: "faq_3_q",
-    title: "SSS 3 Soru",
-    content: "Kayıt için nasıl ilerlemeliyim?",
-  },
-  {
-    key: "faq_3_a",
-    title: "SSS 3 Cevap",
-    content:
-      "WhatsApp veya iletişim formundan danışmanlık alın; uygun programı seçip kayıt sepetine ekleyebilirsiniz.",
-  },
-  {
-    key: "faq_4_q",
-    title: "SSS 4 Soru",
-    content: "Eğitim saatleri nedir?",
-  },
-  {
-    key: "faq_4_a",
-    title: "SSS 4 Cevap",
-    content:
-      "Programlara göre değişmekle birlikte dersler genellikle 10:00–17:00 arasındadır. Detaylar her eğitimin sayfasında yer alır.",
-  },
+  ...HOME_FAQS.flatMap((item, i) => {
+    const n = i + 1;
+    return [
+      {
+        key: `faq_${n}_q`,
+        title: `SSS ${n} Soru`,
+        content: item.q,
+      },
+      {
+        key: `faq_${n}_a`,
+        title: `SSS ${n} Cevap`,
+        content: item.a,
+      },
+    ];
+  }),
   {
     key: "testimonial_section_title",
     title: "Yorumlar Başlık",
@@ -516,9 +498,11 @@ async function main() {
           isActive: true,
           inStock: true,
           specs: JSON.stringify({
-            sure: course.duration,
-            program: course.schedule,
-            belge: course.certificate,
+            montaj: course.duration,
+            teslimat: course.schedule,
+            garanti: course.certificate,
+            kayit: "Ön kayıt gerekli",
+            konum: "Adana — Cemalpaşa / Seyhan",
             uygulama: "Canlı manken — birebir",
           }),
         },

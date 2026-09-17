@@ -11,6 +11,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { resolveMysqlPoolConfig } from "../src/lib/db-url";
 import { CATEGORIES } from "../src/lib/constants";
+import { HOME_FAQS } from "../src/lib/home-faq";
 import { COURSES } from "./courses-data";
 import { projectData } from "./projects-data";
 import { BLOGS } from "./blog-data";
@@ -27,9 +28,24 @@ const adapter = new PrismaMariaDb({
 const prisma = new PrismaClient({ adapter });
 
 const MISSION =
-  "Güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmek; canlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak.";
+  "Misyonumuz; güzellik sektöründe güvenilir, uygulamalı ve belgelendirilmiş eğitimlerle nitelikli uzmanlar yetiştirmektir.\n\nCanlı manken üzerinde birebir uygulama ile mezunlarımıza mesleki özgüven kazandırmak; hijyenik ortamda doğru teknikleri öğretmek ve kariyer yolculuklarında yanlarında olmak istiyoruz. Kısa vadeli vaatler yerine, ölçülebilir öğrenme çıktıları ve dürüst bilgilendirme ile uzun soluklu başarı hedefleriz.\n\nHer programda önceliğimiz: güvenli uygulama ortamı, uzman eğitmen kontrolü ve net belgelendirme sürecidir.";
 const VISION =
-  "Adana ve çevresinde güzellik eğitiminde referans akademi olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamak.";
+  "Vizyonumuz; Adana ve çevresinde güzellik eğitiminin referans akademilerinden biri olmak; bilimi sanatla buluşturan standartlar koymak ve mezunlarımızın sektörde tercih edilen uzmanlar olmasını sağlamaktır.\n\nUygulamalı müfredatımızı, güncel teknikleri ve belgelendirme seçeneklerini güçlendirerek hem yeni başlayanlara hem de kendini geliştirmek isteyen profesyonellere tutarlı bir kalite sunmayı amaçlıyoruz.\n\nUzun vadede hedefimiz; “herkese aynı kurs” değil, “hedefinize uygun eğitim yolu” anlayışının Adana’daki en bilinen temsilcilerinden biri olmaktır.";
+const ABOUT_INTRO =
+  "Zeynep Çeltek Güzellik Akademi; Adana Seyhan Cemalpaşa’da, uygulamalı güzellik eğitimleriyle meslek sahibi olmak veya mevcut becerisini güçlendirmek isteyenlere yönelik bir eğitim kurumudur. Protez tırnak, kalıcı makyaj, cilt bakımı, lazer ve iğneli epilasyon, kirpik-kaş uygulamaları, kafa masajı (head spa) ve kapsamlı güzellik uzmanlığı programlarını; canlı manken üzerinde birebir pratik modeliyle sunarız.\n\nBizim için eğitim, yalnızca teori anlatmak değildir. Doğru tekniği güvenli ve hijyenik ortamda deneyimlemek, ilk uygulamaları eğitmen eşliğinde tamamlamak ve belgelendirme sürecini şeffaf yürütmek temel yaklaşımımızdır. MEB onaylı belge, sertifika veya akademi belgesi programın yapısına göre netleştirilir.\n\nKayıt sürecini sade tutarız: WhatsApp veya iletişim formuyla danışmanlık, sitedeki kayıt sepeti ile ön talep; kontenjan ve ücret onayı sonrası eğitime başlangıç. Amacımız, Adana’da güvenilir, uygulamalı ve kariyer odaklı bir güzellik akademisi deneyimi sunmaktır.";
+const ABOUT_PHILOSOPHY =
+  "Eğitim ilkelerimizin özeti: dinlemek, doğru programı önermek, uygulamada yanınızda olmak ve belge sürecini açık yürütmek.\n\nHer programı standart bir “kurs paketi” gibi değil; ölçülebilir bir öğrenme yolu olarak görürüz. Kayıt öncesinde hedefinizi (sıfırdan meslek, ek uzmanlık, salon kurma vb.) dinleriz. Eğitim sırasında teori ile canlı manken uygulamasını aynı akışta birleştiririz. Eğitim sonrasında ise belge / sınav adımlarını ve sektöre geçiş için gerçekçi yönlendirmeyi paylaşırız.\n\nHijyen, meslek etiği ve birebir rehberlik bizim için slogan değil; günlük eğitim disiplinimizin parçasıdır. Böylece mezunlarımız yalnızca bir sertifika değil, sahada kullanabilecekleri özgüven ve teknik birikimle ayrılır.";
+
+function courseSpecs(course: (typeof COURSES)[number]) {
+  return JSON.stringify({
+    montaj: course.duration,
+    teslimat: course.schedule,
+    garanti: course.certificate,
+    kayit: "Ön kayıt gerekli",
+    konum: "Adana — Cemalpaşa / Seyhan",
+    uygulama: "Canlı manken — birebir",
+  });
+}
 
 async function upsertContent(key: string, title: string, content: string) {
   await prisma.siteContent.upsert({
@@ -86,11 +102,7 @@ async function main() {
         price: course.price,
         image: course.image,
         images: JSON.stringify([course.image]),
-        specs: JSON.stringify({
-          montaj: course.duration,
-          teslimat: course.schedule,
-          garanti: course.certificate,
-        }),
+        specs: courseSpecs(course),
         categoryId: category.id,
         sortOrder: course.sortOrder,
         isActive: true,
@@ -104,11 +116,7 @@ async function main() {
         price: course.price,
         image: course.image,
         images: JSON.stringify([course.image]),
-        specs: JSON.stringify({
-          montaj: course.duration,
-          teslimat: course.schedule,
-          garanti: course.certificate,
-        }),
+        specs: courseSpecs(course),
         categoryId: category.id,
         sortOrder: course.sortOrder,
         isActive: true,
@@ -118,14 +126,48 @@ async function main() {
     });
   }
 
-  console.log("[sync] mission / vision…");
+  console.log("[sync] about / FAQ…");
   await upsertContent("mission", "Misyon", MISSION);
   await upsertContent("vision", "Vizyon", VISION);
+  await upsertContent("about_intro", "Hakkımızda Giriş", ABOUT_INTRO);
   await upsertContent(
-    "about_intro",
-    "Hakkımızda Giriş",
-    "Zeynep Çeltek Güzellik Akademi, Adana Seyhan Cemalpaşa'da uygulamalı güzellik eğitimleri sunar. Amacımız yalnızca teknik öğretmek değil; canlı manken üzerinde doğru uygulamayı deneyimlemenizi sağlamak ve kariyerinize sağlam bir temel kazandırmaktır.\n\nMEB onaylı belgelendirme süreçleri, uzman eğitmen kadrosu ve birebir uygulama modeli ile mezunlarımızı sektöre hazırlıyoruz."
+    "about_philosophy",
+    "Çalışma İlkelerimiz",
+    ABOUT_PHILOSOPHY
   );
+  await upsertContent(
+    "values_hygiene",
+    "Hijyen & Standart",
+    "Eğitim ve uygulama alanlarımızı klinik hijyen anlayışıyla yönetiriz. Canlı manken çalışmalarında yüzey, ekipman ve malzeme düzeni; misafir ve öğrenci güvenliği için temel koşuldur. Temizlik ek bir vaat değil, her dersin parçasıdır."
+  );
+  await upsertContent(
+    "values_team",
+    "Uzman Eğitmenler",
+    "Alanında deneyimli eğitmen kadromuz birebir rehberlik sunar. Parametre, ürün ve teknik seçimleri rastgele değil; eğitimin hedeflerine ve sizin seviyenize göre yönlendirilir. Küçük grup / yoğun uygulama modeli öğrenmeyi hızlandırır."
+  );
+  await upsertContent(
+    "values_products",
+    "Uygulamalı Müfredat",
+    "Teori ile canlı manken uygulamasını aynı süreçte birleştiririz. Blok derslerden uzun MEB programlarına kadar müfredat; ilk işlemi doğru teknikle tamamlayabileceğiniz şekilde planlanır. Süre, program ve belge türü eğitim kartında açıkça yazar."
+  );
+  await upsertContent(
+    "values_personal",
+    "Kariyer Odaklı",
+    "Belgelendirme sonrası sektöre giriş, salon / stüdyo yönelimi ve mesleki özgüven için danışmanlık desteği sunarız. “Garanti iş” vaadi yerine gerçekçi kariyer yönlendirmesi yaparız; hedefinize uygun sonraki adımları birlikte netleştiririz."
+  );
+  await upsertContent("faq_section_eyebrow", "SSS Üst (bölüm)", "SSS");
+  await upsertContent(
+    "faq_section_title",
+    "SSS Başlık (bölüm)",
+    "Sık sorulan sorular"
+  );
+
+  for (let i = 0; i < HOME_FAQS.length; i++) {
+    const n = i + 1;
+    const item = HOME_FAQS[i]!;
+    await upsertContent(`faq_${n}_q`, `SSS ${n} Soru`, item.q);
+    await upsertContent(`faq_${n}_a`, `SSS ${n} Cevap`, item.a);
+  }
 
   console.log("[sync] Instagram…");
   await upsertSetting(

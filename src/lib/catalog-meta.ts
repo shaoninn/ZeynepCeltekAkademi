@@ -31,6 +31,13 @@ export const SPEC_FIELD_LABELS: Record<string, string> = {
   duration: "Süre",
   certificate: "Belge",
   schedule: "Program",
+  kayit: "Kayıt",
+  konum: "Konum",
+  sure: "Süre",
+  seans: "Seans",
+  program: "Program",
+  belge: "Belge",
+  uygulama: "Uygulama",
 };
 
 export function productSeoScore(input: {

@@ -48,13 +48,13 @@ export function GalleryLightbox({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
+      <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-2.5">
         {items.map((item, i) => (
           <button
             key={`${item.src}-${i}`}
             type="button"
             onClick={() => setOpenIndex(i)}
-            className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-white/10 bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-orange"
+            className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-white/10 bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-orange"
             aria-label={`${item.alt} — büyüt`}
           >
             <Image

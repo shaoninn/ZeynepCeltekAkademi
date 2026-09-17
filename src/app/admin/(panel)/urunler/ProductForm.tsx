@@ -324,10 +324,12 @@ export function ProductForm({ categories, initial }: ProductFormProps) {
       <div className="grid sm:grid-cols-2 gap-4">
         {(
           [
-            ["malzeme", "Eğitim içeriği"],
-            ["garanti", "Sertifika"],
+            ["malzeme", "İçerik"],
+            ["garanti", "Belge"],
             ["montaj", "Süre"],
-            ["teslimat", "Kontenjan / başlangıç"],
+            ["teslimat", "Program"],
+            ["kayit", "Kayıt"],
+            ["konum", "Konum"],
           ] as const
         ).map(([key, label]) => (
           <AdminField key={key} label={label}>
