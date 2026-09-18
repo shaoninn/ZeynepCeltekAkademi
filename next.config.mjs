@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-/* deploy nudge: 2026-09-18 — re-trigger Hostinger Git deploy */
+/* deploy nudge: 2026-09-18b — re-trigger Hostinger Git deploy */
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
