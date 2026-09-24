@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { readAdsConsent, type AdsConsent } from "@/lib/ads";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const AW_ID = process.env.NEXT_PUBLIC_AW_ID;
+/** Google Ads — Hostinger’da NEXT_PUBLIC_AW_ID yoksa yedek */
+const AW_ID = process.env.NEXT_PUBLIC_AW_ID || "AW-18472054951";
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 function applyConsent(consent: AdsConsent | null) {
