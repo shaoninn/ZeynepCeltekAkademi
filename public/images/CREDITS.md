@@ -1,9 +1,8 @@
 # Görsel kaynakları
 
-Aşağıdaki stok fotoğraflar [Unsplash License](https://unsplash.com/license) kapsamında indirildi (ticari kullanım serbest; fotoğrafçıya atıf zorunlu değil).
+Site görselleri (2026-09) akademi / eğitim temalı üretim setiyle yenilendi:
+hero, facility, about, courses, gallery, blog, OG.
 
-Klasörler: `public/images/{hero,courses,about,facility,gallery,blog}`
+Kurumsal logo (`public/images/logo`) markaya aittir.
 
-Kurumsal logo (`public/images/logo`) markaya aittir; Unsplash değildir.
-
-Hero görseli: Unsplash (salon / eğitmen portre stok).
+WebP + `-sm` varyantları: `node scripts/optimize-images.mjs`
